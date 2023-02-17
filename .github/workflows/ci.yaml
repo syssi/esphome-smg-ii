@@ -1,0 +1,82 @@
+name: CI
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+
+  esphome-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@v2
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install esphome
+          pip list
+          esphome version
+      - name: Write secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
+      - name: Validate example configurations
+        run: |
+          esphome config esp32-example.yaml
+          esphome config esp8266-example.yaml
+
+  esphome-compile:
+    runs-on: ubuntu-latest
+    needs: [esphome-config]
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@v2
+      - name: Cache .esphome
+        uses: actions/cache@v2
+        with:
+          path: .esphome
+          key: esphome-compile-esphome-${{ hashFiles('*.yaml') }}
+          restore-keys: esphome-compile-esphome-
+      - name: Cache .pioenvs
+        uses: actions/cache@v2
+        with:
+          path: .pioenvs
+          key: esphome-compile-pioenvs-${{ hashFiles('*.yaml') }}
+          restore-keys: esphome-compile-pioenvs-
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install esphome
+          pip list
+          esphome version
+      - name: Register problem matchers
+        run: |
+          echo "::add-matcher::.github/workflows/matchers/gcc.json"
+          echo "::add-matcher::.github/workflows/matchers/python.json"
+      - name: Write secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
+      - name: Compile example configurations
+        run: |
+          esphome compile esp32-example.yaml
+          esphome compile esp8266-example.yaml
