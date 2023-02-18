@@ -678,13 +678,7 @@ switch:
     bitmask: 1
 
 text_sensor:
-  # Operation Mode                                                UInt  201 1 R 0: Power On
-  #                                                                             1: Standby
-  #                                                                             2: Mains
-  #                                                                             3: Off-Grid
-  #                                                                             4: Bypass
-  #                                                                             5: Charging
-  #                                                                             6: Fault
+  # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} operation mode"
@@ -701,9 +695,8 @@ text_sensor:
         case 4: return std::string("Bypass");
         case 5: return std::string("Charging");
         case 6: return std::string("Fault");
-        default: return std::string("Unknown");
       }
-      return x;
+      return std::string("Unknown");
 
 # Number entities
 
