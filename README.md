@@ -145,9 +145,9 @@ The protocol is Modbus RTU via RS232.
 | Maximum charging current                               |  0.1A    |  Uint |  332 |  1  | R/W | |
 | Maximum mains charging current                         |  0.1A    |  Uint |  333 |  1  | R/W | |
 | Eq Charging voltage                                    |  0.1V    |  Uint |  334 |  1  | R/W | |
-| bat_eq_time                                            |  min     |  Uint |  335 |  1  | R/W | Range: 0~900 |
-| Eq Timeout exit                                        |  min     |  Uint |  336 |  1  | R/W | Range: 0~900 |
-| Two Eq charging intervals                              |  day     |  Uint |  337 |  1  | R/W | Range: 1~90  |
+| Battery equalization time                              |  min     |  Uint |  335 |  1  | R/W | Range: 0~900 |
+| Equalization timeout exit                              |  min     |  Uint |  336 |  1  | R/W | Range: 0~900 |
+| Two equalization charging intervals                    |  day     |  Uint |  337 |  1  | R/W | Range: 1~90  |
 | Turn on mode                                           |          |  Uint |  406 |  1  | R/W | 0: Can be turn-on locally or remotely<br>1: Only local turn-on<br>2: Only remote turn-on |
 | Remote switch                                          |          |  Uint |  420 |  1  | R/W | 0: Remote shutdown<br>1: Remote turn-on |
 | Exit the fault mode                                    |          |  Uint |  426 |     |  W  | 1: Exit the fault state (only when the inverter enters the fault mode, it could be available) |
