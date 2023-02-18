@@ -543,7 +543,6 @@ sensor:
     unit_of_measurement: "W"
     accuracy_decimals: 0
 
-
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
   - platform: modbus_controller
@@ -696,6 +695,49 @@ switch:
     bitmask: 1
 
 text_sensor:
+  # Fault code                                                    ULong 100 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} fault"
+    address: 100
+    register_type: holding
+    register_count: 2
+    response_size: 4
+    raw_encode: HEXBYTES
+    lambda: |-
+      uint32_t value = modbus_controller::dword_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("");
+        case 1: return std::string("Over temperature of inverter module");
+        case 2: return std::string("Over temperature of DCDC module");
+        case 3: return std::string("Battery over voltage");
+        case 4: return std::string("PV module over temperature");
+        case 5: return std::string("Output short circuit");
+        case 6: return std::string("Inverter over voltage");
+        case 7: return std::string("Output over load");
+        case 8: return std::string("Bus over voltage");
+        case 9: return std::string("Bus soft start timed out");
+        case 10: return std::string("PV over current");
+        case 11: return std::string("PV over voltage");
+        case 12: return std::string("Battery over current");
+        case 13: return std::string("Inverter over current");
+        case 14: return std::string("Bus low voltage");
+        // case 15: Reserve
+        case 16: return std::string("Inverter DC component is too high");
+        // case 17: Reserve
+        case 18: return std::string("The zero bias of output current is too large");
+        case 19: return std::string("The zero bias of inverter current is too large");
+        case 20: return std::string("The zero bias of battery current is too large");
+        case 21: return std::string("The zero bias of PV current is too large");
+        case 22: return std::string("Inverter low voltage");
+        case 23: return std::string("Inverter negative power protection");
+        case 24: return std::string("The host in the parallel system is lost");
+        case 25: return std::string("Synchronization signal abnormal in the parallel system");
+        case 26: return std::string("The battery type is incompatible");
+        case 27: return std::string("Parallel versions are incompatible");
+      }
+      return std::string("Unknown");
+
   # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
     modbus_controller_id: smg0
@@ -727,35 +769,6 @@ text_sensor:
   # Exit the fault mode                                           Uint  426   W   1: Exit the fault state(only when the inverter enters the fault mode , it could be available)
 
 
-# Fault codes
-#
-# 1 Over temperature of inverter module
-# 2 Over temperature of DCDC module
-# 3 Battery over voltage
-# 4 Over temperature of PV module
-# 5 Output short circuited
-# 6 Over Inverter voltage
-# 7 Output over load
-# 8 Bus over voltage
-# 9 Bus soft start times out
-# 10 PV over current
-# 11 PV over voltage
-# 12 Battery over current
-# 13 Inverter over current
-# 14 Bus low voltage
-# 15 Reserve
-# 16 Inverter DC component is too high
-# 17 Reserve
-# 18 The zero bias of Output current is too large
-# 19 The zero bias of inverter current is too large
-# 20 The zero bias of battery current is too large
-# 21 The zero bias of PV current is too large
-# 22 Inverter low voltage
-# 23 Inverter negative power protection
-# 24 The host in the parallel system is lost
-# 25 Synchronization signal abnormal in the parallel system
-# 26 The battery type is incompatible
-# 27 Parallel versions are incompatible
 
 # Warning bits
 #
