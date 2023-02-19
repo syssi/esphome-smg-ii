@@ -759,7 +759,7 @@ text_sensor:
     raw_encode: HEXBYTES
     lambda: |-
       static const uint8_t WARNINGS_SIZE = 19;
-      static const char *const WARNINGS[FAULTS_SIZE] = {
+      static const char *const WARNINGS[WARNINGS_SIZE] = {
           "Reserve (Bit 0)",                                             // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
           "Mains waveform abnormal",                                     // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
           "Reserve (Bit 2)",                                             // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
