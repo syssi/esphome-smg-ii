@@ -540,7 +540,6 @@ sensor:
     unit_of_measurement: "W"
     accuracy_decimals: 0
 
-
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
   - platform: modbus_controller
@@ -693,6 +692,62 @@ switch:
     bitmask: 1
 
 text_sensor:
+  # Fault code                                                    ULong 100 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} fault"
+    address: 100
+    register_type: holding
+    register_count: 2
+    response_size: 4
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t FAULTS_SIZE = 27;
+      static const char *const FAULTS[FAULTS_SIZE] = {
+          "Over temperature of inverter module",                     // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+          "Over temperature of DCDC module",                         // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+          "Battery over voltage",                                    // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+          "PV module over temperature",                              // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+          "Output short circuit",                                    // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+          "Inverter over voltage",                                   // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+          "Output over load",                                        // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+          "Bus over voltage",                                        // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+          "Bus soft start timed out",                                // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+          "PV over current",                                         // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+          "PV over voltage",                                         // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+          "Battery over current",                                    // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+          "Inverter over current",                                   // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+          "Bus low voltage",                                         // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+          "Reserve (Bit 15)",                                        // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+          "Inverter DC component is too high",                       // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+          "Reserve (Bit 17)",                                        // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+          "The zero bias of output current is too large",            // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+          "The zero bias of inverter current is too large",          // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+          "The zero bias of battery current is too large",           // 0000 0000 0000 1000 0000 0000 0000 0000 (20)
+          "The zero bias of PV current is too large",                // 0000 0000 0001 0000 0000 0000 0000 0000 (21)
+          "Inverter low voltage",                                    // 0000 0000 0010 0000 0000 0000 0000 0000 (22)
+          "Inverter negative power protection",                      // 0000 0000 0100 0000 0000 0000 0000 0000 (23)
+          "The host in the parallel system is lost",                 // 0000 0000 1000 0000 0000 0000 0000 0000 (24)
+          "Synchronization signal abnormal in the parallel system",  // 0000 0001 0000 0000 0000 0000 0000 0000 (25)
+          "The battery type is incompatible",                        // 0000 0010 0000 0000 0000 0000 0000 0000 (26)
+          "Parallel versions are incompatible",                      // 0000 0100 0000 0000 0000 0000 0000 0000 (27)
+      };
+      std::string values = "";
+
+      uint32_t mask = modbus_controller::dword_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < FAULTS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(FAULTS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
   # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
     modbus_controller_id: smg0
@@ -722,37 +777,6 @@ text_sensor:
 # Button entities
 
   # Exit the fault mode                                           Uint  426   W   1: Exit the fault state(only when the inverter enters the fault mode , it could be available)
-
-
-# Fault codes
-#
-# 1 Over temperature of inverter module
-# 2 Over temperature of DCDC module
-# 3 Battery over voltage
-# 4 Over temperature of PV module
-# 5 Output short circuited
-# 6 Over Inverter voltage
-# 7 Output over load
-# 8 Bus over voltage
-# 9 Bus soft start times out
-# 10 PV over current
-# 11 PV over voltage
-# 12 Battery over current
-# 13 Inverter over current
-# 14 Bus low voltage
-# 15 Reserve
-# 16 Inverter DC component is too high
-# 17 Reserve
-# 18 The zero bias of Output current is too large
-# 19 The zero bias of inverter current is too large
-# 20 The zero bias of battery current is too large
-# 21 The zero bias of PV current is too large
-# 22 Inverter low voltage
-# 23 Inverter negative power protection
-# 24 The host in the parallel system is lost
-# 25 Synchronization signal abnormal in the parallel system
-# 26 The battery type is incompatible
-# 27 Parallel versions are incompatible
 
 # Warning bits
 #
