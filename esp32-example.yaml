@@ -741,7 +741,8 @@ text_sensor:
       if (mask) {
         for (int i = 0; i < FAULTS_SIZE; i++) {
           if (mask & (1 << i)) {
-            values.append(FAULTS[i] + ";");
+            values.append(FAULTS[i]);
+            values.append(";");
           }
         }
         if (!values.empty()) {
