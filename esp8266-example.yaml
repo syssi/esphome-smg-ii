@@ -816,11 +816,45 @@ text_sensor:
       }
       return std::string("Unknown");
 
-# Number entities
+number:
+  # Battery equalization time                                     min     Uint  335 1 R/W Range: 0~900
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery equalization time"
+    use_write_multiple: true
+    address: 335
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
 
-  # bat_eq_time                                           min     Uint  335 1 R/W Range: 0~900
-  # Eq Timeout exit                                       min     Uint  336 1 R/W Range: 0~900
-  # Two Eq charging intervals                             day     Uint  337 1 R/W Range: 1~90
+  # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} equalization Timeout exit"
+    use_write_multiple: true
+    address: 336
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
+
+  # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} two equalization charging intervals"
+    use_write_multiple: true
+    address: 337
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 90.0
+    step: 1
+    unit_of_measurement: "day"
 
 # Button entities
 
