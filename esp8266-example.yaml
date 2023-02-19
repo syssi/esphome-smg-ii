@@ -748,6 +748,54 @@ text_sensor:
       }
       return values;
 
+  # Warning code                                                  ULong 108 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} fault"
+    address: 100
+    register_type: holding
+    register_count: 2
+    response_size: 4
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t WARNINGS_SIZE = 19;
+      static const char *const WARNINGS[WARNINGS_SIZE] = {
+          "Reserve (Bit 0)",                                             // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+          "Mains waveform abnormal",                                     // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+          "Reserve (Bit 2)",                                             // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+          "Mains low voltage",                                           // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+          "Mains over frequency",                                        // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+          "Mains low frequency",                                         // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+          "PV low voltage",                                              // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+          "Over temperature",                                            // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+          "Battery low voltage",                                         // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+          "Battery is not connected",                                    // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+          "Overload",                                                    // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+          "Battery Eq charging",                                         // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+          "Battery undervoltage",                                        // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+          "Output power derating",                                       // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+          "Fan blocked",                                                 // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+          "PV energy is too low to be use",                              // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+          "Parallel communication interrupted",                          // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+          "Output mode of Single and Parallel systems inconsistent",     // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+          "Battery voltage difference of parallel system is too large",  // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+      };
+      std::string values = "";
+
+      uint32_t mask = modbus_controller::dword_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < WARNINGS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(WARNINGS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
   # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
     modbus_controller_id: smg0
@@ -777,26 +825,3 @@ text_sensor:
 # Button entities
 
   # Exit the fault mode                                           Uint  426   W   1: Exit the fault state(only when the inverter enters the fault mode , it could be available)
-
-# Warning bits
-#
-#  0    Reserve
-#  1    Mains waveform abnormal
-#  2    Reserve
-#  3    Mains low voltage
-#  4    Mains over frequency
-#  5    Mains low frequency
-#  6    PV low voltage
-#  7    Over temperature
-#  8    Battery low voltage
-#  9    Battery is not connected
-# 10    Overload
-# 11    Battery Eq charging
-# 12    Battery is discharged at a low voltage and it has not been charged back to the recovery point
-# 13    Output power derating
-# 14    Fan blocked
-# 15    PV energy is too low to be use
-# 16    Parallel communication interrupted
-# 17    Output mode of Single and Parallel systems is inconsistent
-# 18    Battery voltage difference of parallel system is too large
-# 19-31 Reserve
