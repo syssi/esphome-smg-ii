@@ -705,38 +705,50 @@ text_sensor:
     response_size: 4
     raw_encode: HEXBYTES
     lambda: |-
-      uint32_t value = modbus_controller::dword_from_hex_str(x, 0);
-      switch (value) {
-        case 0: return std::string("");
-        case 1: return std::string("Over temperature of inverter module");
-        case 2: return std::string("Over temperature of DCDC module");
-        case 3: return std::string("Battery over voltage");
-        case 4: return std::string("PV module over temperature");
-        case 5: return std::string("Output short circuit");
-        case 6: return std::string("Inverter over voltage");
-        case 7: return std::string("Output over load");
-        case 8: return std::string("Bus over voltage");
-        case 9: return std::string("Bus soft start timed out");
-        case 10: return std::string("PV over current");
-        case 11: return std::string("PV over voltage");
-        case 12: return std::string("Battery over current");
-        case 13: return std::string("Inverter over current");
-        case 14: return std::string("Bus low voltage");
-        // case 15: Reserve
-        case 16: return std::string("Inverter DC component is too high");
-        // case 17: Reserve
-        case 18: return std::string("The zero bias of output current is too large");
-        case 19: return std::string("The zero bias of inverter current is too large");
-        case 20: return std::string("The zero bias of battery current is too large");
-        case 21: return std::string("The zero bias of PV current is too large");
-        case 22: return std::string("Inverter low voltage");
-        case 23: return std::string("Inverter negative power protection");
-        case 24: return std::string("The host in the parallel system is lost");
-        case 25: return std::string("Synchronization signal abnormal in the parallel system");
-        case 26: return std::string("The battery type is incompatible");
-        case 27: return std::string("Parallel versions are incompatible");
+      static const uint8_t FAULTS_SIZE = 27;
+      static const char *const FAULTS[FAULTS_SIZE] = {
+          "Over temperature of inverter module",                     // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+          "Over temperature of DCDC module",                         // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+          "Battery over voltage",                                    // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+          "PV module over temperature",                              // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+          "Output short circuit",                                    // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+          "Inverter over voltage",                                   // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+          "Output over load",                                        // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+          "Bus over voltage",                                        // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+          "Bus soft start timed out",                                // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+          "PV over current",                                         // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+          "PV over voltage",                                         // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+          "Battery over current",                                    // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+          "Inverter over current",                                   // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+          "Bus low voltage",                                         // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+          "Reserve (Bit 15)",                                        // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+          "Inverter DC component is too high",                       // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+          "Reserve (Bit 17)",                                        // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+          "The zero bias of output current is too large",            // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+          "The zero bias of inverter current is too large",          // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+          "The zero bias of battery current is too large",           // 0000 0000 0000 1000 0000 0000 0000 0000 (20)
+          "The zero bias of PV current is too large",                // 0000 0000 0001 0000 0000 0000 0000 0000 (21)
+          "Inverter low voltage",                                    // 0000 0000 0010 0000 0000 0000 0000 0000 (22)
+          "Inverter negative power protection",                      // 0000 0000 0100 0000 0000 0000 0000 0000 (23)
+          "The host in the parallel system is lost",                 // 0000 0000 1000 0000 0000 0000 0000 0000 (24)
+          "Synchronization signal abnormal in the parallel system",  // 0000 0001 0000 0000 0000 0000 0000 0000 (25)
+          "The battery type is incompatible",                        // 0000 0010 0000 0000 0000 0000 0000 0000 (26)
+          "Parallel versions are incompatible",                      // 0000 0100 0000 0000 0000 0000 0000 0000 (27)
+      };
+      std::string values = "";
+
+      uint32_t mask = modbus_controller::dword_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < FAULTS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(FAULTS[i] + ";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
       }
-      return std::string("Unknown");
+      return values;
 
   # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
