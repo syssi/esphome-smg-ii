@@ -23,23 +23,19 @@ ESPHome component to monitor and control a ISolar/EASUN SMG II inverter via RS23
 ## Schematics
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/001.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/001.jpg" height="16%">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/001.jpg" height="150">
 </a>
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/002.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/002.jpg" height="16%">
-</a>
-
-<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/003.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/003.jpg" height="16%">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/002.jpg" height="150">
 </a>
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/004.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/004.jpg" height="16%">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/004.jpg" height="150">
 </a>
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/005.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/005.jpg" height="16%">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/add-photos/images/005.jpg" height="150">
 </a>
 
 ```
