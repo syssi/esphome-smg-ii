@@ -22,6 +22,22 @@ ESPHome component to monitor and control a ISolar/EASUN SMG II inverter via RS23
 
 ## Schematics
 
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/001.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/002.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/004.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/005.jpg" height="172">
+</a>
+
 ```
                RS232                     UART-TTL
 ┌──────────┐              ┌──────────┐                ┌─────────┐
