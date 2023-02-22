@@ -6,7 +6,7 @@
 ![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-smg-ii)
 [!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
 
-ESPHome component to monitor and control a ISolar/EASUN SMG II inverter via RS232
+ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via RS232
 
 ## Supported devices
 
@@ -81,9 +81,9 @@ Use the `esp32-example.yaml` / `esp8266-example.yaml` as proof of concept:
 # Install esphome
 pip3 install esphome
 
-# Clone this external component
-git clone https://github.com/syssi/esphome-pipsolar.git
-cd esphome-pipsolar
+# Clone this project
+git clone https://github.com/syssi/esphome-smg-ii.git
+cd esphome-smg-ii
 
 # Create a secret.yaml containing some setup specific secrets
 cat > secrets.yaml <<EOF
