@@ -644,9 +644,10 @@ select:
     address: 301
     value_type: U_WORD
     optionsmap:
-      "Utility-PV-Battery": 0
-      "PV-Utility-Battery": 1
-      "PV-Battery-Utility": 2
+      "Utility-PV-Battery (UTI)": 0
+      "PV-Utility-Battery (SOL)": 1
+      "PV-Battery-Utility (SBU)": 2
+      "PV-Utility-Battery (SUB)": 3
 
   # Input voltage range                                           Uint  302 1 R/W 0: Wide range, 1: Narrow range
   - platform: modbus_controller
