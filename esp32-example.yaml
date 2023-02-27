@@ -58,10 +58,10 @@ time:
 
 sensor:
   - platform: total_daily_energy
-    name: "${name} energy today"
+    name: "${name} PV energy today"
     restore: true
     icon: mdi:counter
-    power_id: smg0_pv_charging_average_power
+    power_id: smg0_pv_average_power
     filters:
       # Multiplication factor from W to kW is 0.001
       - multiply: 0.001
@@ -343,6 +343,7 @@ sensor:
   # PV average power                                     1W       Int   223 1 R
   - platform: modbus_controller
     modbus_controller_id: smg0
+    id: smg0_pv_average_power
     name: "${name} pv average power"
     address: 223
     register_type: holding
@@ -355,7 +356,6 @@ sensor:
   # PV charging average power                            1W       Int   224 1 R
   - platform: modbus_controller
     modbus_controller_id: smg0
-    id: smg0_pv_charging_average_power
     name: "${name} pv charging average power"
     address: 224
     register_type: holding
