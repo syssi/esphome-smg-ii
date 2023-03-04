@@ -99,6 +99,8 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 0
+    # Retrieve register 201...235 at once, cp. #14
+    register_count: 34
 
   # Effective mains voltage                              0.1V     Int   202 1 R
   - platform: modbus_controller
@@ -468,6 +470,8 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
+    # Retrieve register 320...338 at once, cp. #14
+    register_count: 18
 
   # Output frequency setting                              0.01Hz  Uint  321 1 R/W
   - platform: modbus_controller
@@ -635,6 +639,8 @@ select:
       "Phase P1": 2
       "Phase P2": 3
       "Phase P3": 4
+    # Retrieve register 300...314 at once, cp. #14
+    register_count: 14
 
   # Output priority                                               Uint  301 1 R/W 0: Utility-PV-Battery, 1: PV-Utility-Battery, 2: PV-Battery-Utility
   - platform: modbus_controller
