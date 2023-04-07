@@ -6,16 +6,18 @@
 ![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-smg-ii)
 [!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
 
-ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via RS232
+ESPHome configuration to monitor and control SmartESS compatible inverters (f.e. EASUN SMG II) via RS232
 
 ## Supported devices
 
 * ISolar SMG II
 * EASUN SMG II
+* PowMr POW-HVM5.5K-48V
+* PowMr POW-HVM6.2M-48V
 
 ## Requirements
 
-* [ESPHome 2022.11.0 or higher](https://github.com/esphome/esphome/releases).
+* [ESPHome 2023.3.0 or higher](https://github.com/esphome/esphome/releases).
 * One half of an ethernet cable with RJ45 connector
 * RS232-to-TTL module (`MAX3232CSE` f.e.)
 * Generic ESP32 or ESP8266 board
