@@ -6,7 +6,7 @@
 ![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-smg-ii)
 [!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
 
-ESPHome configuration to monitor and control SmartESS compatible inverters (f.e. EASUN SMG II) via RS232
+ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via RS232
 
 ## Supported devices
 
