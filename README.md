@@ -12,8 +12,7 @@ ESPHome configuration to monitor and control SmartESS compatible inverters (f.e.
 
 * ISolar SMG II
 * EASUN SMG II
-* PowMr POW-HVM5.5K-48V
-* PowMr POW-HVM6.2M-48V
+* PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
 
 ## Requirements
 
