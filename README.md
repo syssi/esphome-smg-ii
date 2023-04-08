@@ -12,10 +12,11 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 
 * ISolar SMG II
 * EASUN SMG II
+* PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
 
 ## Requirements
 
-* [ESPHome 2022.11.0 or higher](https://github.com/esphome/esphome/releases).
+* [ESPHome 2023.3.0 or higher](https://github.com/esphome/esphome/releases).
 * One half of an ethernet cable with RJ45 connector
 * RS232-to-TTL module (`MAX3232CSE` f.e.)
 * Generic ESP32 or ESP8266 board
