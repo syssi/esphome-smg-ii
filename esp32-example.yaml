@@ -36,7 +36,7 @@ mqtt:
 # api:
 
 uart:
-  - id: uart0
+  - id: uart_0
     baud_rate: 9600
     tx_pin: ${tx_pin}
     rx_pin: ${rx_pin}
@@ -46,6 +46,7 @@ uart:
 
 modbus:
   - id: modbus0
+    uart_id: uart_0
     send_wait_time: 200ms
 
 modbus_controller:

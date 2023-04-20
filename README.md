@@ -185,7 +185,7 @@ logger:
   baud_rate: 0
 
 uart:
-  id: uart0
+  id: uart_0
   baud_rate: 2400
   tx_pin: GPIO1
   rx_pin: GPIO3
