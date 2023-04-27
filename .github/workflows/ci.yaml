@@ -39,6 +39,7 @@ jobs:
       - name: Validate example configurations
         run: |
           esphome config esp32-example.yaml
+          esphome config esp32-example-advanced-multiple-uarts.yaml
           esphome config esp8266-example.yaml
 
   esphome-compile:
@@ -79,4 +80,5 @@ jobs:
       - name: Compile example configurations
         run: |
           esphome compile esp32-example.yaml
+          esphome compile esp32-example-advanced-multiple-uarts.yaml
           esphome compile esp8266-example.yaml
