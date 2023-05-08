@@ -1,5 +1,7 @@
 substitutions:
   name: smg-ii
+  device0: "${name} 1"
+  device1: "${name} 2"
   device_description: "Monitor and control two ISolar/EASUN SMG II inverters via RS232"
   tx_pin: GPIO16
   rx_pin: GPIO17
@@ -70,7 +72,7 @@ modbus_controller:
 sensor:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} pv average voltage"
+    name: "${device0} pv average voltage"
     address: 219
     register_type: holding
     value_type: S_WORD
@@ -82,7 +84,7 @@ sensor:
       - multiply: 0.1
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} pv average current"
+    name: "${device0} pv average current"
     address: 220
     register_type: holding
     value_type: S_WORD
@@ -95,7 +97,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${name} pv average voltage"
+    name: "${device1} pv average voltage"
     address: 219
     register_type: holding
     value_type: S_WORD
@@ -107,7 +109,7 @@ sensor:
       - multiply: 0.1
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${name} pv average current"
+    name: "${device1} pv average current"
     address: 220
     register_type: holding
     value_type: S_WORD
@@ -122,7 +124,7 @@ sensor:
 select:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} output priority"
+    name: "${device0} output priority"
     use_write_multiple: true
     address: 301
     value_type: U_WORD
@@ -134,7 +136,7 @@ select:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${name} output priority"
+    name: "${device1} output priority"
     use_write_multiple: true
     address: 301
     value_type: U_WORD
@@ -147,7 +149,7 @@ select:
 text_sensor:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} operation mode"
+    name: "${device1} operation mode"
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
@@ -166,7 +168,7 @@ text_sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${name} operation mode"
+    name: "${device1} operation mode"
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
@@ -182,3 +184,28 @@ text_sensor:
         case 6: return std::string("Fault");
       }
       return std::string("Unknown");
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${device0} battery equalization time"
+    use_write_multiple: true
+    address: 335
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg1
+    name: "${device1} battery equalization time"
+    use_write_multiple: true
+    address: 335
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
