@@ -1,5 +1,5 @@
 substitutions:
-  name: smg-ii
+  name: smg-ii-multi
   device0: "${name} 1"
   device1: "${name} 2"
   device_description: "Monitor and control two ISolar/EASUN SMG II inverters via RS232"
