@@ -836,8 +836,8 @@ text_sensor:
   # Warning code                                                  ULong 108 2 R
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} fault"
-    address: 100
+    name: "${name} warning"
+    address: 108
     register_type: holding
     register_count: 2
     response_size: 4
