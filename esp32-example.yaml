@@ -458,159 +458,173 @@ sensor:
     filters:
       - multiply: 0.1
 
-  # Output voltage                                        0.1V    Uint  320 1 R/W
+  # PV charging average current                          0.1A     Int   234 1 R
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${name} output voltage"
-    address: 320
+    name: "${name} pv charging average current"
+    address: 234
     register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Output frequency setting                              0.01Hz  Uint  321 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} output frequency setting"
-    address: 321
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "Hz"
-    device_class: frequency
-    # state_class: measurement
-    accuracy_decimals: 2
-    filters:
-      - multiply: 0.01
-
-  # Battery overvoltage protection point                  0.1V    Uint  323 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} battery overvoltage protection point"
-    address: 323
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Max charging voltage                                  0.1V    Uint  324 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} max charging voltage"
-    address: 324
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Floating charging voltage                             0.1V    Uint  325 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} floating charging voltage"
-    address: 325
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Battery discharge recovery point in mains mode        0.1V    Uint  326 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} battery discharge recovery point in mains mode"
-    address: 326
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Battery low voltage protection point in mains mode    0.1V    Uint  327 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} battery low voltage protection point in mains mode"
-    address: 327
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Battery low voltage protection point in off-grid mode 0.1V    Uint  329 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} battery low voltage protection point in off-grid mode"
-    address: 329
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
-  # Maximum charging current                              0.1A    Uint  332 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} maximum charging current"
-    address: 332
-    register_type: holding
-    value_type: U_WORD
+    value_type: S_WORD
     unit_of_measurement: "A"
     device_class: current
-    # state_class: measurement
+    state_class: measurement
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
 
-  # Maximum mains charging current                        0.1A    Uint  333 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} maximum mains charging current"
-    address: 333
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "A"
-    device_class: current
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
+  # # Output voltage                                        0.1V    Uint  320 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} output voltage"
+  #   address: 320
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
 
-  # Eq Charging voltage                                   0.1V    Uint  334 1 R/W
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} Eq Charging voltage"
-    address: 334
-    register_type: holding
-    value_type: U_WORD
-    unit_of_measurement: "V"
-    device_class: voltage
-    # state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
+  # # Output frequency setting                              0.01Hz  Uint  321 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} output frequency setting"
+  #   address: 321
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "Hz"
+  #   device_class: frequency
+  #   # state_class: measurement
+  #   accuracy_decimals: 2
+  #   filters:
+  #     - multiply: 0.01
+
+  # # Battery overvoltage protection point                  0.1V    Uint  323 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery overvoltage protection point"
+  #   address: 323
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Max charging voltage                                  0.1V    Uint  324 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} max charging voltage"
+  #   address: 324
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Floating charging voltage                             0.1V    Uint  325 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} floating charging voltage"
+  #   address: 325
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery discharge recovery point in mains mode        0.1V    Uint  326 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery discharge recovery point in mains mode"
+  #   address: 326
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery low voltage protection point in mains mode    0.1V    Uint  327 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery low voltage protection point in mains mode"
+  #   address: 327
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery low voltage protection point in off-grid mode 0.1V    Uint  329 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery low voltage protection point in off-grid mode"
+  #   address: 329
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Maximum charging current                              0.1A    Uint  332 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} maximum charging current"
+  #   address: 332
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "A"
+  #   device_class: current
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Maximum mains charging current                        0.1A    Uint  333 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} maximum mains charging current"
+  #   address: 333
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "A"
+  #   device_class: current
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Eq Charging voltage                                   0.1V    Uint  334 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Eq Charging voltage"
+  #   address: 334
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
 
   # Rated power                                           W       Uint  643 1 R
   - platform: modbus_controller
@@ -902,6 +916,118 @@ text_sensor:
       return std::string("Unknown");
 
 number:
+  # Output voltage                                                0.1V    Uint  320 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output voltage"
+    use_write_multiple: true
+    address: 320
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Output frequency setting                                      0.01Hz  Uint  321 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output frequency setting"
+    use_write_multiple: true
+    address: 321
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "Hz"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery overvoltage protection point                          0.1V    Uint  323 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery overvoltage protection point"
+    use_write_multiple: true
+    address: 323
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Max charging voltage                                          0.1V    Uint  324 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} max charging voltage"
+    use_write_multiple: true
+    address: 324
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Floating charging voltage                                     0.1V    Uint  325 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} floating charging voltage"
+    use_write_multiple: true
+    address: 325
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery discharge recovery point in mains mode                0.1V    Uint  326 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery discharge recovery point in mains mode"
+    use_write_multiple: true
+    address: 326
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery low voltage protection point in mains mode            0.1V    Uint  327 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery low voltage protection point in mains mode"
+    use_write_multiple: true
+    address: 327
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
   # Maximum charging current                                      0.1A    Uint  332 1 R/W
   - platform: modbus_controller
     modbus_controller_id: smg0
@@ -930,6 +1056,22 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Eq Charging voltage                                           0.1V    Uint  334 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} Eq Charging voltage"
+    use_write_multiple: true
+    address: 334
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
