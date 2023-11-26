@@ -458,20 +458,6 @@ sensor:
     filters:
       - multiply: 0.1
 
-  # PV charging average current                          0.1A     Int   234 1 R
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "${name} pv charging average current"
-    address: 234
-    register_type: holding
-    value_type: S_WORD
-    unit_of_measurement: "A"
-    device_class: current
-    state_class: measurement
-    accuracy_decimals: 1
-    filters:
-      - multiply: 0.1
-
   # # Output voltage                                        0.1V    Uint  320 1 R/W
   # - platform: modbus_controller
   #   modbus_controller_id: smg0
