@@ -926,11 +926,11 @@ number:
     value_type: U_WORD
     min_value: 0.0
     # max_value: 100.0
-    step: 0.1
+    step: 0.01
     unit_of_measurement: "Hz"
-    lambda: "return x * 0.1f;"
+    lambda: "return x * 0.01f;"
     write_lambda: |-
-      return x * 10.0f;
+      return x * 100.0f;
 
   # Battery overvoltage protection point                          0.1V    Uint  323 1 R/W
   - platform: modbus_controller
