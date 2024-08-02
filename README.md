@@ -186,9 +186,9 @@ logger:
 
 uart:
   id: uart_0
-  baud_rate: 2400
-  tx_pin: GPIO1
-  rx_pin: GPIO3
+  baud_rate: 9600
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
   debug:
     direction: BOTH
     dummy_receiver: false
