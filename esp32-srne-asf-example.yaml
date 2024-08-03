@@ -1,0 +1,820 @@
+# See https://github.com/syssi/esphome-smg-ii/issues/28
+
+substitutions:
+  name: srne-asf
+  device_description: "Monitor and control a SRNE ASF inverter via RS232"
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  min_version: 2024.6.0
+  project:
+    name: "syssi.esphome-smg-ii"
+    version: 1.1.0
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  level: INFO
+
+# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+# The native API has many advantages over MQTT: https://esphome.io/components/api.html#advantages-over-mqtt
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
+
+# api:
+
+uart:
+  - id: uart_0
+    baud_rate: 9600
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+
+modbus:
+  - id: modbus0
+    uart_id: uart_0
+    send_wait_time: 200ms
+
+modbus_controller:
+  - id: smg0
+    address: 0x01
+    modbus_id: modbus0
+    command_throttle: 200ms
+    update_interval: 10s
+
+time:
+  - platform: sntp
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Software Version"
+    id: software_version
+    register_type: holding
+    address: 0x014
+    register_count: 2
+    value_type: U_DWORD
+    skip_updates: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Serial Number"
+    id: serial_number
+    register_type: holding
+    address: 0x016
+    register_count: 2
+    value_type: U_DWORD
+    skip_updates: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Battery SOC"
+    id: battery_soc
+    register_type: holding
+    address: 0x100
+    unit_of_measurement: "%"
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Battery Voltage"
+    id: battery_voltage
+    address: 0x101
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Battery Current"
+    id: battery_current
+    address: 0x102
+    unit_of_measurement: "A"
+    register_type: holding
+    value_type: S_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: -0.1
+
+  - platform: template
+    name: "Battery Power"
+    id: battery_power
+    unit_of_measurement: "W"
+    lambda: |-
+      return (id(battery_voltage).state * id(battery_current).state);
+    accuracy_decimals: 1
+    device_class: power
+    update_interval: 1s
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 1 Voltage"
+    id: mppt1_voltage
+    address: 0x107
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 1 Current"
+    id: mppt1_current
+    address: 0x108
+    unit_of_measurement: "A"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 1 Power"
+    id: mppt1_power
+    address: 0x109
+    unit_of_measurement: "W"
+    register_type: holding
+    value_type: U_WORD
+    device_class: Power
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Charge Power"
+    id: charge_power
+    address: 0x10E
+    unit_of_measurement: "W"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 2 Voltage"
+    id: mppt2_voltage
+    address: 0x10F
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 2 Current"
+    id: mppt2_current
+    address: 0x110
+    unit_of_measurement: "A"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "MPPT 2 Power"
+    id: mppt2_power
+    address: 0x111
+    unit_of_measurement: "W"
+    register_type: holding
+    value_type: U_WORD
+    device_class: Power
+    accuracy_decimals: 1
+
+  - platform: template
+    name: "Solar Power"
+    id: solar_power
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: Power
+    update_interval: 1s
+    lambda: |-
+      return (id(mppt1_power).state + id(mppt2_power).state);
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: battery_rated_voltage
+    name: "Rated Voltage"
+    address: 0x204
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: time_year
+#    name: "Time Year"
+#    address: 0x020C
+#    register_type: holding
+#    bitmask: 0xFF00
+#    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_voltage
+    name: "Grid Voltage"
+    address: 0x213
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_current_a
+    name: "Grid Current A"
+    address: 0x214
+    unit_of_measurement: "A"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_frequency
+    name: "Grid Frequency"
+    address: 0x215
+    unit_of_measurement: "Hz"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: inverter_frequency
+    name: "Inverter Frequency"
+    address: 0x218
+    unit_of_measurement: "Hz"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: inverter_load_a
+    name: "Inverter Load A"
+    address: 0x021B
+    unit_of_measurement: "W"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 0
+    filters:
+      - multiply: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_voltage_b
+    name: "Grid Voltage B"
+    address: 0x022A
+    unit_of_measurement: "V"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_current_b
+    name: "Grid Current B"
+    address: 0x022E
+    unit_of_measurement: "A"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: template
+    name: "Grid Power"
+    id: grid_power
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    update_interval: 1s
+    lambda: |-
+      return (id(grid_voltage).state * id(grid_current_a).state);
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: inverter_load_b
+    name: "Inverter Load B"
+    address: 0x232
+    unit_of_measurement: "W"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 0
+    filters:
+      - multiply: 1
+
+  - platform: template
+    name: "Inverter Load"
+    id: inverter_load
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    update_interval: 1s
+    lambda: |-
+      return (id(inverter_load_a).state + id(inverter_load_b).state);
+
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: over_voltage_threshold
+#    name: ${name}_over_voltage_threshold
+#    address: 0xE005
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: charging_voltage_limit
+#    name: ${name}_charging_voltage_limit
+#    address: 0xE006
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: equalizing_charge_voltage
+#    name: ${name}_equalizing_charge_voltage
+#    address: 0xE007
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: boost_voltage
+#    name: ${name}_boost_voltage
+#    address: 0xE008
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: float_voltage
+#    name: ${name}_float_voltage
+#    address: 0xE009
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: boost_charging_recovery_voltage
+#    name: ${name}_boost_charging_recovery_voltage
+#    address: 0xE00A
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: over_discharge_recovery_voltage
+#    name: ${name}_over_discharge_recovery_voltage
+#    address: 0xE00B
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#            ######## 8 ########
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: under_voltage_warning
+#    name: ${name}_under_voltage_warning
+#    address: 0xE00C
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: over_discharge_voltage
+#    name: ${name}_over_discharge_voltage
+#    address: 0xE00D
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+#
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    id: discharge_limit_voltage
+#    name: ${name}_discharge_limit_voltage
+#    address: 0xE00E
+#    register_type: holding
+#    value_type: U_WORD
+#    accuracy_decimals: 1
+#    unit_of_measurement: "V"
+#    skip_updates: 1
+#    # filters:
+#    #   - multiply: 0.1
+#    lambda: "return x * 0.4;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: inverter_to_grid
+    name: "Inverter to Grid"
+    address: 0xE01B
+    register_type: holding
+    value_type: U_WORD
+    icon: mdi:sine-wave
+    accuracy_decimals: 1
+    unit_of_measurement: "V"
+    skip_updates: 1
+    # filters:
+    #   - multiply: 0.1
+    lambda: "return x * 0.4;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_to_inverter
+    name: "Grid to Inverter"
+    address: 0xE022
+    register_type: holding
+    value_type: U_WORD
+    icon: mdi:sine-wave
+    accuracy_decimals: 1
+    unit_of_measurement: "V"
+    skip_updates: 1
+    # filters:
+    #   - multiply: 0.1
+    lambda: "return x * 0.4;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: solar_today
+    name: "Solar Power Today"
+    address: 0x0F02F
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "Energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: load_today
+    name: "Load Power Today"
+    address: 0x0F030
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "Energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_today
+    name: "Grid Power Today"
+    address: 0x0F03D
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: solar_accumulated
+    name: "Accumulated Solar Power"
+    address: 0x0F038
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "Energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: load_accumulated
+    name: "Accumulated Load Power"
+    address: 0x0F03A
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "Energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: grid_accumulated
+    name: "Accumulated Grid Power"
+    address: 0x0F048
+    unit_of_measurement: "kWh"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+    device_class: "Energy"
+    state_class: "total"
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: bypass_time
+    name: "Bypass Time"
+    address: 0x0F03F
+    unit_of_measurement: "min"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 1
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Inverter to Grid Voltage"
+    id: inverter_togrid_bvoltage
+    address: 0xE01B
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "V"
+    min_value: 40
+    max_value: 60
+    step: 0.1
+    lambda: "return x * 0.4;"
+    write_lambda: "return x * 2.5;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Grid to Inverter Voltage"
+    id: grid_toinverter_bvoltage
+    address: 0xE022
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "V"
+    min_value: 40
+    max_value: 60
+    step: 0.1
+    lambda: "return x * 0.4;"
+    write_lambda: "return x * 2.5;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Bulk Charge Voltage"
+    id: bulk_voltage
+    address: 0xE008
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "V"
+    min_value: 48
+    max_value: 58.4
+    step: 0.4
+    lambda: "return x * 0.4;"
+    write_lambda: "return x * 2.5;"
+    use_write_multiple: true
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Float Charge Voltage"
+    id: float_voltage
+    address: 0xE009
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "V"
+    min_value: 48
+    max_value: 58.4
+    step: 0.4
+    lambda: "return x * 0.4;"
+    write_lambda: "return x * 2.5;"
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Grid Charge Current"
+    address: 0xE205
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "A"
+    min_value: 0
+    max_value: 120
+    step: 1
+    multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Total Charge Current"
+    address: 0xE20A
+    value_type: U_WORD
+    register_type: holding
+    unit_of_measurement: "A"
+    min_value: 10
+    max_value: 200
+    step: 10
+    lambda: "return x * 0.1;"
+    write_lambda: "return x * 10;"
+
+select:
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Output Priority"
+    id: output_priority
+    address: 0xE204
+    value_type: U_WORD
+    optionsmap:
+      "Solar": 0
+      "Utlity": 1
+      "Solar-Battery": 2
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "AC Input Voltage Range"
+    address: 0xE20B
+    value_type: U_WORD
+    optionsmap:
+      "Appliance": 0
+      "UPS": 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "ECO Mode"
+    id: ecomode
+    address: 0xE20C
+    value_type: U_WORD
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Overload Restart"
+    address: 0xE20D
+    value_type: U_WORD
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+
+#  - platform: modbus_controller
+#    modbus_controller_id: smg0
+#    name: "Alarm"
+#    address: 0xE210
+#    value_type: U_WORD
+#    optionsmap:
+#      "Disable": 0
+#      "Enable": 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Charge Priority"
+    address: 0xE20F
+    value_type: U_WORD
+    optionsmap:
+      "Solar and Utility": 0
+      "Utility-Solar": 1
+      "Solar-Utility": 2
+      "Solar Only": 3
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Overload Bypass"
+    address: 0xE212
+    value_type: U_WORD
+    optionsmap:
+      "Disable": 0
+      "Enable": 1
+
+switch:
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: smg0
+    name: "Alarms"
+    register_type: holding
+    address: 0xE210
+    bitmask: 1
+    entity_category: config
+    icon: "mdi:toggle-switch"
+
+text_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Inverter State"
+    id: inverter_state
+    address: 0x0210
+    register_type: holding
+    raw_encode: HEXBYTES
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("Power On");
+        case 1: return std::string("Standby");
+        case 2: return std::string("Mains");
+        case 3: return std::string("Off-Grid");
+        case 4: return std::string("Bypass");
+        case 5: return std::string("Charging");
+        case 6: return std::string("Fault");
+      }
+      return std::string("Unknown");
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "Charge State"
+    id: charge_state
+    address: 0x010B
+    register_type: holding
+    raw_encode: HEXBYTES
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("Charge Off");
+        case 1: return std::string("Quick Charge");
+        case 2: return std::string("Cons Volt Charge");
+        case 4: return std::string("Float Charge");
+        case 5: return std::string("Reserved");
+        case 6: return std::string("Li Batt Activate");
+        case 7: return std::string("Reserved");
+      }
+      return std::string("Unknown");
