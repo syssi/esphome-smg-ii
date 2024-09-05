@@ -37,5 +37,5 @@ interval:
   - interval: 1s
     then:
       - uart.write:
-          id: uart0
+          id: uart_0
           data: "Hello from ${name}"
