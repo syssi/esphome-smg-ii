@@ -777,7 +777,6 @@ switch:
     modbus_controller_id: smg0
     name: "Overload Bypass"
     address: 0xE212
-    entity_category: config
     bitmask: 1
     entity_category: config
     icon: "mdi:toggle-switch"
