@@ -648,8 +648,8 @@ number:
 
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "Bulk Charge Voltage"
-    id: bulk_voltage
+    name: "Boost Charge Voltage"
+    id: boost_voltage
     address: 0xE008
     value_type: U_WORD
     register_type: holding
