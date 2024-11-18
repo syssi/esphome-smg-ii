@@ -685,7 +685,8 @@ number:
     min_value: 0
     max_value: 120
     step: 1
-    multiply: 0.1
+    lambda: "return x * 0.1;"
+    write_lambda: "return x * 10;"
 
   - platform: modbus_controller
     modbus_controller_id: smg0
