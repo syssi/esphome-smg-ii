@@ -738,6 +738,7 @@ switch:
     use_write_multiple: true
     modbus_controller_id: smg0
     name: "Overload Restart"
+    register_type: holding
     address: 0xE20D
     bitmask: 1
     entity_category: config
@@ -757,7 +758,7 @@ switch:
     use_write_multiple: true
     modbus_controller_id: smg0
     name: "ECO Mode"
-    id: ecomode
+    register_type: holding
     address: 0xE20C
     bitmask: 1
     entity_category: config
@@ -767,6 +768,7 @@ switch:
     use_write_multiple: true
     modbus_controller_id: smg0
     name: "Overload Restart"
+    register_type: holding
     address: 0xE20D
     bitmask: 1
     entity_category: config
@@ -776,6 +778,7 @@ switch:
     use_write_multiple: true
     modbus_controller_id: smg0
     name: "Overload Bypass"
+    register_type: holding
     address: 0xE212
     bitmask: 1
     entity_category: config
