@@ -709,7 +709,7 @@ select:
     value_type: U_WORD
     optionsmap:
       "Solar": 0
-      "Utlity": 1
+      "Utility": 1
       "Solar-Battery": 2
 
   - platform: modbus_controller
