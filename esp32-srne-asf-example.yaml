@@ -724,34 +724,6 @@ select:
 
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "ECO Mode"
-    id: ecomode
-    address: 0xE20C
-    value_type: U_WORD
-    optionsmap:
-      "Disable": 0
-      "Enable": 1
-
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "Overload Restart"
-    address: 0xE20D
-    value_type: U_WORD
-    optionsmap:
-      "Disable": 0
-      "Enable": 1
-
-#  - platform: modbus_controller
-#    modbus_controller_id: smg0
-#    name: "Alarm"
-#    address: 0xE210
-#    value_type: U_WORD
-#    optionsmap:
-#      "Disable": 0
-#      "Enable": 1
-
-  - platform: modbus_controller
-    modbus_controller_id: smg0
     name: "Charge Priority"
     address: 0xE20F
     value_type: U_WORD
@@ -761,22 +733,51 @@ select:
       "Solar-Utility": 2
       "Solar Only": 3
 
-  - platform: modbus_controller
-    modbus_controller_id: smg0
-    name: "Overload Bypass"
-    address: 0xE212
-    value_type: U_WORD
-    optionsmap:
-      "Disable": 0
-      "Enable": 1
-
 switch:
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: smg0
+    name: "Overload Restart"
+    address: 0xE20D
+    bitmask: 1
+    entity_category: config
+    icon: "mdi:toggle-switch"
+
   - platform: modbus_controller
     use_write_multiple: true
     modbus_controller_id: smg0
     name: "Alarms"
     register_type: holding
     address: 0xE210
+    bitmask: 1
+    entity_category: config
+    icon: "mdi:toggle-switch"
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: smg0
+    name: "ECO Mode"
+    id: ecomode
+    address: 0xE20C
+    bitmask: 1
+    entity_category: config
+    icon: "mdi:toggle-switch"
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: smg0
+    name: "Overload Restart"
+    address: 0xE20D
+    bitmask: 1
+    entity_category: config
+    icon: "mdi:toggle-switch"
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: smg0
+    name: "Overload Bypass"
+    address: 0xE212
+    entity_category: config
     bitmask: 1
     entity_category: config
     icon: "mdi:toggle-switch"
