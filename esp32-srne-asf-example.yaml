@@ -54,7 +54,7 @@ modbus:
     send_wait_time: 200ms
 
 modbus_controller:
-  - id: smg0
+  - id: inverter0
     address: 0x01
     modbus_id: modbus0
     command_throttle: 200ms
@@ -65,7 +65,7 @@ time:
 
 sensor:
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Software Version"
     id: software_version
     register_type: holding
@@ -75,7 +75,7 @@ sensor:
     skip_updates: 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Hardware Version"
     id: hardware_version
     register_type: holding
@@ -85,7 +85,7 @@ sensor:
     skip_updates: 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Battery SOC"
     id: battery_soc
     register_type: holding
@@ -94,7 +94,7 @@ sensor:
     value_type: U_WORD
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Battery Voltage"
     id: battery_voltage
     address: 0x101
@@ -106,7 +106,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Battery Current"
     id: battery_current
     address: 0x102
@@ -128,7 +128,7 @@ sensor:
     update_interval: 1s
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 1 Voltage"
     id: mppt1_voltage
     address: 0x107
@@ -140,7 +140,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 1 Current"
     id: mppt1_current
     address: 0x108
@@ -152,7 +152,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 1 Power"
     id: mppt1_power
     address: 0x109
@@ -163,7 +163,7 @@ sensor:
     accuracy_decimals: 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Charge Power"
     id: charge_power
     address: 0x10E
@@ -173,7 +173,7 @@ sensor:
     accuracy_decimals: 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 2 Voltage"
     id: mppt2_voltage
     address: 0x10F
@@ -185,7 +185,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 2 Current"
     id: mppt2_current
     address: 0x110
@@ -197,7 +197,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "MPPT 2 Power"
     id: mppt2_power
     address: 0x111
@@ -218,7 +218,7 @@ sensor:
       return (id(mppt1_power).state + id(mppt2_power).state);
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: battery_rated_voltage
     name: "Rated Voltage"
     address: 0x204
@@ -230,7 +230,7 @@ sensor:
       - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: time_year
 #    name: "Time Year"
 #    address: 0x020C
@@ -239,7 +239,7 @@ sensor:
 #    value_type: U_WORD
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_voltage
     name: "Grid Voltage"
     address: 0x213
@@ -251,7 +251,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_current_a
     name: "Grid Current A"
     address: 0x214
@@ -263,7 +263,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_frequency
     name: "Grid Frequency"
     address: 0x215
@@ -275,7 +275,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_voltage
     name: "Inverter Voltage"
     address: 0x216
@@ -287,7 +287,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_frequency
     name: "Inverter Frequency"
     address: 0x218
@@ -299,7 +299,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_current
     name: "Inverter Current"
     address: 0x219
@@ -311,7 +311,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_load_a
     name: "Inverter Load A"
     address: 0x021B
@@ -323,7 +323,7 @@ sensor:
       - multiply: 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_voltage_b
     name: "Grid Voltage B"
     address: 0x022A
@@ -335,7 +335,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_current_b
     name: "Grid Current B"
     address: 0x022E
@@ -356,7 +356,7 @@ sensor:
       return (id(grid_voltage).state * id(grid_current_a).state);
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_load_b
     name: "Inverter Load B"
     address: 0x232
@@ -377,7 +377,7 @@ sensor:
       return (id(inverter_load_a).state + id(inverter_load_b).state);
 
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: over_voltage_threshold
 #    name: ${name}_over_voltage_threshold
 #    address: 0xE005
@@ -391,7 +391,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: charging_voltage_limit
 #    name: ${name}_charging_voltage_limit
 #    address: 0xE006
@@ -405,7 +405,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: equalizing_charge_voltage
 #    name: ${name}_equalizing_charge_voltage
 #    address: 0xE007
@@ -419,7 +419,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: boost_voltage
 #    name: ${name}_boost_voltage
 #    address: 0xE008
@@ -433,7 +433,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: float_voltage
 #    name: ${name}_float_voltage
 #    address: 0xE009
@@ -447,7 +447,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: boost_charging_recovery_voltage
 #    name: ${name}_boost_charging_recovery_voltage
 #    address: 0xE00A
@@ -461,7 +461,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: over_discharge_recovery_voltage
 #    name: ${name}_over_discharge_recovery_voltage
 #    address: 0xE00B
@@ -477,7 +477,7 @@ sensor:
 #            ######## 8 ########
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: under_voltage_warning
 #    name: ${name}_under_voltage_warning
 #    address: 0xE00C
@@ -491,7 +491,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: over_discharge_voltage
 #    name: ${name}_over_discharge_voltage
 #    address: 0xE00D
@@ -505,7 +505,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 #
 #  - platform: modbus_controller
-#    modbus_controller_id: smg0
+#    modbus_controller_id: inverter0
 #    id: discharge_limit_voltage
 #    name: ${name}_discharge_limit_voltage
 #    address: 0xE00E
@@ -519,7 +519,7 @@ sensor:
 #    lambda: "return x * 0.4;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: inverter_to_grid
     name: "Inverter to Grid"
     address: 0xE01B
@@ -534,7 +534,7 @@ sensor:
     lambda: "return x * 0.4;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_to_inverter
     name: "Grid to Inverter"
     address: 0xE022
@@ -549,7 +549,7 @@ sensor:
     lambda: "return x * 0.4;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: solar_today
     name: "Solar Power Today"
     address: 0x0F02F
@@ -563,7 +563,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: load_today
     name: "Load Power Today"
     address: 0x0F030
@@ -577,7 +577,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_today
     name: "Grid Power Today"
     address: 0x0F03D
@@ -591,7 +591,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: solar_accumulated
     name: "Accumulated Solar Power"
     address: 0x0F038
@@ -605,7 +605,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: load_accumulated
     name: "Accumulated Load Power"
     address: 0x0F03A
@@ -619,7 +619,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: grid_accumulated
     name: "Accumulated Grid Power"
     address: 0x0F048
@@ -633,7 +633,7 @@ sensor:
       - multiply: 0.1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     id: bypass_time
     name: "Bypass Time"
     address: 0x0F03F
@@ -644,7 +644,7 @@ sensor:
 
 number:
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Inverter to Grid Voltage"
     id: inverter_togrid_bvoltage
     address: 0xE01B
@@ -658,7 +658,7 @@ number:
     write_lambda: "return x * 2.5;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Grid to Inverter Voltage"
     id: grid_toinverter_bvoltage
     address: 0xE022
@@ -672,7 +672,7 @@ number:
     write_lambda: "return x * 2.5;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Boost Charge Voltage"
     id: boost_voltage
     address: 0xE008
@@ -687,7 +687,7 @@ number:
     use_write_multiple: true
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Float Charge Voltage"
     id: float_voltage
     address: 0xE009
@@ -701,7 +701,7 @@ number:
     write_lambda: "return x * 2.5;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Grid Charge Current"
     address: 0xE205
     value_type: U_WORD
@@ -714,7 +714,7 @@ number:
     write_lambda: "return x * 10;"
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Total Charge Current"
     address: 0xE20A
     value_type: U_WORD
@@ -728,7 +728,7 @@ number:
 
 select:
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Output Priority"
     id: output_priority
     address: 0xE204
@@ -739,7 +739,7 @@ select:
       "Solar-Battery": 2
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "AC Input Voltage Range"
     address: 0xE20B
     value_type: U_WORD
@@ -748,7 +748,7 @@ select:
       "UPS": 1
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Charge Priority"
     address: 0xE20F
     value_type: U_WORD
@@ -761,7 +761,7 @@ select:
 switch:
   - platform: modbus_controller
     use_write_multiple: true
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Overload Restart"
     register_type: holding
     address: 0xE20D
@@ -771,7 +771,7 @@ switch:
 
   - platform: modbus_controller
     use_write_multiple: true
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Alarms"
     register_type: holding
     address: 0xE210
@@ -781,7 +781,7 @@ switch:
 
   - platform: modbus_controller
     use_write_multiple: true
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "ECO Mode"
     register_type: holding
     address: 0xE20C
@@ -791,7 +791,7 @@ switch:
 
   - platform: modbus_controller
     use_write_multiple: true
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Overload Restart"
     register_type: holding
     address: 0xE20D
@@ -801,7 +801,7 @@ switch:
 
   - platform: modbus_controller
     use_write_multiple: true
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Overload Bypass"
     register_type: holding
     address: 0xE212
@@ -811,7 +811,7 @@ switch:
 
 text_sensor:
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Inverter State"
     id: inverter_state
     address: 0x0210
@@ -831,7 +831,7 @@ text_sensor:
       return std::string("Unknown");
 
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: inverter0
     name: "Charge State"
     id: charge_state
     address: 0x010B
