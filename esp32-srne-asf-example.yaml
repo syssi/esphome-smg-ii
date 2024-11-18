@@ -1,4 +1,5 @@
 # See https://github.com/syssi/esphome-smg-ii/issues/28
+# See https://github.com/HotNoob/PythonProtocolGateway/blob/main/protocols/srne/srne_v1.7.holding_registry_map.csv
 
 substitutions:
   name: srne-asf
@@ -75,8 +76,8 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "Serial Number"
-    id: serial_number
+    name: "Hardware Version"
+    id: hardware_version
     register_type: holding
     address: 0x016
     register_count: 2
