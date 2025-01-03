@@ -75,14 +75,14 @@ sensor:
     unit_of_measurement: "W"
     device_class: power
     state_class: measurement
-    lambda: |-
-      if (id(smg0_battery_average_power).has_state()) {
-        auto power = id(smg0_battery_average_power).state;
-        return (power < 0) ? -power; 0;
-      }
-      return {};
     # Gets updated on value of smg0_battery_average_power
     update_interval: never
+    lambda: |-
+      if (isnan(id(smg0_battery_average_power).state)) {
+        return {};
+      }
+      auto power = id(smg0_battery_average_power).state;
+      return (power < 0) ? -power; 0;
 
   - platform: template
     name: "${name} charging power"
@@ -90,14 +90,14 @@ sensor:
     unit_of_measurement: "W"
     device_class: power
     state_class: measurement
-    lambda: |-
-      if (id(smg0_battery_average_power).has_state()) {
-        auto power = id(smg0_battery_average_power).state;
-        return (power > 0) ? power; 0;
-      }
-      return {};
     # Gets updated on value of smg0_battery_average_power
     update_interval: never
+    lambda: |-
+      if (isnan(id(smg0_battery_average_power).state)) {
+        return {};
+      }
+      auto power = id(smg0_battery_average_power).state;
+      return (power > 0) ? power; 0;
 
   # Fault code                                                    ULong 100 2 R
   - platform: modbus_controller
