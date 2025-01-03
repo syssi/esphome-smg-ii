@@ -82,7 +82,7 @@ sensor:
         return {};
       }
       auto power = id(smg0_battery_average_power).state;
-      return (power < 0) ? -power; 0;
+      return (power < 0.0f) ? -power : 0.0f;
 
   - platform: template
     name: "${name} charging power"
@@ -97,7 +97,7 @@ sensor:
         return {};
       }
       auto power = id(smg0_battery_average_power).state;
-      return (power > 0) ? power; 0;
+      return (power > 0.0f) ? power : 0.0f;
 
   # Fault code                                                    ULong 100 2 R
   - platform: modbus_controller
