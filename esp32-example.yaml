@@ -69,6 +69,36 @@ sensor:
       - multiply: 0.001
     unit_of_measurement: kWh
 
+  - platform: template
+    name: "${name} discharging power"
+    id: smg0_discharging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    lambda: |-
+      if (id(smg0_battery_average_power).has_state()) {
+        auto power = id(smg0_battery_average_power).state;
+        return (power < 0) ? -power; 0;
+      }
+      return {};
+    # Gets updated on value of smg0_battery_average_power
+    update_interval: never
+
+  - platform: template
+    name: "${name} charging power"
+    id: smg0_charging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    lambda: |-
+      if (id(smg0_battery_average_power).has_state()) {
+        auto power = id(smg0_battery_average_power).state;
+        return (power > 0) ? power; 0;
+      }
+      return {};
+    # Gets updated on value of smg0_battery_average_power
+    update_interval: never
+
   # Fault code                                                    ULong 100 2 R
   - platform: modbus_controller
     modbus_controller_id: smg0
@@ -306,6 +336,7 @@ sensor:
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} battery average power"
+    id: smg0_battery_average_power
     address: 217
     register_type: holding
     value_type: S_WORD
@@ -313,6 +344,9 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    on_value:
+      - component.update: smg0_discharging_power
+      - component.update: smg0_charging_power
 
   # PV average voltage                                   0.1V     Int   219 1 R
   - platform: modbus_controller
