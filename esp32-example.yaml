@@ -711,6 +711,19 @@ select:
       "Local turn-on only": 1
       "Remote turn-on only": 2
 
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery type"
+    address: 630
+    value_type: U_WORD
+    optionsmap:
+      "AGM": 0
+      "FLD": 1
+      "USER": 2
+      "Li2": 4
+      "Li4": 6
+      "Lib": 8
+
 switch:
   # LCD automatically returns to the homepage                     Uint  306 1 R/W 0: Do not return automatically, 1: Automatically return after 1 minute
   - platform: modbus_controller
