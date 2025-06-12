@@ -1,0 +1,691 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex:2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>2号通讯协议</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='modbusrtu通信说明'><span>Modbus_RTU通信说明</span></h1><hr /><p><span>版本：2024年07月 第1.0版</span></p><!-- 
+2022年06月11日修改内容：正在修改	修改人:frost 
+2022年06月22日修改内容：434，437寄存器逆变器日期和时间增加说明
+2022年08月31日修改内容：修正将10H功能码的示例写到了14H功能码下面的错误
+2022年09月21日修改内容：电力流状态位新增4位作为图标亮灭标志，用于适配wifi界面显示
+2023年11月15日修改内容：修正0x10功能码示例，增加最大放电电流保护设置，增加当天发电量和总发电量读取，增加孤岛警告
+2023年12月05日修改内容：程序版本地址改为内部日期版本地址
+2024年07月31日修改内容：修正0x03功能码示例
+--><div class='md-toc' mdtype='toc'><p class="md-toc-content" role="list"><span role="listitem" class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" href="#modbusrtu通信说明">Modbus_RTU通信说明</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n6"><a class="md-toc-inner" href="#通讯数据格式">通讯数据格式</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n32"><a class="md-toc-inner" href="#帧格式">帧格式</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n521"><a class="md-toc-inner" href="#设备寄存器地址">设备寄存器地址</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n1614"><a class="md-toc-inner" href="#警告码说明">警告码说明</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n1694"><a class="md-toc-inner" href="#电力流标志说明">电力流标志说明</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n1734"><a class="md-toc-inner" href="#电量查询">电量查询</a></span><span role="listitem" class="md-toc-item md-toc-h2" data-ref="n2098"><a class="md-toc-inner" href="#crc校验算法">CRC校验算法</a></span></p></div><h2 id='通讯数据格式'><span>通讯数据格式</span></h2><ul><li><p><span>通讯时数据以字(WORD— 2 字节)的形式回送，回送的每个字中，高字节在前，低字节在后，如果2 个字连续回送(如：长整形)，则高字在前，低字在后。</span></p><figure><table><thead><tr><th><span>数据类型</span></th><th style='text-align:left;' ><span>寄存器数</span></th><th><span>字节数</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>字符型</span></td><td style='text-align:left;' ><span>1</span></td><td><span>1</span></td><td><span>一次送回两个字符，不足两个用0补充</span></td></tr><tr><td><span>整型</span></td><td style='text-align:left;' ><span>1</span></td><td><span>2</span></td><td><span>一次送回，高字节在前，低字节在后</span></td></tr><tr><td><span>长整型</span></td><td style='text-align:left;' ><span>2</span></td><td><span>4</span></td><td><span>分两个字回送，高字在前，低字在后</span></td></tr></tbody></table></figure></li></ul><hr /><h2 id='帧格式'><span>帧格式</span></h2><ul><li><h3 id='寄存器内容查询功能码03h）'><span>寄存器内容查询（功能码03H）</span></h3><p><span>查询的起始地址和结束地址必须是一个完整数据块的起始地址和结束地址，否则返回的数据不正确。例如：设备序列号的寄存器起始地址是186，长度是12，则查询时起始地址不能在186~198之间，同样结束地址（起始地址+读取的寄存器个数）不能落在这个范围。</span></p><h4 id='上位机发送的帧格式-1'><span>上位机发送的帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>示例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>01H</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>03H</span></td><td><span>03H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>起始寄存器地址高字节</span></td><td><span>00H</span></td><td><span>寄存器地址高8位</span></td></tr><tr><td><span>3</span></td><td><span>起始寄存器地址低字节</span></td><td><span>10H</span></td><td><span>寄存器地址低8位</span></td></tr><tr><td><span>4</span></td><td><span>寄存器个数高字节</span></td><td><span>00H</span></td><td><span>寄存器个数高8位</span></td></tr><tr><td><span>5</span></td><td><span>寄存器个数低字节</span></td><td><span>02H</span></td><td><span>寄存器个数低8位</span></td></tr><tr><td><span>6</span></td><td><span>CRC16校验高字节</span></td><td><span>C0H</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>7</span></td><td><span>CRC16校验低字节</span></td><td><span>CBH</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='下位机解析成功回送帧格式-1'><span>下位机解析成功回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>03H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>回送数据字节数(N)</span></td><td><span>N = 请求的寄存器个数*2</span></td></tr><tr><td><span>3</span></td><td><span>第1个寄存器数据高字节</span></td><td>&nbsp;</td></tr><tr><td><span>4</span></td><td><span>第1 个寄存器数据低字节</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N 个寄存器数据高字节</span></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N 个寄存器数据低字节</span></td><td>&nbsp;</td></tr><tr><td><span>N+3</span></td><td><span>CRC16校验高字节</span></td><td><span>CRC之前的字节均要参与校验</span></td></tr><tr><td><span>N+4</span></td><td><span>CRC16校验低字节</span></td><td>&nbsp;</td></tr></tbody></table></figure><h4 id='下位机解析错误回送帧格式-1'><span>下位机解析错误回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>03H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>回送数据字节数(N)</span></td><td><span>N = 请求的寄存器个数*2</span></td></tr><tr><td><span>3</span></td><td><span>第1个0</span></td><td><span>总共回送N个0</span></td></tr><tr><td><span>4</span></td><td><span>第2个0</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N-1 个0</span></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N 个0</span></td><td>&nbsp;</td></tr><tr><td><span>N+3</span></td><td><span>CRC16校验高字节</span></td><td><span>CRC之前的字节均要参与校验</span></td></tr><tr><td><span>N+4</span></td><td><span>CRC16校验低字节</span></td><td>&nbsp;</td></tr></tbody></table></figure><h4 id='寄存器读示例'><span>寄存器读示例：</span></h4><p><span>读取市电电压有效值(起始寄存器202)到市电功率平均值的数据，其中市电电压返回230.0v,市电频率返回50.00Hz,市电功率平均值返回1200w</span></p><p><span>上位机：01 03 00 CA 00 03 25 F5</span></p><p><span>下位机：01 03 06 08 FC 13 88 04 B0 F7 F3</span></p><hr /><p>&nbsp;</p></li><li><h3 id='寄存器内容设置功能码10h）'><span>寄存器内容设置（功能码10H）</span></h3><h4 id='上位机发送的帧格式-2'><span>上位机发送的帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>示例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>01H</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>10H</span></td><td><span>10H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>起始寄存器地址高字节</span></td><td><span>01H</span></td><td><span>寄存器地址高8位</span></td></tr><tr><td><span>3</span></td><td><span>起始寄存器地址低字节</span></td><td><span>10H</span></td><td><span>寄存器地址低8位</span></td></tr><tr><td><span>4</span></td><td><span>寄存器个数高字节</span></td><td><span>00H</span></td><td><span>寄存器个数高8位（恒等于0）</span></td></tr><tr><td><span>5</span></td><td><span>寄存器个数低字节</span></td><td><span>02H</span></td><td><span>寄存器个数低8位</span></td></tr><tr><td><span>6</span></td><td><span>待写入的字节数(N)</span></td><td>&nbsp;</td><td><span>N = 寄存器个数*2</span></td></tr><tr><td><span>7</span></td><td><span>第1个寄存器数据高字节</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><span>8</span></td><td><span>第1个寄存器数据低字节</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N个寄存器数据高字节</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><span>第N个寄存器数据低字节</span></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td><span>N+7</span></td><td><span>CRC16校验高字节</span></td><td>&nbsp;</td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>N+8</span></td><td><span>CRC16校验低字节</span></td><td>&nbsp;</td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='下位机解析成功回送帧格式-2'><span>下位机解析成功回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>示例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>01H</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>10H</span></td><td><span>10H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>起始寄存器地址高字节</span></td><td><span>01H</span></td><td><span>寄存器地址高8位</span></td></tr><tr><td><span>3</span></td><td><span>起始寄存器地址低字节</span></td><td><span>10H</span></td><td><span>寄存器地址低8位</span></td></tr><tr><td><span>4</span></td><td><span>寄存器个数高字节</span></td><td><span>00H</span></td><td><span>寄存器个数高8位（恒等于0）</span></td></tr><tr><td><span>5</span></td><td><span>寄存器个数低字节</span></td><td><span>02H</span></td><td><span>寄存器个数低8位</span></td></tr><tr><td><span>6</span></td><td><span>CRC16校验高字节</span></td><td><span>41H</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>7</span></td><td><span>CRC16校验低字节</span></td><td><span>F1H</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='下位机解析错误回送帧格式-2'><span>下位机解析错误回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>90H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>错误代码</span></td><td><span>错误代码</span></td></tr><tr><td><span>3</span></td><td><span>CRC16校验高字节</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>4</span></td><td><span>CRC16校验低字节</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='寄存器写示例'><span>寄存器写示例：</span></h4><p><span>设置输出电压(起始寄存器320)为220v</span></p><p><span>上位机：01 10 01 40 00 01 02 08 98 BE 3A</span></p><p><span>下位机：01 10 01 40 00 01 01 E1</span></p><hr /><p>&nbsp;</p></li><li><h3 id='文件读取功能码14h'><span>文件读取(功能码14H)</span></h3><h4 id='上位机发送的帧格式-3'><span>上位机发送的帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>示例</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>01H</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>14H</span></td><td><span>14H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>07H</span></td><td><span>07H</span></td><td>&nbsp;</td></tr><tr><td><span>3</span></td><td><span>06H</span></td><td><span>06H</span></td><td><span>引用类型</span></td></tr><tr><td><span>4</span></td><td><span>文件号高字节</span></td><td><span>00H</span></td><td><span>文件号高8位</span></td></tr><tr><td><span>5</span></td><td><span>文件号低字节</span></td><td><span>02H</span></td><td><span>文件号低8位</span></td></tr><tr><td><span>6</span></td><td><span>文件记录索引高字节</span></td><td><span>00H</span></td><td><span>文件记录号高8位</span></td></tr><tr><td><span>7</span></td><td><span>文件记录索引低字节</span></td><td><span>01H</span></td><td><span>文件记录号低8位</span></td></tr><tr><td><span>8</span></td><td><span>00H</span></td><td><span>00H</span></td><td>&nbsp;</td></tr><tr><td><span>9</span></td><td><span>00H</span></td><td><span>00H</span></td><td>&nbsp;</td></tr><tr><td><span>10</span></td><td><span>CRC16校验高字节</span></td><td><span>D1H</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>11</span></td><td><span>CRC16校验低字节</span></td><td><span>24H</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='下位机解析成功回送帧格式-3'><span>下位机解析成功回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>14H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>后面数据的长度(N)</span></td><td><span>N=M+1</span></td></tr><tr><td><span>3</span></td><td><span>回送数据字节长度(M)</span></td><td><span>M=n+1</span></td></tr><tr><td><span>4</span></td><td><span>06H</span></td><td><span>引用类型</span></td></tr><tr><td><span>5</span></td><td><span>第1个数据</span></td><td>&nbsp;</td></tr><tr><td><span>6</span></td><td><span>第2个数据</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td><span>......</span></td><td><span>......</span></td><td>&nbsp;</td></tr><tr><td><span>n+4</span></td><td><span>第n个数据</span></td><td>&nbsp;</td></tr><tr><td><span>n+5</span></td><td><span>CRC16校验高字节</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>n+6</span></td><td><span>CRC16校验低字节</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='下位机解析错误回送帧格式-3'><span>下位机解析错误回送帧格式</span></h4><figure><table><thead><tr><th><span>字节顺序</span></th><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>设备地址</span></td><td><span>设备地址(1~247)</span></td></tr><tr><td><span>1</span></td><td><span>90H</span></td><td><span>功能码</span></td></tr><tr><td><span>2</span></td><td><span>错误代码</span></td><td><span>错误代码</span></td></tr><tr><td><span>3</span></td><td><span>CRC16校验高字节</span></td><td><span>CRC16校验高8位</span></td></tr><tr><td><span>4</span></td><td><span>CRC16校验低字节</span></td><td><span>CRC16校验低8位</span></td></tr></tbody></table></figure><h4 id='错误代码说明'><span>错误代码说明</span></h4><figure><table><thead><tr><th><span>代码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>01H</span></td><td><span>操作了只读寄存器</span></td></tr><tr><td><span>03H</span></td><td><span>写入超过可接受范围的数据</span></td></tr><tr><td><span>07H</span></td><td><span>当前工作模式不允许修改的寄存器</span></td></tr><tr><td><span>08H</span></td><td><span>文件数据不存在</span></td></tr></tbody></table></figure></li></ul><hr /><p>&nbsp;</p><h2 id='设备寄存器地址'><span>设备寄存器地址</span></h2><ul><li><p><span>R：表示可读即支持03 H 命令。W：表示可写即支持10 H 命令。</span></p></li><li><p><span>Int：整型；Long：长整型；UInt：无符整型；ULong：无符长整型；ASC：ASCII码</span></p></li><li><p><span>Max：取最大值；Min：取最小值</span></p></li><li><p><span>下表中的地址均以十进制表示</span></p><figure><table><thead><tr><th><span>数据名称</span></th><th><span>单位</span></th><th><span>数据格式</span></th><th><span>起始地址</span></th><th><span>寄存器数</span></th><th><span>读写</span></th><th><span>备注</span></th></tr></thead><tbody><tr><td><span>设备故障码</span></td><td>&nbsp;</td><td><span>ULong</span></td><td><span>100</span></td><td><span>2</span></td><td><span>R</span></td><td><span>32位故障代码，每一位对应一个故障码，详见</span><a href='#faultcode'><span>故障代码表</span></a><span>，故障码1对应bit1，故障码2对应bit2，以此类推</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>102</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>获取无屏蔽处理的警告码</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>104</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>32位警告代码详见</span><a href='#warning'><span>警告码说明</span></a></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>106</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>获取屏蔽处理后的警告码</span></td><td>&nbsp;</td><td><span>ULong</span></td><td><span>108</span></td><td><span>2</span></td><td><span>R/W</span></td><td><span>32位警告代码详见</span><a href='#warning'><span>警告码说明</span></a></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>110</span></td><td><span>61</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>设备类型</span></td><td>&nbsp;</td><td><span>UInt</span></td><td><span>171</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>设备名称</span></td><td>&nbsp;</td><td><span>ASC</span></td><td><span>172</span></td><td><span>12</span></td><td><span>R/W</span></td><td><span>设备名称，以ASCII码形式写入或读取</span></td></tr><tr><td><span>协议号</span></td><td>&nbsp;</td><td><span>UInt</span></td><td><span>184</span></td><td><span>1</span></td><td><span>R</span></td><td><span>本协议的协议号为0x02</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>185</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>设备序列号</span></td><td>&nbsp;</td><td><span>ASC</span></td><td><span>186</span></td><td><span>12</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>198</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>无效数据</span></td><td>&nbsp;</td><td><span>UInt</span></td><td><span>200</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>内部命令</span></td></tr><tr><td><span>工作模式</span></td><td>&nbsp;</td><td><span>UInt</span></td><td><span>201</span></td><td><span>1</span></td><td><span>R</span></td><td><span>0:开机模式</span><br><span>1:待机模式</span><br><span>2:市电模式</span><br><span>3:离网模式</span><br><span>4:旁路模式</span><br><span>5:充电模式</span><br><span>6:故障模式</span></td></tr><tr><td><span>市电电压有效值</span></td><td><span>0.1v</span></td><td><span>Int</span></td><td><span>202</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>市电频率</span></td><td><span>0.01Hz</span></td><td><span>Int</span></td><td><span>203</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>市电功率平均值</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>204</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>逆变电压有效值</span></td><td><span>0.1v</span></td><td><span>Int</span></td><td><span>205</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>逆变电流有效值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>206</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>逆变频率</span></td><td><span>0.01Hz</span></td><td><span>Int</span></td><td><span>207</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>逆变功率平均值</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>208</span></td><td><span>1</span></td><td><span>R</span></td><td><span>正数表示逆变输出，负数表示逆变输入</span></td></tr><tr><td><span>逆变充电功率</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>209</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>输出电压有效值</span></td><td><span>0.1v</span></td><td><span>Int</span></td><td><span>210</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>输出电流有效值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>211</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>输出频率</span></td><td><span>0.01Hz</span></td><td><span>Int</span></td><td><span>212</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>输出有功功率</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>213</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>输出视在功率</span></td><td><span>1VA</span></td><td><span>Int</span></td><td><span>214</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>电池电压平均值</span></td><td><span>0.1v</span></td><td><span>Int</span></td><td><span>215</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>电池电流平均值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>216</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>电池功率平均值</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>217</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>无效数据</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>218</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>内部命令</span></td></tr><tr><td><span>PV电压平均值</span></td><td><span>0.1v</span></td><td><span>Int</span></td><td><span>219</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>PV电流平均值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>220</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>221</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>PV功率平均值</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>223</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>PV充电功率平均值</span></td><td><span>1w</span></td><td><span>Int</span></td><td><span>224</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>负载百分比</span></td><td><span>1%</span></td><td><span>Int</span></td><td><span>225</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>DCDC温度</span></td><td><span>1℃</span></td><td><span>Int</span></td><td><span>226</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>逆变温度</span></td><td><span>1℃</span></td><td><span>Int</span></td><td><span>227</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>PV温度</span></td><td><span>1℃</span></td><td><span>Int</span></td><td><span>228</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>电池百分比</span></td><td><span>1%</span></td><td><span>UInt</span></td><td><span>229</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>无效数据</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>230</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>内部命令</span></td></tr><tr><td><span>电力流状态</span></td><td>&nbsp;</td><td><span>UInt</span></td><td><span>231</span></td><td><span>1</span></td><td><span>R</span></td><td><span>详见</span><a href='#powerflow'><span>电力流标志位说明</span></a></td></tr><tr><td><span>电池电流滤波平均值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>232</span></td><td><span>1</span></td><td><span>R</span></td><td><span>正数表示充电，负数表示放电</span></td></tr><tr><td><span>逆变充电电流平均值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>233</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>PV充电电流平均值</span></td><td><span>0.1A</span></td><td><span>Int</span></td><td><span>234</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>外部CT采样功率</span></td><td><span>1w</span></td><td><span>Long</span></td><td><span>235</span></td><td><span>2</span></td><td><span>R</span></td><td><span>正数:电网输出能量</span><br><span>负数:有能量灌入电网</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>237</span></td><td><span>63</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>输出模式</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>300</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：单机；</span><br><span>1：并机；</span><br><span>2：三相组合-P1</span><br><span>3：三相组合-P2</span><br><span>4：三相组合-P3</span></td></tr><tr><td><span>主输出优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>301</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>1：PV-市电-电池(SUB)[优先逆变]</span><br><span>2：PV-电池-市电(SBU)</span><br><span>3：PV-市电-电池(SUF)[PV可并网]</span><br><span>4：PV-电池-市电(ZEC)[自发自用]</span></td></tr><tr><td><span>输入电压范围</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>302</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：APL；</span><br><span>1：UPS；</span><br><span>2：GNT</span></td></tr><tr><td><span>蜂鸣器模式</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>303</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：所有情况静音；</span><br><span>1：输入源有变换或有特定警告或故障时鸣响；</span><br><span>2：有特定警告或故障时鸣响；</span><br><span>3：故障时鸣响；</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>304</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>预留地址</span></td></tr><tr><td><span>LCD背光</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>305</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：定时关闭；</span><br><span>1：常亮；</span></td></tr><tr><td><span>LCD自动返回主页</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>306</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：不自动返回；</span><br><span>1：1分钟后自动返回；</span></td></tr><tr><td><span>节能模式开关</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>307</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：节能模式关；</span><br><span>1：节能模式开；</span></td></tr><tr><td><span>过载自动重启</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>308</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：过载故障不重启；</span><br><span>1：过载故障自动重启；</span></td></tr><tr><td><span>过温自动重启</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>309</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：过温故障不重启；</span><br><span>1：过温故障自动重启；</span></td></tr><tr><td><span>过载转旁路使能</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>310</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：禁止；</span><br><span>1：使能；</span></td></tr><tr><td><span>并机PV侦测模式</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>311</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：逆变器各自侦测并使用自己的PV</span><br><span>1：系统中所有PV正常才使用PV</span></td></tr><tr><td><span>外部CT使能</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>312</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：禁止；</span><br><span>1：使能；</span></td></tr><tr><td><span>电池Eq模式使能</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>313</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：禁止；</span><br><span>1：使能；</span></td></tr><tr><td><span id="I"><span>警告掩码[I]</span></span></td><td>&nbsp;</td><td><span>ULong</span></td><td><span>314</span></td><td><span>2</span></td><td><span>R/W</span></td><td><span>对应为1的警告正常显示，对应为0的警告被屏蔽</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>316</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>副输出优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>318</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：关闭副输出优先级</span><br><span>1：PV-市电-电池(SUB)[优先逆变]</span><br><span>2：PV-电池-市电(SBU)</span><br><span>3：PV-市电-电池(SUF)[PV可并网]</span><br><span>4：PV-电池-市电(ZEC)[自发自用]</span></td></tr><tr><td><span>副充电优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>319</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：关闭副充电优先级</span><br><span>1：PV优先(SOF)</span><br><span>2：PV与市电同级(SNU)</span><br><span>3：只允许PV充电(OSO)</span><br><span>4：PV优先满足输出剩余充电(SOR)</span></td></tr><tr><td><span>输出电压</span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>320</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>2200：220v输出；</span><br><span>2300：230v输出；</span><br><span>2400：240v输出；</span></td></tr><tr><td><span>输出频率</span></td><td><span>0.01Hz</span></td><td><span>Uint</span></td><td><span>321</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>5000：50Hz输出；</span><br><span>6000：60Hz输出；</span></td></tr><tr><td><span>电池类型</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>322</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：AGM；</span><br><span>1：FLD；</span><br><span>2：USER；</span><br><span>3：Li1</span><br><span>4：Li2</span><br><span>5：Li3</span><br><span>6：Li4</span><br><span>7：预留(不显示)</span><br><span>8：LIB</span></td></tr><tr><td><span id="A"><span>电池过压保护点[A]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>323</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：(</span><a href='#B'><span>B</span></a><span> + 1v * </span><a href='#J'><span>J</span></a><span>) ~ 16.5v*</span><a href='#J'><span>J</span></a></td></tr><tr><td><span id="B"><span>最大充电电压[B]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>324</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：</span><a href='#C'><span>C</span></a><span> ~ (</span><a href='#A'><span>A</span></a><span> - 1v)</span></td></tr><tr><td><span id="C"><span>浮充电电压[C]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>325</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：(12v * </span><a href='#J'><span>J</span></a><span>) ~ </span><a href='#B'><span>B</span></a></td></tr><tr><td><span id="D"><span>市电模式电池放电恢复点[D]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>326</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：(</span><a href='#B'><span>B</span></a><span> - 0.5v * </span><a href='#J'><span>J</span></a><span>) ~ Max(12v </span><span>*</span><span> </span><a href='#J'><span>J</span></a><span> ,  </span><a href='#E'><span>E</span></a><span>)</span><br><span>设置为0则表示充满恢复</span></td></tr><tr><td><span id="E"><span>市电模式电池低压保护点[E]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>327</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围： Min(14.3v </span><span>*</span><span> </span><a href='#J'><span>J</span></a><span> , </span><a href='#D'><span>D</span></a><span>) ~ Max(11v * </span><a href='#J'><span>J</span></a><span> ,  </span><a href='#F'><span>F</span></a><span>)</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>328</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span id="F"><span>离网模式电池低压保护点[F]</span></span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>329</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：(10v * </span><a href='#J'><span>J</span></a><span>) ~ Min(13.5v </span><span>*</span><span> </span><a href='#J'><span>J</span></a><span> ,  </span><a href='#E'><span>E</span></a><span>)</span></td></tr><tr><td><span>恒压转浮充等待时间</span></td><td><span>min</span></td><td><span>Uint</span></td><td><span>330</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：1~900min</span><br><span>设置为协议0则默认为10min</span></td></tr><tr><td><span>充电优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>331</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>1：PV优先(SOF)</span><br><span>2：PV与市电同级(SNU)</span><br><span>3：只允许PV充电(OSO)</span><br><span>4：PV优先满足输出剩余充电(SOR)</span></td></tr><tr><td><span id="G"><span>最大充电电流[G]</span></span></td><td><span>0.1A</span></td><td><span>Uint</span></td><td><span>332</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：Max(10A , </span><a href='#H'><span>H</span></a><span>) ~ 80A</span></td></tr><tr><td><span id="H"><span>最大市电充电电流[H]</span></span></td><td><span>0.1A</span></td><td><span>Uint</span></td><td><span>333</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：2A ~ </span><a href='#G'><span>G</span></a></td></tr><tr><td><span>Eq充电电压</span></td><td><span>0.1v</span></td><td><span>Uint</span></td><td><span>334</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：</span><a href='C#'><span>C</span></a><span> ~ (</span><a href='#A'><span>A</span></a><span> - 0.5v * </span><a href='#J'><span>J</span></a><span>)</span></td></tr><tr><td><span>bat_eq_time</span></td><td><span>min</span></td><td><span>Uint</span></td><td><span>335</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0 ~ 900</span></td></tr><tr><td><span>Eq超时退出</span></td><td><span>min</span></td><td><span>Uint</span></td><td><span>336</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0 ~ 900</span></td></tr><tr><td><span>两次Eq充电间隔</span></td><td><span>day</span></td><td><span>Uint</span></td><td><span>337</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：1 ~ 90</span></td></tr><tr><td><span>自动市电输出使能</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>338</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：不按开机键不会市电输出</span><br><span>1：不按开机键也会自动市电输出</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>339</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span id="K"><span>市电模式电池放电SOC保护值[K]</span></span></td><td><span>1%</span></td><td><span>Uint</span></td><td><span>341</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：20%~50%</span></td></tr><tr><td><span>市电模式电池放电SOC恢复值</span></td><td><span>1%</span></td><td><span>Uint</span></td><td><span>342</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：60%~100%</span></td></tr><tr><td><span>离网模式电池放电SOC保护值</span></td><td><span>1%</span></td><td><span>Uint</span></td><td><span>343</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：3%~Min(</span><a href='#K'><span>K</span></a><span> , 30%)</span></td></tr><tr><td><span>PV并网最大功率</span></td><td><span>1w</span></td><td><span>Uint</span></td><td><span>344</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：200w~</span><a href='#额定功率'><span>额定功率</span></a></td></tr><tr><td><span>副输出优先级开始时间</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>345</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0000~2359，千位和百位为小时，十位和个位为分钟</span></td></tr><tr><td><span>副输出优先级结束时间</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>346</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0000~2359，千位和百位为小时，十位和个位为分钟</span></td></tr><tr><td><span>副充电优先级开始时间</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>347</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0000~2359，千位和百位为小时，十位和个位为分钟</span></td></tr><tr><td><span>副充电优先级结束时间</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>348</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>范围：0000~2359，千位和百位为小时，十位和个位为分钟</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>349</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>最大放电电流保护</span></td><td><span>1A</span></td><td><span>Uint</span></td><td><span>351</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>单机模式下最大放电电流保护值</span></td></tr><tr><td><span>孤岛侦测使能</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>352</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：禁止孤岛侦测</span><br><span>1：使能孤岛侦测</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>353</span></td><td><span>49</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>当前时段的输出优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>402</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>当前时段的充电优先级</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>403</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>404</span></td><td><span>2</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>开机方式</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>406</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：可以本地或远程开机</span><br><span>1：只能本地开机</span><br><span>2：只能远程开机</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>407</span></td><td><span>13</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>远程开关</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>420</span></td><td><span>1</span></td><td><span>R/W</span></td><td><span>0：远程关机</span><br><span>1：远程开机</span></td></tr><tr><td><span>无效数据</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>421</span></td><td><span>1</span></td><td>&nbsp;</td><td><span>内部命令</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>422</span></td><td><span>3</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>强制Eq充电</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>425</span></td><td>&nbsp;</td><td><span>W</span></td><td><span>1：手动强制Eq充电一次</span></td></tr><tr><td><span>退出故障锁定状态</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>426</span></td><td>&nbsp;</td><td><span>W</span></td><td><span>1：退出故障锁定状态(只有机器进入故障模式才会生效)</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>427</span></td><td><span>7</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>逆变器日期</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>434</span></td><td><span>3</span></td><td><span>R/W</span></td><td><span>三个16位数，分别代表年、月、日(例:07H E6H 00H 07H 00H 0EH  表示2022年7月14日)</span></td></tr><tr><td><span>逆变器时间</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>437</span></td><td><span>3</span></td><td><span>R/W</span></td><td><span>三个16位数，分别代表时、分、秒(例:00H 0DH 00H 0FH 00H 10H  表示13时15分16秒)</span></td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>440</span></td><td><span>3</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>当天发电量</span></td><td><span>0.01Kwh</span></td><td><span>Uint</span></td><td><span>443</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>总发电量</span></td><td><span>0.01Kwh</span></td><td><span>ULong</span></td><td><span>444</span></td><td><span>2</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>446</span></td><td><span>13</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span>清零发电量</span></td><td>&nbsp;</td><td><span>Uint</span></td><td><span>459</span></td><td><span>1</span></td><td><span>W</span></td><td><span>0xAA：清除所有发电量数据</span></td></tr><tr><td><span>清除记录</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>460</span></td><td><span>1</span></td><td><span>W</span></td><td><span>0xAA：清除运行记录及故障记录(工作在非离网模式生效)</span></td></tr><tr><td><span>重置用户参数</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>461</span></td><td><span>1</span></td><td><span>W</span></td><td><span>0xAA：用户参数恢复默认值(工作在非离网模式生效)</span></td></tr><tr><td><span>程序版本</span></td><td>&nbsp;</td><td><span>ASC</span></td><td><span>626</span></td><td><span>8</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span>预留</span></td><td>&nbsp;</td><td>&nbsp;</td><td><span>462</span></td><td><span>179</span></td><td>&nbsp;</td><td><span>预留地址</span></td></tr><tr><td><span id="额定功率"><span>额定功率</span></span></td><td><span>w</span></td><td><span>UInt</span></td><td><span>643</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr><tr><td><span id="J"><span>额定电池节数[J]</span></span></td><td><span>PCS</span></td><td><span>UInt</span></td><td><span>644</span></td><td><span>1</span></td><td><span>R</span></td><td>&nbsp;</td></tr></tbody></table></figure></li></ul><hr /><p>&nbsp;</p><ul><li><h3 id='故障代码表'><span id="faultcode"><span>故障代码表</span></span></h3><figure><table><thead><tr><th><span>故障码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>bit0</span></td><td><span>逆变过温</span></td></tr><tr><td><span>bit1</span></td><td><span>PV过温</span></td></tr><tr><td><span>bit2</span></td><td><span>DCDC过温</span></td></tr><tr><td><span>bit3</span></td><td><span>电池过压</span></td></tr><tr><td><span>bit4</span></td><td><span>预留</span></td></tr><tr><td><span>bit5</span></td><td><span>输出短路</span></td></tr><tr><td><span>bit6</span></td><td><span>逆变过压</span></td></tr><tr><td><span>bit7</span></td><td><span>输出过载</span></td></tr><tr><td><span>bit8</span></td><td><span>母线过压</span></td></tr><tr><td><span>bit9</span></td><td><span>母线软起超时</span></td></tr><tr><td><span>bit10</span></td><td><span>PV过流</span></td></tr><tr><td><span>bit11</span></td><td><span>PV过压</span></td></tr><tr><td><span>bit12</span></td><td><span>DCDC过流</span></td></tr><tr><td><span>bit13</span></td><td><span>逆变过流</span></td></tr><tr><td><span>bit14</span></td><td><span>母线低压</span></td></tr><tr><td><span>bit15</span></td><td><span>保留</span></td></tr><tr><td><span>bit16</span></td><td><span>逆变直流分量过高</span></td></tr><tr><td><span>bit17</span></td><td><span>保留</span></td></tr><tr><td><span>bit18</span></td><td><span>输出电流零偏过大</span></td></tr><tr><td><span>bit19</span></td><td><span>逆变电流零偏过大</span></td></tr><tr><td><span>bit20</span></td><td><span>电池电流零偏过大</span></td></tr><tr><td><span>bit21</span></td><td><span>PV电流零偏过大</span></td></tr><tr><td><span>bit22</span></td><td><span>逆变低压</span></td></tr><tr><td><span>bit23</span></td><td><span>逆变负功保护</span></td></tr><tr><td><span>bit24</span></td><td><span>并机系统主机丢失</span></td></tr><tr><td><span>bit25</span></td><td><span>并机系统同步信号异常</span></td></tr><tr><td><span>bit26</span></td><td><span>电池类型不兼容</span></td></tr><tr><td><span>bit27</span></td><td><span>并机版本不兼容</span></td></tr><tr><td><span>bit28</span></td><td><span>外部CT设置重复</span></td></tr></tbody></table></figure></li></ul><hr /><p>&nbsp;</p><h2 id='警告码说明'><span id="warning"><span>警告码说明</span></span></h2><p><span>系统警告是一个32位的无符号长整型，每一位对应一个警告，每一位也可以通过警告掩码</span><a href='#I'><span>I</span></a><span>进行屏蔽，屏蔽后对应警告将不会在LCD读到，也不会通过命令读到。</span></p><ul><li><h3 id='警告代码表'><span>警告代码表</span></h3><figure><table><thead><tr><th><span>警告码</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>bit 0</span></td><td><span>市电过零丢失</span></td></tr><tr><td><span>bit 1</span></td><td><span>市电波形异常</span></td></tr><tr><td><span>bit 2</span></td><td><span>市电过压</span></td></tr><tr><td><span>bit 3</span></td><td><span>市电欠压</span></td></tr><tr><td><span>bit 4</span></td><td><span>市电过频</span></td></tr><tr><td><span>bit 5</span></td><td><span>市电欠频</span></td></tr><tr><td><span>bit 6</span></td><td><span>PV欠压</span></td></tr><tr><td><span>bit 7</span></td><td><span>过温</span></td></tr><tr><td><span>bit 8</span></td><td><span>电池电压较低</span></td></tr><tr><td><span>bit 9</span></td><td><span>电池未接</span></td></tr><tr><td><span>bit 10</span></td><td><span>过载</span></td></tr><tr><td><span>bit 11</span></td><td><span>电池Eq充电</span></td></tr><tr><td><span>bit 12</span></td><td><span>电池放电低压且还未充回恢复点</span></td></tr><tr><td><span>bit 13</span></td><td><span>输出功率降额</span></td></tr><tr><td><span>bit 14</span></td><td><span>风扇堵转</span></td></tr><tr><td><span>bit 15</span></td><td><span>PV能量过低无法使用</span></td></tr><tr><td><span>bit 16</span></td><td><span>并机通讯中断</span></td></tr><tr><td><span>bit 17</span></td><td><span>单并机输出模式不一致</span></td></tr><tr><td><span>bit 18</span></td><td><span>并机电池压差过大</span></td></tr><tr><td><span>bit19</span></td><td><span>锂电通讯异常</span></td></tr><tr><td><span>bit20</span></td><td><span>电池放电电流超过设定值</span></td></tr><tr><td><span>bit21</span></td><td><span>发生孤岛</span></td></tr><tr><td><span>bit 22~31</span></td><td><span>保留</span></td></tr></tbody></table></figure></li></ul><hr /><p>&nbsp;</p><h2 id='电力流标志说明'><span id="powerflow"><span>电力流标志说明</span></span></h2><p><span>电力流有一个16位无符整型表示，各个位的意义如下表：</span></p><ul><li><h3 id='电力流位表'><span>电力流位表</span></h3><figure><table><thead><tr><th><span>位</span></th><th><span>说明</span></th></tr></thead><tbody><tr><td><span>bit0~1</span></td><td><span>0：PV未接入系统</span><br><span>1：PV已接入系统</span></td></tr><tr><td><span>bit2~3</span></td><td><span>0：市电未接入系统</span><br><span>1：市电已接入系统</span><br><span>2：逆变器并网</span></td></tr><tr><td><span>bit4~5</span></td><td><span>0：电池不充不放</span><br><span>1：电池充电</span><br><span>2：电池放电</span></td></tr><tr><td><span>bit6~7</span></td><td><span>0：系统不输出带载</span><br><span>1：系统输出带载</span></td></tr><tr><td><span>bit8</span></td><td><span>0：市电未充电</span><br><span>1：市电充电</span></td></tr><tr><td><span>bit9</span></td><td><span>0：PV未充电</span><br><span>1：PV充电</span></td></tr><tr><td><span>bit10</span></td><td><span>0：电池图标亮</span><br><span>1：电池图标灭</span></td></tr><tr><td><span>bit11</span></td><td><span>0：PV图标亮</span><br><span>1：PV图标灭</span></td></tr><tr><td><span>bit12</span></td><td><span>0：市电图标亮</span><br><span>1：市电图标灭</span></td></tr><tr><td><span>bit13</span></td><td><span>0：负载图标亮</span><br><span>1：负载图标灭</span></td></tr></tbody></table></figure></li></ul><hr /><h2 id='电量查询'><span>电量查询</span></h2><p><span>逆变器可以存储一定时间内的电量数据，包括PV的发电量和输出带负载的用电量，存储的电量，可以分为总电量、年电量、月电量、日电量、时电量。每种电量的存储时间范围见下</span></p><figure><table><thead><tr><th><span>发电量类型</span></th><th><span>存储时间范围</span></th><th><span>单位</span></th></tr></thead><tbody><tr><td><span>总电量</span></td><td><span>永久</span></td><td><span>0.01kwh</span></td></tr><tr><td><span>年电量</span></td><td><span>最近12年中的每一年</span></td><td><span>0.01kwh</span></td></tr><tr><td><span>月电量</span></td><td><span>最近12年中的每个月</span></td><td><span>0.01kwh</span></td></tr><tr><td><span>日电量</span></td><td><span>最近一年中的每一日</span></td><td><span>0.01kwh</span></td></tr><tr><td><span>时电量</span></td><td><span>最近15天中的每一小时</span></td><td><span>0.01kwh</span></td></tr></tbody></table></figure><ul><li><h3 id='发电量数据结构'><span>发电量数据结构</span></h3></li><li><p><span>小时发电量</span></p></li></ul><figure><table><thead><tr><th style='text-align:left;' ><span>数据顺序</span></th><th><span>数据说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>0</span></td><td><span>年，年份中的后两位，例如2022年则返回22</span></td></tr><tr><td style='text-align:left;' ><span>1</span></td><td><span>月</span></td></tr><tr><td style='text-align:left;' ><span>2</span></td><td><span>日</span></td></tr><tr><td style='text-align:left;' ><span>3</span></td><td><span>无效数据</span></td></tr><tr><td style='text-align:left;' ><span>4</span></td><td><span>无效数据</span></td></tr><tr><td style='text-align:left;' ><span>5</span></td><td><span>无效数据</span></td></tr><tr><td style='text-align:left;' ><span>6</span></td><td><span>0时的发电量高8位</span></td></tr><tr><td style='text-align:left;' ><span>7</span></td><td><span>0时的发电量低8位</span></td></tr><tr><td style='text-align:left;' ><span>8</span></td><td><span>0时的用电量高8位</span></td></tr><tr><td style='text-align:left;' ><span>9</span></td><td><span>0时的用电量低8位</span></td></tr><tr><td style='text-align:left;' ><span>...</span></td><td><span>...</span></td></tr><tr><td style='text-align:left;' ><span>...</span></td><td><span>...</span></td></tr><tr><td style='text-align:left;' ><span>...</span></td><td><span>...</span></td></tr><tr><td style='text-align:left;' ><span>...</span></td><td><span>...</span></td></tr><tr><td style='text-align:left;' ><span>98</span></td><td><span>23时的发电量高8位</span></td></tr><tr><td style='text-align:left;' ><span>99</span></td><td><span>23时的发电量低8位</span></td></tr><tr><td style='text-align:left;' ><span>100</span></td><td><span>23时的用电量高8位</span></td></tr><tr><td style='text-align:left;' ><span>101</span></td><td><span>23时的用电量高8位</span></td></tr></tbody></table></figure><ul><li><span>日发电量(不存在的日期数据无效，例如4月31日)</span></li></ul><figure><table><thead><tr><th><span>数据顺序</span></th><th><span>数据说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>年，年份中的后两位，例如2022年则返回22</span></td></tr><tr><td><span>1</span></td><td><span>月</span></td></tr><tr><td><span>2</span></td><td><span>无效数据</span></td></tr><tr><td><span>3</span></td><td><span>无效数据</span></td></tr><tr><td><span>4</span></td><td><span>无效数据</span></td></tr><tr><td><span>5</span></td><td><span>无效数据</span></td></tr><tr><td><span>6</span></td><td><span>1日的发电量高8位</span></td></tr><tr><td><span>7</span></td><td><span>1日的发电量低8位</span></td></tr><tr><td><span>8</span></td><td><span>1日的用电量高8位</span></td></tr><tr><td><span>9</span></td><td><span>1日的用电量低8位</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>66</span></td><td><span>31日的发电量高8位</span></td></tr><tr><td><span>67</span></td><td><span>31日的发电量低8位</span></td></tr><tr><td><span>66</span></td><td><span>31日的用电量高8位</span></td></tr><tr><td><span>67</span></td><td><span>31日的用电量低8位</span></td></tr></tbody></table></figure><ul><li><span>总发电量、年发电量、月发电量</span></li></ul><figure><table><thead><tr><th><span>数据顺序</span></th><th><span>数据说明</span></th></tr></thead><tbody><tr><td><span>0</span></td><td><span>年，年份中的后两位，例如2022年则返回22</span></td></tr><tr><td><span>1</span></td><td><span>月</span></td></tr><tr><td><span>2</span></td><td><span>日</span></td></tr><tr><td><span>3</span></td><td><span>时</span></td></tr><tr><td><span>4</span></td><td><span>无效数据</span></td></tr><tr><td><span>5</span></td><td><span>无效数据</span></td></tr><tr><td><span>6</span></td><td><span>无效数据</span></td></tr><tr><td><span>7</span></td><td><span>无效数据</span></td></tr><tr><td><span>8</span></td><td><span>总发电量24~31位</span></td></tr><tr><td><span>9</span></td><td><span>总发电量低16~23位</span></td></tr><tr><td><span>10</span></td><td><span>总发电量高8~15位</span></td></tr><tr><td><span>11</span></td><td><span>总发电量0~7位</span></td></tr><tr><td><span>12</span></td><td><span>总用电量24~31位</span></td></tr><tr><td><span>13</span></td><td><span>总用电量低16~23位</span></td></tr><tr><td><span>14</span></td><td><span>总用电量高8~15位</span></td></tr><tr><td><span>15</span></td><td><span>总用电量0~7位</span></td></tr><tr><td><span>16</span></td><td><span>年发电量24~31位</span></td></tr><tr><td><span>17</span></td><td><span>年发电量低16~23位</span></td></tr><tr><td><span>18</span></td><td><span>年发电量高8~15位</span></td></tr><tr><td><span>19</span></td><td><span>年发电量0~7位</span></td></tr><tr><td><span>20</span></td><td><span>年用电量24~31位</span></td></tr><tr><td><span>21</span></td><td><span>年用电量低16~23位</span></td></tr><tr><td><span>22</span></td><td><span>年用电量高8~15位</span></td></tr><tr><td><span>23</span></td><td><span>年用电量0~7位</span></td></tr><tr><td><span>24</span></td><td><span>1月的发电量24~31位</span></td></tr><tr><td><span>25</span></td><td><span>1月的发电量低16~23位</span></td></tr><tr><td><span>26</span></td><td><span>1月的发电量高8~15位</span></td></tr><tr><td><span>27</span></td><td><span>1月的发电量0~7位</span></td></tr><tr><td><span>28</span></td><td><span>1月的用电量24~31位</span></td></tr><tr><td><span>29</span></td><td><span>1月的用电量低16~23位</span></td></tr><tr><td><span>30</span></td><td><span>1月的用电量高8~15位</span></td></tr><tr><td><span>31</span></td><td><span>1月的用电量0~7位</span></td></tr><tr><td><span>32</span></td><td><span>2月的发电量24~31位</span></td></tr><tr><td><span>33</span></td><td><span>2月的发电量低16~23位</span></td></tr><tr><td><span>34</span></td><td><span>2月的发电量高8~15位</span></td></tr><tr><td><span>35</span></td><td><span>2月的发电量0~7位</span></td></tr><tr><td><span>36</span></td><td><span>2月的用电量24~31位</span></td></tr><tr><td><span>37</span></td><td><span>2月的用电量低16~23位</span></td></tr><tr><td><span>38</span></td><td><span>2月的用电量高8~15位</span></td></tr><tr><td><span>39</span></td><td><span>2月的用电量0~7位</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>...</span></td><td><span>...</span></td></tr><tr><td><span>112</span></td><td><span>12月的发电量24~31位</span></td></tr><tr><td><span>113</span></td><td><span>12月的发电量低16~23位</span></td></tr><tr><td><span>114</span></td><td><span>12月的发电量高8~15位</span></td></tr><tr><td><span>115</span></td><td><span>12月的发电量0~7位</span></td></tr><tr><td><span>116</span></td><td><span>12月的用电量24~31位</span></td></tr><tr><td><span>117</span></td><td><span>12月的用电量低16~23位</span></td></tr><tr><td><span>118</span></td><td><span>12月的用电量高8~15位</span></td></tr><tr><td><span>119</span></td><td><span>12月的用电量0~7位</span></td></tr></tbody></table></figure><p><span>以上发电量均可使用文件读取功能码(14H)读取</span></p><figure><table><thead><tr><th><span>发电量类型</span></th><th><span>文件号</span></th><th><span>文件记录索引(*表示任意数值)</span></th><th><span>返回数据结构</span></th></tr></thead><tbody><tr><td><span>当日所有小时发电量</span></td><td><span>1</span></td><td><span>*</span></td><td><span>小时发电量</span></td></tr><tr><td><span>当月所有日的发电量</span></td><td><span>2</span></td><td><span>*</span></td><td><span>日发电量</span></td></tr><tr><td><span>总发电量，当前年发电量及当前年度每个月发电量</span></td><td><span>3</span></td><td><span>*</span></td><td><span>总发电量、年发电量、月发电量</span></td></tr><tr><td><span>历史小时发电量</span></td><td><span>4</span></td><td><span>0~15（索引0为前一天的数据，以此类推）</span></td><td><span>小时发电量</span></td></tr><tr><td><span>历史日发电量</span></td><td><span>5</span></td><td><span>0~11（索引0为前一月的数据，以此类推）</span></td><td><span>日发电量</span></td></tr><tr><td><span>历史总发电量，年发电量及对应年度每个月发电量</span></td><td><span>6</span></td><td><span>0~11（索引0为前一年的数据，以此类推）</span></td><td><span>总发电量、年发电量、月发电量</span></td></tr></tbody></table></figure><p><span>示例：</span></p><ol start='' ><li><p><span>读取当日的所有小时发电量(*以下数据只为举例说明数据格式，并非现实中产生的数据，返回的日期为22年6月11日，返回的发电量数据=小时数+200，返回的用电量=小时数+100，例如0时发电量为200，用电量为100，1时发电量为201，用电量为101，以此类推)</span></p><p><span>上位机：01 14 07 06 00 01 00 01 00 00 95 24</span></p><p><span>下位机：01 14 68 67 06 16 06 0b 00 00 00 00 c8 00 64 00 c9 00 65 00 ca 00 66 00 cb 00 67 00 cc 00 68 00 cd 00 69 00 ce 00 6a 00 cf 00 6b 00 d0 00 6c 00 d1 00 6d 00 d2 00 6e 00 d3 00 6f 00 d4 00 70 00 d5 00 71 00 d6 00 72 00 d7 00 73 00 d8 00 74 00 d9 00 75 00 da 00 76 00 db 00 77 00 dc 00 78 00 dd 00 79 00 de 00 7a 00 df 00 7b af 58</span></p></li><li><p><span>读取总发电量、年发电量、月发电量(**以下数据只为举例说明数据格式，并非现实中产生的数据，返回的日期为22年6月11日12时，返回总发电量=250000，返回总用电量=200000,返回年发电量=150000,返回年用电量=100000,返回月发电量=月数+2000,返回月用电量=月数+1000,例如1月发电量为2001,用电量为1001,二月发电量为2002,二月用电量为1002,以此类推)</span></p><p><span>上位机：01 14 07 06 00 03 00 01 00 00 ec e4</span></p><p><span>下位机：01 14 7a 79 06 16 06 0b 0c 00 00 00 00 00 03 d0 90 00 03 0d 40 00 02 49 f0 00 01 86 a0 00 00 07 d1 00 00 03 e9 00 00 07 d2 00 00 03 ea 00 00 07 d3 00 00 03 eb 00 00 07 d4 00 00 03 ec 00 00 07 d5 00 00 03 ed 00 00 07 d6 00 00 03 ee 00 00 07 d7 00 00 03 ef 00 00 07 d8 00 00 03 f0 00 00 07 d9 00 00 03 f1 00 00 07 da 00 00 03 f2 00 00 07 db 00 00 03 f3 00 00 07 dc 00 00 03 f4 9d a5</span></p></li></ol><hr /><p>&nbsp;</p><h2 id='crc校验算法'><span>CRC校验算法</span></h2><pre class="md-fences md-end-block ty-contain-cm modeLoaded md-focus" spellcheck="false" lang="C" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.2px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">参数模型</span>:<span class="cm-variable">CRC</span><span class="cm-operator">-</span><span class="cm-number">16</span><span class="cm-operator">/</span><span class="cm-variable">MODBUS</span> <span class="cm-variable">X16</span><span class="cm-operator">+</span><span class="cm-variable">X15</span><span class="cm-operator">+</span><span class="cm-variable">X2</span><span class="cm-operator">+</span><span class="cm-number">1</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">C语言代码</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">const</span> <span class="cm-variable-3">char</span> <span class="cm-variable">auchCRCHi</span>[] <span class="cm-operator">=</span> { </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC0</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x80</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x00</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x40</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} ; </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">const</span> <span class="cm-variable-3">char</span> <span class="cm-variable">auchCRCLo</span>[] <span class="cm-operator">=</span> { </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x00</span>, <span class="cm-number">0xC0</span>, <span class="cm-number">0xC1</span>, <span class="cm-number">0x01</span>, <span class="cm-number">0xC3</span>, <span class="cm-number">0x03</span>, <span class="cm-number">0x02</span>, <span class="cm-number">0xC2</span>, <span class="cm-number">0xC6</span>, <span class="cm-number">0x06</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x07</span>, <span class="cm-number">0xC7</span>, <span class="cm-number">0x05</span>, <span class="cm-number">0xC5</span>, <span class="cm-number">0xC4</span>, <span class="cm-number">0x04</span>, <span class="cm-number">0xCC</span>, <span class="cm-number">0x0C</span>, <span class="cm-number">0x0D</span>, <span class="cm-number">0xCD</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x0F</span>, <span class="cm-number">0xCF</span>, <span class="cm-number">0xCE</span>, <span class="cm-number">0x0E</span>, <span class="cm-number">0x0A</span>, <span class="cm-number">0xCA</span>, <span class="cm-number">0xCB</span>, <span class="cm-number">0x0B</span>, <span class="cm-number">0xC9</span>, <span class="cm-number">0x09</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x08</span>, <span class="cm-number">0xC8</span>, <span class="cm-number">0xD8</span>, <span class="cm-number">0x18</span>, <span class="cm-number">0x19</span>, <span class="cm-number">0xD9</span>, <span class="cm-number">0x1B</span>, <span class="cm-number">0xDB</span>, <span class="cm-number">0xDA</span>, <span class="cm-number">0x1A</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x1E</span>, <span class="cm-number">0xDE</span>, <span class="cm-number">0xDF</span>, <span class="cm-number">0x1F</span>, <span class="cm-number">0xDD</span>, <span class="cm-number">0x1D</span>, <span class="cm-number">0x1C</span>, <span class="cm-number">0xDC</span>, <span class="cm-number">0x14</span>, <span class="cm-number">0xD4</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0xD5</span>, <span class="cm-number">0x15</span>, <span class="cm-number">0xD7</span>, <span class="cm-number">0x17</span>, <span class="cm-number">0x16</span>, <span class="cm-number">0xD6</span>, <span class="cm-number">0xD2</span>, <span class="cm-number">0x12</span>, <span class="cm-number">0x13</span>, <span class="cm-number">0xD3</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x11</span>, <span class="cm-number">0xD1</span>, <span class="cm-number">0xD0</span>, <span class="cm-number">0x10</span>, <span class="cm-number">0xF0</span>, <span class="cm-number">0x30</span>, <span class="cm-number">0x31</span>, <span class="cm-number">0xF1</span>, <span class="cm-number">0x33</span>, <span class="cm-number">0xF3</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0xF2</span>, <span class="cm-number">0x32</span>, <span class="cm-number">0x36</span>, <span class="cm-number">0xF6</span>, <span class="cm-number">0xF7</span>, <span class="cm-number">0x37</span>, <span class="cm-number">0xF5</span>, <span class="cm-number">0x35</span>, <span class="cm-number">0x34</span>, <span class="cm-number">0xF4</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x3C</span>, <span class="cm-number">0xFC</span>, <span class="cm-number">0xFD</span>, <span class="cm-number">0x3D</span>, <span class="cm-number">0xFF</span>, <span class="cm-number">0x3F</span>, <span class="cm-number">0x3E</span>, <span class="cm-number">0xFE</span>, <span class="cm-number">0xFA</span>, <span class="cm-number">0x3A</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x3B</span>, <span class="cm-number">0xFB</span>, <span class="cm-number">0x39</span>, <span class="cm-number">0xF9</span>, <span class="cm-number">0xF8</span>, <span class="cm-number">0x38</span>, <span class="cm-number">0x28</span>, <span class="cm-number">0xE8</span>, <span class="cm-number">0xE9</span>, <span class="cm-number">0x29</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0xEB</span>, <span class="cm-number">0x2B</span>, <span class="cm-number">0x2A</span>, <span class="cm-number">0xEA</span>, <span class="cm-number">0xEE</span>, <span class="cm-number">0x2E</span>, <span class="cm-number">0x2F</span>, <span class="cm-number">0xEF</span>, <span class="cm-number">0x2D</span>, <span class="cm-number">0xED</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0xEC</span>, <span class="cm-number">0x2C</span>, <span class="cm-number">0xE4</span>, <span class="cm-number">0x24</span>, <span class="cm-number">0x25</span>, <span class="cm-number">0xE5</span>, <span class="cm-number">0x27</span>, <span class="cm-number">0xE7</span>, <span class="cm-number">0xE6</span>, <span class="cm-number">0x26</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x22</span>, <span class="cm-number">0xE2</span>, <span class="cm-number">0xE3</span>, <span class="cm-number">0x23</span>, <span class="cm-number">0xE1</span>, <span class="cm-number">0x21</span>, <span class="cm-number">0x20</span>, <span class="cm-number">0xE0</span>, <span class="cm-number">0xA0</span>, <span class="cm-number">0x60</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x61</span>, <span class="cm-number">0xA1</span>, <span class="cm-number">0x63</span>, <span class="cm-number">0xA3</span>, <span class="cm-number">0xA2</span>, <span class="cm-number">0x62</span>, <span class="cm-number">0x66</span>, <span class="cm-number">0xA6</span>, <span class="cm-number">0xA7</span>, <span class="cm-number">0x67</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0xA5</span>, <span class="cm-number">0x65</span>, <span class="cm-number">0x64</span>, <span class="cm-number">0xA4</span>, <span class="cm-number">0x6C</span>, <span class="cm-number">0xAC</span>, <span class="cm-number">0xAD</span>, <span class="cm-number">0x6D</span>, <span class="cm-number">0xAF</span>, <span class="cm-number">0x6F</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x6E</span>, <span class="cm-number">0xAE</span>, <span class="cm-number">0xAA</span>, <span class="cm-number">0x6A</span>, <span class="cm-number">0x6B</span>, <span class="cm-number">0xAB</span>, <span class="cm-number">0x69</span>, <span class="cm-number">0xA9</span>, <span class="cm-number">0xA8</span>, <span class="cm-number">0x68</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x78</span>, <span class="cm-number">0xB8</span>, <span class="cm-number">0xB9</span>, <span class="cm-number">0x79</span>, <span class="cm-number">0xBB</span>, <span class="cm-number">0x7B</span>, <span class="cm-number">0x7A</span>, <span class="cm-number">0xBA</span>, <span class="cm-number">0xBE</span>, <span class="cm-number">0x7E</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x7F</span>, <span class="cm-number">0xBF</span>, <span class="cm-number">0x7D</span>, <span class="cm-number">0xBD</span>, <span class="cm-number">0xBC</span>, <span class="cm-number">0x7C</span>, <span class="cm-number">0xB4</span>, <span class="cm-number">0x74</span>, <span class="cm-number">0x75</span>, <span class="cm-number">0xB5</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x77</span>, <span class="cm-number">0xB7</span>, <span class="cm-number">0xB6</span>, <span class="cm-number">0x76</span>, <span class="cm-number">0x72</span>, <span class="cm-number">0xB2</span>, <span class="cm-number">0xB3</span>, <span class="cm-number">0x73</span>, <span class="cm-number">0xB1</span>, <span class="cm-number">0x71</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x70</span>, <span class="cm-number">0xB0</span>, <span class="cm-number">0x50</span>, <span class="cm-number">0x90</span>, <span class="cm-number">0x91</span>, <span class="cm-number">0x51</span>, <span class="cm-number">0x93</span>, <span class="cm-number">0x53</span>, <span class="cm-number">0x52</span>, <span class="cm-number">0x92</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x96</span>, <span class="cm-number">0x56</span>, <span class="cm-number">0x57</span>, <span class="cm-number">0x97</span>, <span class="cm-number">0x55</span>, <span class="cm-number">0x95</span>, <span class="cm-number">0x94</span>, <span class="cm-number">0x54</span>, <span class="cm-number">0x9C</span>, <span class="cm-number">0x5C</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x5D</span>, <span class="cm-number">0x9D</span>, <span class="cm-number">0x5F</span>, <span class="cm-number">0x9F</span>, <span class="cm-number">0x9E</span>, <span class="cm-number">0x5E</span>, <span class="cm-number">0x5A</span>, <span class="cm-number">0x9A</span>, <span class="cm-number">0x9B</span>, <span class="cm-number">0x5B</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x99</span>, <span class="cm-number">0x59</span>, <span class="cm-number">0x58</span>, <span class="cm-number">0x98</span>, <span class="cm-number">0x88</span>, <span class="cm-number">0x48</span>, <span class="cm-number">0x49</span>, <span class="cm-number">0x89</span>, <span class="cm-number">0x4B</span>, <span class="cm-number">0x8B</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x8A</span>, <span class="cm-number">0x4A</span>, <span class="cm-number">0x4E</span>, <span class="cm-number">0x8E</span>, <span class="cm-number">0x8F</span>, <span class="cm-number">0x4F</span>, <span class="cm-number">0x8D</span>, <span class="cm-number">0x4D</span>, <span class="cm-number">0x4C</span>, <span class="cm-number">0x8C</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x44</span>, <span class="cm-number">0x84</span>, <span class="cm-number">0x85</span>, <span class="cm-number">0x45</span>, <span class="cm-number">0x87</span>, <span class="cm-number">0x47</span>, <span class="cm-number">0x46</span>, <span class="cm-number">0x86</span>, <span class="cm-number">0x82</span>, <span class="cm-number">0x42</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-number">0x43</span>, <span class="cm-number">0x83</span>, <span class="cm-number">0x41</span>, <span class="cm-number">0x81</span>, <span class="cm-number">0x80</span>, <span class="cm-number">0x40</span> </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} ;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">unsigned</span> <span class="cm-variable-3">short</span> <span class="cm-def">sModbusCrc16</span>(<span class="cm-variable">INT8U</span> <span class="cm-operator">*</span><span class="cm-variable">chMsg</span>, <span class="cm-variable">INT16U</span> <span class="cm-variable">dataLen</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{ </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable-3">unsigned</span> <span class="cm-variable-3">char</span> <span class="cm-variable">ubCRCHi</span> <span class="cm-operator">=</span> <span class="cm-number">0xFF</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable-3">unsigned</span> <span class="cm-variable-3">char</span> <span class="cm-variable">ubCRCLo</span> <span class="cm-operator">=</span> <span class="cm-number">0xFF</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">unsigned</span> <span class="cm-variable-3">char</span> <span class="cm-variable">duwIndex</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">while</span> (<span class="cm-variable">dataLen</span> <span class="cm-operator">--</span>)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>{ </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">duwIndex</span> <span class="cm-operator">=</span> <span class="cm-number">0xff</span><span class="cm-operator">&amp;</span>(<span class="cm-variable">ubCRCHi</span> <span class="cm-variable">^</span> <span class="cm-operator">*</span><span class="cm-variable">chMsg</span><span class="cm-operator">++</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">ubCRCHi</span> <span class="cm-operator">=</span> <span class="cm-number">0xff</span><span class="cm-operator">&amp;</span>(<span class="cm-variable">ubCRCLo</span> <span class="cm-variable">^</span> <span class="cm-variable">auchCRCHi</span>[<span class="cm-variable">duwIndex</span>]); </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">ubCRCLo</span> <span class="cm-operator">=</span> <span class="cm-variable">auchCRCLo</span>[<span class="cm-variable">duwIndex</span>]; </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>} </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">return</span> (<span class="cm-variable">ubCRCHi</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-number">8</span> <span class="cm-operator">|</span> <span class="cm-variable">ubCRCLo</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 1680px;"></div><div class="CodeMirror-gutters" style="display: none; height: 1680px;"></div></div></div></pre></div></div>
+</body>
+</html>
