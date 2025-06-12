@@ -107,41 +107,41 @@ sensor:
       return (power > 0.0f) ? power : 0.0f;
 
   ## Fault code                                                    ULong 100 2 R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} fault code"
-  #  address: 100
-  #  register_type: holding
-  #  value_type: U_DWORD
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} fault code"
+  #   address: 100
+  #   register_type: holding
+  #   value_type: U_DWORD
+  #   accuracy_decimals: 0
 
   # Warning code                                                  ULong 108 2 R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} warning code"
-  #  address: 108
-  #  register_type: holding
-  #  value_type: U_DWORD
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} warning code"
+  #   address: 108
+  #   register_type: holding
+  #   value_type: U_DWORD
+  #   accuracy_decimals: 0
 
 
   # Device Type	 	UInt	171	1	R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} Device Type"
-  #  address: 171
-  #  register_type: holding
-  #  value_type: U_WORD
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Device Type"
+  #   address: 171
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   accuracy_decimals: 0
 
   # Protocol Number	 	UInt	184	1	R	The protocol number of this protocol is 0x02
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} Protocol Number"
-  #  address: 171
-  #  register_type: holding
-  #  value_type: U_WORD
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Protocol Number"
+  #   address: 171
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   accuracy_decimals: 0
 
   # Operation Mode                                                UInt  201 1 R 0: Power On
   #                                                                             1: Standby
@@ -150,13 +150,13 @@ sensor:
   #                                                                             4: Bypass
   #                                                                             5: Charging
   #                                                                             6: Fault
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} operation mode id"
-  #  address: 201
-  #  register_type: holding
-  #  value_type: U_WORD
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} operation mode id"
+  #   address: 201
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   accuracy_decimals: 0
 
   # Effective mains voltage                              0.1V     Int   202 1 R
   - platform: modbus_controller
@@ -560,7 +560,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  #Power generation on the day	0.01Kwh	Uint	443	1	R
+  # Power generation on the day                            0.01Kwh  Uint   443 1 R
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} PV energy today"
@@ -576,27 +576,27 @@ sensor:
       - multiply: 0.01
 
   ## Rated power                                           W       Uint  643 1 R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} rated power"
-  #  address: 643
-  #  register_type: holding
-  #  value_type: U_WORD
-  #  unit_of_measurement: "W"
-  #  device_class: power
-  #  # state_class: measurement
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} rated power"
+  #   address: 643
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "W"
+  #   device_class: power
+  #   # state_class: measurement
+  #   accuracy_decimals: 0
 
   ## Rated number of battery cells [J]                                          PCS       Uint  644 1 R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} rated number of battery cells "
-  #  address: 644
-  #  register_type: holding
-  #  value_type: U_WORD
-  #  unit_of_measurement: "PCS"
-  #  # state_class: measurement
-  #  accuracy_decimals: 0
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} rated number of battery cells "
+  #   address: 644
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "PCS"
+  #   # state_class: measurement
+  #   accuracy_decimals: 0
 
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
@@ -621,7 +621,7 @@ select:
     address: 301
     value_type: U_WORD
     optionsmap:
-      #"Utility-PV-Battery (UTI)": 0
+      # "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SUB)": 1
       "PV-Battery-Utility (SBU)": 2
       "PV-Utility-Battery (SUF)": 3
@@ -671,11 +671,11 @@ select:
     address: 318
     value_type: U_WORD
     optionsmap:
-      "Disabled":                 0
+      "Disabled": 0
       "PV-Utility-Battery (SUB)": 1
       "PV-Battery-Utility (SBU)": 2
       "PV-Utility-Battery (SUF)": 3
-      "Zero Export To CT (ZEC)":  4
+      "Zero Export To CT (ZEC)": 4
 
   # Auxiliary battery charging priority                                     Uint  319 1 R/W 0: Utility priority, 1: PV priority, 2: PV is at the same level as the Utility, 3: Only PV charging is allowed
   - platform: modbus_controller
@@ -698,14 +698,14 @@ select:
     address: 322
     value_type: U_WORD
     optionsmap:
-      "AGM":  0
-      "FLD":  1
+      "AGM": 0
+      "FLD": 1
       "USER": 2
-      "Li1":  3
-      "Li2":  4 # PYLON US2000
-      "Li3":  5 # FOX ESS
-      "Li4":  6
-      "Lib":  8
+      "Li1": 3
+      "Li2": 4  # PYLON US2000
+      "Li3": 5  # FOX ESS
+      "Li4": 6
+      "Lib": 8
 
   # Battery charging priority                                     Uint  331 1 R/W 0: Utility priority, 1: PV priority, 2: PV is at the same level as the Utility, 3: Only PV charging is allowed
   - platform: modbus_controller
@@ -805,7 +805,7 @@ switch:
     register_type: holding
     bitmask: 1
 
-  # Automatic mains output enable	 	Uint	338	1	R/W	0: No AC power output if the power button is not pressed  1: Automatic AC power output if the power button is not pressed
+  # Automatic mains output enable                                Uint   338 1 R/W 0: No AC power output if the power button is not pressed  1: Automatic AC power output if the power button is not pressed
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} Automatic mains output enable"
@@ -814,7 +814,7 @@ switch:
     register_type: holding
     bitmask: 1
 
-  # Island detection enable	 	Uint	352	1	R/W	0: Disable island detection 1: Enable island detection
+  # Island detection enable                                       Uint  352 1 R/W 0: Disable island detection 1: Enable island detection
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} island detection"
@@ -942,25 +942,25 @@ text_sensor:
       }
       return values;
 
-  #Device Name	 	ASC	172	12	R/W	Device name, written or read in ASCII format
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} Device Name"
-  #  address: 172
-  #  register_type: holding
-  #  raw_encode: ANSI
-  #  register_count: 12
-  #  response_size: 12
+  ## Device Name                                                  ASC   172 12 R/W Device name, written or read in ASCII format
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Device Name"
+  #   address: 172
+  #   register_type: holding
+  #   raw_encode: ANSI
+  #   register_count: 12
+  #   response_size: 12
 
-  ##Device serial number	 	ASC	186	12	R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} Device serial number"
-  #  address: 186
-  #  register_type: holding
-  #  raw_encode: ANSI
-  #  register_count: 12
-  #  response_size: 12
+  ## Device serial number                                         ASC   186 12 R
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Device serial number"
+  #   address: 186
+  #   register_type: holding
+  #   raw_encode: ANSI
+  #   register_count: 12
+  #   response_size: 12
 
   # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
   - platform: modbus_controller
@@ -982,15 +982,15 @@ text_sensor:
       }
       return std::string("Unknown");
 
-  # Program Version ASC	626	8	R
-  #- platform: modbus_controller
-  #  modbus_controller_id: smg0
-  #  name: "${name} Program Version"
-  #  address: 626
-  #  register_type: holding
-  #  raw_encode: ANSI
-  #  register_count: 8
-  #  response_size: 8
+  ## Program Version                                                 ASC   626 8 R
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Program Version"
+  #   address: 626
+  #   register_type: holding
+  #   raw_encode: ANSI
+  #   register_count: 8
+  #   response_size: 8
 
 number:
   # Output voltage                                                0.1V    Uint  320 1 R/W
@@ -1211,7 +1211,7 @@ number:
     step: 1
     unit_of_measurement: "day"
 
-  # Battery discharge SOC protection value in AC mode [K]	1%	Uint	341	1	R/W	Range: 20%~50%
+  # Battery discharge SOC protection value in AC mode [K]           1%    Uint   341 1 R/W Range: 20%~50%
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} Battery discharge SOC protection value in AC mode [K]"
@@ -1224,7 +1224,7 @@ number:
     step: 1
     unit_of_measurement: "%"
 
-  # Battery discharge SOC recovery value in AC mode	1%	Uint	342	1	R/W	Range: 60%~100%
+  # Battery discharge SOC recovery value in AC mode                  1%    Uint   342 1 R/W Range: 60%~100%
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} Battery discharge SOC recovery value in AC mode"
@@ -1237,7 +1237,7 @@ number:
     step: 1
     unit_of_measurement: "%"
 
-  # Off-grid mode battery discharge SOC protection value	1%	Uint	343	1	R/W	Range: 3%~Min( K , 30%)
+  # Off-grid mode battery discharge SOC protection value              1%    Uint   343 1 R/W Range: 3%~Min( K , 30%)
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} Off-grid mode battery discharge SOC protection value"
@@ -1250,7 +1250,7 @@ number:
     step: 1
     unit_of_measurement: "%"
 
-  # PV grid-connected maximum power	1w	Uint	344	1	R/W	Range: 200w~ rated power
+  # PV grid-connected maximum power                                    1w    Uint   344 1 R/W Range: 200w~ rated power
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} PV grid-connected maximum power"
@@ -1264,7 +1264,7 @@ number:
     device_class: power
     unit_of_measurement: "W"
 
-  # UNDOCUMENTED!! CT detection error compensation 349	1	R/W	Range: -200:200
+  # UNDOCUMENTED!! CT detection error compensation                                   349 1 R/W Range: -200:200
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} CT detection error compensation"
@@ -1275,7 +1275,7 @@ number:
     min_value: -200.0
     max_value: 200.0
 
-  # Maximum discharge current protection	1A	Uint	351	1	R/W	Maximum discharge current protection value in stand-alone mode
+  # Maximum discharge current protection                                1A    Uint   351 1 R/W Maximum discharge current protection value in stand-alone mode
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} maximum discharge current protection"
