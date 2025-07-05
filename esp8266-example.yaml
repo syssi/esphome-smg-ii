@@ -75,6 +75,7 @@ sensor:
     register_type: holding
     value_type: U_DWORD
     accuracy_decimals: 0
+    icon: mdi:alert-circle
 
   # Warning code                                                  ULong 108 2 R
   - platform: modbus_controller
@@ -84,6 +85,7 @@ sensor:
     register_type: holding
     value_type: U_DWORD
     accuracy_decimals: 0
+    icon: mdi:alert-circle
 
   # Operation Mode                                                UInt  201 1 R 0: Power On
   #                                                                             1: Standby
@@ -99,6 +101,7 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 0
+    icon: mdi:information
 
   # Effective mains voltage                              0.1V     Int   202 1 R
   - platform: modbus_controller
@@ -111,6 +114,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -125,6 +129,7 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
+    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -139,6 +144,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:sine-wave
 
   # Effective inverter voltage                           0.1V     Int   205 1 R
   - platform: modbus_controller
@@ -151,6 +157,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -165,6 +172,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -179,6 +187,7 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
+    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -193,6 +202,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:power-plug
 
   # Inverter charging power                              1W       Int   209 1 R
   - platform: modbus_controller
@@ -205,6 +215,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:battery-charging
 
   # Output effective voltage                             0.1V     Int   210 1 R
   - platform: modbus_controller
@@ -217,6 +228,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -231,6 +243,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -245,6 +258,7 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
+    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -259,6 +273,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:home-lightning-bolt
 
   # Output apparent power                                1VA      Int   214 1 R
   - platform: modbus_controller
@@ -271,6 +286,7 @@ sensor:
     device_class: apparent_power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:home-lightning-bolt
 
   # Battery average voltage                              0.1V     Int   215 1 R
   - platform: modbus_controller
@@ -283,6 +299,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:battery
     filters:
       - multiply: 0.1
 
@@ -297,6 +314,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -311,6 +329,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:battery
 
   # PV average voltage                                   0.1V     Int   219 1 R
   - platform: modbus_controller
@@ -323,6 +342,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -337,6 +357,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -352,6 +373,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:solar-power
 
   # PV charging average power                            1W       Int   224 1 R
   - platform: modbus_controller
@@ -364,6 +386,7 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:solar-power
 
   # Load percentage                                      1%       Int   225 1 R
   - platform: modbus_controller
@@ -376,6 +399,7 @@ sensor:
     # device_class: battery
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:percent
 
   # DCDC Temperature                                     1°C      Int   226 1 R
   - platform: modbus_controller
@@ -388,6 +412,7 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:thermometer
 
   # Inverter Temperature                                 1°C      Int   227 1 R
   - platform: modbus_controller
@@ -400,6 +425,7 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:thermometer
 
   # Battery state of charge                              1%       UInt  229 1 R
   - platform: modbus_controller
@@ -412,6 +438,7 @@ sensor:
     device_class: battery
     state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:battery
 
   # Battery average current                              0.1A     Int   232 1 R Positive number means charging, negative number means discharging
   - platform: modbus_controller
@@ -424,6 +451,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -438,6 +466,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -452,6 +481,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -620,6 +650,7 @@ sensor:
     device_class: power
     # state_class: measurement
     accuracy_decimals: 0
+    icon: mdi:chart-line
 
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
@@ -629,6 +660,7 @@ select:
     use_write_multiple: true
     address: 300
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Single": 0
       "Parallel": 1
@@ -643,6 +675,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SOL)": 1
@@ -656,6 +689,7 @@ select:
     use_write_multiple: true
     address: 302
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Wide range": 0
       "Narrow range": 1
@@ -667,6 +701,7 @@ select:
     use_write_multiple: true
     address: 303
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Silent": 0
       "Beep on input source changes, warnings and faults": 1
@@ -680,6 +715,7 @@ select:
     use_write_multiple: true
     address: 305
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Timed off": 0
       "Always on": 1
@@ -691,6 +727,7 @@ select:
     use_write_multiple: true
     address: 331
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Utility priority": 0
       "PV priority": 1
@@ -704,6 +741,7 @@ select:
     use_write_multiple: true
     address: 406
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Local and remotely turn-on allowed": 0
       "Local turn-on only": 1
@@ -718,6 +756,7 @@ switch:
     address: 306
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Energy-saving mode                                            Uint  307 1 R/W 0: Energy-saving mode is off, 1: Energy-saving mode is on
   - platform: modbus_controller
@@ -727,6 +766,7 @@ switch:
     address: 307
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Overload automatic restart                                    Uint  308 1 R/W 0: Overload failure will not restart, 1: Automatic restart after overload failure
   - platform: modbus_controller
@@ -736,6 +776,7 @@ switch:
     address: 308
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Over temperature automatic restart                            Uint  309 1 R/W 0: Over temperature failure will not restart, 1: Automatic restart after over-temperature fault
   - platform: modbus_controller
@@ -745,6 +786,7 @@ switch:
     address: 309
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Overload transfer to bypass enabled                           Uint  310 1 R/W 0: Disable, 1: Enable
   - platform: modbus_controller
@@ -754,6 +796,7 @@ switch:
     address: 310
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Battery Eq mode is enabled                                    Uint  313 1 R/W 0: Disable, 1: Enable
   - platform: modbus_controller
@@ -763,6 +806,7 @@ switch:
     address: 313
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
   # Remote switch                                                 Uint  420 1 R/W 0: Remote shutdown, 1: Remote turn-on
   - platform: modbus_controller
@@ -772,6 +816,7 @@ switch:
     address: 420
     register_type: holding
     bitmask: 1
+    icon: mdi:toggle-switch
 
 text_sensor:
   # Fault code                                                    ULong 100 2 R
@@ -783,6 +828,7 @@ text_sensor:
     register_count: 2
     response_size: 4
     raw_encode: HEXBYTES
+    icon: mdi:alert-circle
     lambda: |-
       static const uint8_t FAULTS_SIZE = 27;
       static const char *const FAULTS[FAULTS_SIZE] = {
@@ -839,6 +885,7 @@ text_sensor:
     register_count: 2
     response_size: 4
     raw_encode: HEXBYTES
+    icon: mdi:alert-circle
     lambda: |-
       static const uint8_t WARNINGS_SIZE = 19;
       static const char *const WARNINGS[WARNINGS_SIZE] = {
@@ -885,6 +932,7 @@ text_sensor:
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
+    icon: mdi:information
     lambda: |-
       uint16_t value = modbus_controller::word_from_hex_str(x, 0);
       switch (value) {
@@ -911,6 +959,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:cog
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -927,6 +976,7 @@ number:
     # max_value: 100.0
     step: 0.01
     unit_of_measurement: "Hz"
+    icon: mdi:cog
     lambda: "return x * 0.01f;"
     write_lambda: |-
       return x * 100.0f;
@@ -943,6 +993,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -959,6 +1010,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -975,6 +1027,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -991,6 +1044,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1007,6 +1061,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1023,6 +1078,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1039,6 +1095,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1055,6 +1112,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1071,6 +1129,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
       return x * 10.0f;
@@ -1087,6 +1146,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    icon: mdi:timer
 
   # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
   - platform: modbus_controller
@@ -1100,6 +1160,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    icon: mdi:timer
 
   # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
   - platform: modbus_controller
@@ -1113,6 +1174,7 @@ number:
     max_value: 90.0
     step: 1
     unit_of_measurement: "day"
+    icon: mdi:timer
 
 # Button entities
 

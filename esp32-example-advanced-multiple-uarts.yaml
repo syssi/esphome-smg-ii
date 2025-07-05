@@ -82,6 +82,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
   - platform: modbus_controller
@@ -94,6 +95,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -107,6 +109,7 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
   - platform: modbus_controller
@@ -119,6 +122,7 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
+    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -130,6 +134,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SOL)": 1
@@ -142,6 +147,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SOL)": 1
@@ -155,6 +161,7 @@ text_sensor:
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
+    icon: mdi:information
     lambda: |-
       uint16_t value = modbus_controller::word_from_hex_str(x, 0);
       switch (value) {
@@ -174,6 +181,7 @@ text_sensor:
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
+    icon: mdi:information
     lambda: |-
       uint16_t value = modbus_controller::word_from_hex_str(x, 0);
       switch (value) {
@@ -199,6 +207,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    icon: mdi:timer
 
   - platform: modbus_controller
     modbus_controller_id: smg1
@@ -211,3 +220,4 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    icon: mdi:timer
