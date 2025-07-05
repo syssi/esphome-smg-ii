@@ -1,0 +1,131 @@
+# See https://github.com/syssi/esphome-smg-ii/issues/102
+#
+# Kudos to @test3210-d
+
+substitutions:
+  name: li4-emulator
+  device_description: "Emulates a LI4 battery bank using modbus_server"
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  min_version: 2024.6.0
+  project:
+    name: "syssi.esphome-smg-ii"
+    version: 1.2.0
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  level: INFO
+
+# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+# The native API has many advantages over MQTT: https://esphome.io/components/api.html#advantages-over-mqtt
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
+
+# api:
+
+uart:
+  - id: uart_modbus_server
+    baud_rate: 9600
+    tx_pin: GPIO16
+    rx_pin: GPIO17
+
+modbus:
+  - uart_id: uart_modbus_server
+    id: modbus_server
+    role: server
+    flow_control_pin: GPIO27
+
+modbus_controller:
+  - id: smg0
+    address: 0x01
+    modbus_id: modbus1
+    command_throttle: 150ms
+    update_interval: 20s
+
+  - modbus_id: modbus_server
+    address: 0x01
+    server_registers:
+      - address: 19
+        value_type: S_WORD
+        read_lambda: 'return 107;'
+
+      - address: 20
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_errors_bitmask).state);'
+
+      - address: 21
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_capacity_remaining).state);'
+
+      - address: 22
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_total_voltage).state * 100);'
+
+      - address: 23
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_current).state * 100);'
+
+      - address: 24
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_temperature_sensor_1).state * 10);'
+
+      - address: 25
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_max_charge).state * 100) - 500;'
+
+      - address: 26
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_capacity_remaining).state);'
+
+      - address: 27
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_actual_battery_capacity).state);'
+
+      - address: 28
+        value_type: S_WORD
+        read_lambda: 'return 0;'
+
+      - address: 29
+        value_type: S_WORD
+        read_lambda: 'return 10;'
+
+      - address: 30
+        value_type: S_WORD
+        read_lambda: 'return 1;'
+
+      - address: 31
+        value_type: S_WORD
+        read_lambda: 'return 0;'
+
+      - address: 32
+        value_type: S_WORD
+        read_lambda: 'return 99;'
+
+      - address: 33
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_bat_count).state * id(jk485_volt_rest).state * 100) + 360;'
+
+      - address: 34
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_errors_bitmask).state);'
+
+      - address: 35
+        value_type: S_WORD
+        read_lambda: 'return int(id(jk485_max_discharge).state * 100);'
+
