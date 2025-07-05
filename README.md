@@ -12,6 +12,7 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 
 * ISolar SMG II
 * EASUN SMG II
+* SMG III 6.2kW 48V (mostly supported, some registers may not work)
 * PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
 
 ## Requirements
