@@ -5,7 +5,6 @@
 substitutions:
   name: li4-emulator
   device_description: "Emulates a LI4 battery bank using modbus_server"
-  external_components_source: github://syssi/esphome-jk-bms@main
   mac_address: FF:FF:FF:FF:FF:FF
   protocol_version: JK02_32S
 
@@ -23,7 +22,7 @@ esp32:
     type: esp-idf
 
 external_components:
-  - source: ${external_components_source}
+  - source: github://syssi/esphome-jk-bms@main
     refresh: 0s
 
 wifi:
