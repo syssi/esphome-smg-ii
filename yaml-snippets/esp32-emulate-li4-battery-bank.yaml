@@ -1,3 +1,5 @@
+# Based on Lithium Battery Protocol GT Version July 2022 Version 1.0 spec (docs/Lithium-battery-protocol-GT-version.pdf)
+#
 # See https://github.com/syssi/esphome-smg-ii/issues/102
 #
 # Kudos to @test3210-d and @witoldo7
