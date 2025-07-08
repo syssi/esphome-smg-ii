@@ -60,7 +60,7 @@ sensor:
   - platform: total_daily_energy
     name: "${name} PV energy today"
     restore: true
-    icon: mdi:counter
+    device_class: energy
     power_id: smg0_pv_average_power
     filters:
       # Multiplication factor from W to kW is 0.001
@@ -114,7 +114,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -129,7 +128,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -144,7 +142,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:sine-wave
 
   # Effective inverter voltage                           0.1V     Int   205 1 R
   - platform: modbus_controller
@@ -157,7 +154,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -172,7 +168,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -187,7 +182,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -215,7 +209,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery-charging
 
   # Output effective voltage                             0.1V     Int   210 1 R
   - platform: modbus_controller
@@ -228,7 +221,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -243,7 +235,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -258,7 +249,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -273,7 +263,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Output apparent power                                1VA      Int   214 1 R
   - platform: modbus_controller
@@ -299,7 +288,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:battery
     filters:
       - multiply: 0.1
 
@@ -314,7 +302,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -329,7 +316,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
 
   # PV average voltage                                   0.1V     Int   219 1 R
   - platform: modbus_controller
@@ -373,7 +359,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:solar-power
 
   # PV charging average power                            1W       Int   224 1 R
   - platform: modbus_controller
@@ -386,7 +371,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:solar-power
 
   # Load percentage                                      1%       Int   225 1 R
   - platform: modbus_controller
@@ -412,7 +396,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Inverter Temperature                                 1°C      Int   227 1 R
   - platform: modbus_controller
@@ -425,7 +408,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Battery state of charge                              1%       UInt  229 1 R
   - platform: modbus_controller
@@ -438,7 +420,6 @@ sensor:
     device_class: battery
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
 
   # Battery average current                              0.1A     Int   232 1 R Positive number means charging, negative number means discharging
   - platform: modbus_controller
@@ -451,7 +432,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -466,7 +446,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -650,7 +629,6 @@ sensor:
     device_class: power
     # state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:chart-line
 
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3

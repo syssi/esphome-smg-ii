@@ -94,7 +94,7 @@ sensor:
     address: 0x100
     unit_of_measurement: "%"
     value_type: U_WORD
-    icon: mdi:battery
+    device_class: battery
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -107,7 +107,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:battery
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -120,7 +120,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: -0.1
-    icon: mdi:current-dc
+    device_class: current
 
   - platform: template
     name: "Battery Power"
@@ -131,7 +131,6 @@ sensor:
     accuracy_decimals: 1
     device_class: power
     update_interval: 1s
-    icon: mdi:battery
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -144,7 +143,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -157,7 +156,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
+    device_class: current
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -167,9 +166,8 @@ sensor:
     unit_of_measurement: "W"
     register_type: holding
     value_type: U_WORD
-    device_class: Power
+    device_class: power
     accuracy_decimals: 1
-    icon: mdi:solar-power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -180,7 +178,7 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    icon: mdi:battery-charging
+    device_class: power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -193,7 +191,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -206,7 +204,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
+    device_class: current
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -216,20 +214,18 @@ sensor:
     unit_of_measurement: "W"
     register_type: holding
     value_type: U_WORD
-    device_class: Power
+    device_class: power
     accuracy_decimals: 1
-    icon: mdi:solar-power
 
   - platform: template
     name: "Solar Power"
     id: solar_power
     unit_of_measurement: "W"
     accuracy_decimals: 0
-    device_class: Power
+    device_class: power
     update_interval: 1s
     lambda: |-
       return (id(mppt1_power).state + id(mppt2_power).state);
-    icon: mdi:solar-power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -242,7 +238,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.01
-    icon: mdi:chart-line
+    device_class: voltage
 
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
@@ -264,7 +260,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:sine-wave
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -277,7 +273,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:current-ac
+    device_class: current
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -290,7 +286,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.01
-    icon: mdi:cosine-wave
+    device_class: frequency
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -303,7 +299,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:sine-wave
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -316,7 +312,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.01
-    icon: mdi:cosine-wave
+    device_class: frequency
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -329,7 +325,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:current-ac
+    device_class: current
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -342,7 +338,7 @@ sensor:
     accuracy_decimals: 0
     filters:
       - multiply: 1
-    icon: mdi:home-lightning-bolt
+    device_class: power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -355,7 +351,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:sine-wave
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -368,7 +364,7 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.1
-    icon: mdi:current-ac
+    device_class: current
 
   - platform: template
     name: "Grid Power"
@@ -378,7 +374,7 @@ sensor:
     update_interval: 1s
     lambda: |-
       return (id(grid_voltage).state * id(grid_current_a).state);
-    icon: mdi:sine-wave
+    device_class: power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -391,7 +387,7 @@ sensor:
     accuracy_decimals: 0
     filters:
       - multiply: 1
-    icon: mdi:home-lightning-bolt
+    device_class: power
 
   - platform: template
     name: "Inverter Load"
@@ -401,7 +397,7 @@ sensor:
     update_interval: 1s
     lambda: |-
       return (id(inverter_load_a).state + id(inverter_load_b).state);
-    icon: mdi:home-lightning-bolt
+    device_class: power
 
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
@@ -584,11 +580,10 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    device_class: "Energy"
-    state_class: "total"
+    device_class: energy
+    state_class: total
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -599,11 +594,10 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    device_class: "Energy"
-    state_class: "total"
+    device_class: energy
+    state_class: total
     filters:
       - multiply: 0.1
-    icon: mdi:home-lightning-bolt
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -614,11 +608,10 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    device_class: "energy"
-    state_class: "total"
+    device_class: energy
+    state_class: total
     filters:
       - multiply: 0.1
-    icon: mdi:sine-wave
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -629,11 +622,10 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    device_class: "Energy"
-    state_class: "total"
+    device_class: energy
+    state_class: total
     filters:
       - multiply: 0.1
-    icon: mdi:solar-power
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -644,11 +636,10 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    device_class: "Energy"
-    state_class: "total"
+    device_class: energy
+    state_class: total
     filters:
       - multiply: 0.1
-    icon: mdi:home-lightning-bolt
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -674,7 +665,7 @@ sensor:
     register_type: holding
     value_type: U_WORD
     accuracy_decimals: 1
-    icon: mdi:timer
+    device_class: duration
 
 number:
   - platform: modbus_controller
@@ -690,7 +681,7 @@ number:
     step: 0.1
     lambda: "return x * 0.4;"
     write_lambda: "return x * 2.5;"
-    icon: mdi:sine-wave
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -705,7 +696,7 @@ number:
     step: 0.1
     lambda: "return x * 0.4;"
     write_lambda: "return x * 2.5;"
-    icon: mdi:sine-wave
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -721,7 +712,7 @@ number:
     lambda: "return x * 0.4;"
     write_lambda: "return x * 2.5;"
     use_write_multiple: true
-    icon: mdi:battery-high
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -750,7 +741,7 @@ number:
     step: 1
     lambda: "return x * 0.1;"
     write_lambda: "return x * 10;"
-    icon: mdi:battery-charging
+    device_class: current
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -764,7 +755,7 @@ number:
     step: 10
     lambda: "return x * 0.1;"
     write_lambda: "return x * 10;"
-    icon: mdi:battery-charging
+    device_class: current
 
 select:
   - platform: modbus_controller
