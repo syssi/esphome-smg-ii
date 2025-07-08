@@ -59,7 +59,7 @@ sensor:
   - platform: total_daily_energy
     name: "${name} Battery discharge today"
     restore: true
-    icon: mdi:battery-arrow-down
+    device_class: energy
     power_id: smg0_discharging_power
     filters:
       # Multiplication factor from W to kW is 0.001
@@ -69,7 +69,7 @@ sensor:
   - platform: total_daily_energy
     name: "${name} Battery charge today"
     restore: true
-    icon: mdi:battery-arrow-up
+    device_class: energy
     power_id: smg0_charging_power
     filters:
       # Multiplication factor from W to kW is 0.001
