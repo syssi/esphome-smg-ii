@@ -1227,6 +1227,13 @@ number:
     unit_of_measurement: "day"
     icon: mdi:timer
 
-# Button entities
-
-  # Exit the fault mode                                           Uint  426   W   1: Exit the fault state(only when the inverter enters the fault mode , it could be available)
+button:
+  # Exit the fault mode                                           Uint  426   W   1: Exit the fault state
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} exit fault state"
+    use_write_multiple: true
+    address: 426
+    register_type: holding
+    command: 1
+    icon: mdi:restore
