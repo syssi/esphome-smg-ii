@@ -74,6 +74,7 @@ sensor:
     value_type: U_DWORD
     skip_updates: 1
     icon: mdi:information
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: inverter0
@@ -85,6 +86,7 @@ sensor:
     value_type: U_DWORD
     skip_updates: 1
     icon: mdi:information
+    entity_category: diagnostic
 
   - platform: modbus_controller
     modbus_controller_id: inverter0

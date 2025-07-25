@@ -356,7 +356,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:battery
     filters:
       - multiply: 0.1
 
