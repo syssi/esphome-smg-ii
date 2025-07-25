@@ -1176,6 +1176,13 @@ number:
     unit_of_measurement: "day"
     icon: mdi:timer
 
-# Button entities
-
-  # Exit the fault mode                                           Uint  426   W   1: Exit the fault state(only when the inverter enters the fault mode , it could be available)
+button:
+  # Exit the fault mode                                           Uint  426   W   1: Exit the fault state
+  - platform: template
+    name: "${name} exit fault state"
+    icon: mdi:restore
+    on_press:
+      then:
+        - lambda: |-
+            auto cmd = esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(id(smg0), 426, 1, {1});
+            id(smg0)->queue_command(cmd);
