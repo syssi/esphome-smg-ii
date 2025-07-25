@@ -60,7 +60,7 @@ sensor:
   - platform: total_daily_energy
     name: "${name} PV energy today"
     restore: true
-    icon: mdi:counter
+    device_class: energy
     power_id: smg0_pv_average_power
     filters:
       # Multiplication factor from W to kW is 0.001
@@ -114,7 +114,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -129,7 +128,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -144,7 +142,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:sine-wave
 
   # Effective inverter voltage                           0.1V     Int   205 1 R
   - platform: modbus_controller
@@ -157,7 +154,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -172,7 +168,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -187,7 +182,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -202,7 +196,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:power-plug
 
   # Inverter charging power                              1W       Int   209 1 R
   - platform: modbus_controller
@@ -215,7 +208,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery-charging
 
   # Output effective voltage                             0.1V     Int   210 1 R
   - platform: modbus_controller
@@ -228,7 +220,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -243,7 +234,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -258,7 +248,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -273,7 +262,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Output apparent power                                1VA      Int   214 1 R
   - platform: modbus_controller
@@ -286,7 +274,6 @@ sensor:
     device_class: apparent_power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Battery average voltage                              0.1V     Int   215 1 R
   - platform: modbus_controller
@@ -299,7 +286,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:battery
     filters:
       - multiply: 0.1
 
@@ -314,7 +300,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -329,7 +314,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
 
   # PV average voltage                                   0.1V     Int   219 1 R
   - platform: modbus_controller
@@ -373,7 +357,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:solar-power
 
   # PV charging average power                            1W       Int   224 1 R
   - platform: modbus_controller
@@ -386,7 +369,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:solar-power
 
   # Load percentage                                      1%       Int   225 1 R
   - platform: modbus_controller
@@ -396,7 +378,6 @@ sensor:
     register_type: holding
     value_type: S_WORD
     unit_of_measurement: "%"
-    # device_class: battery
     state_class: measurement
     accuracy_decimals: 0
     icon: mdi:percent
@@ -412,7 +393,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Inverter Temperature                                 1°C      Int   227 1 R
   - platform: modbus_controller
@@ -425,7 +405,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Battery state of charge                              1%       UInt  229 1 R
   - platform: modbus_controller
@@ -438,7 +417,6 @@ sensor:
     device_class: battery
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
 
   # Battery average current                              0.1A     Int   232 1 R Positive number means charging, negative number means discharging
   - platform: modbus_controller
@@ -451,7 +429,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -466,7 +443,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-dc
     filters:
       - multiply: 0.1
 
@@ -650,7 +626,6 @@ sensor:
     device_class: power
     # state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:chart-line
 
 select:
   # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
@@ -661,6 +636,7 @@ select:
     address: 300
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Single": 0
       "Parallel": 1
@@ -676,6 +652,7 @@ select:
     address: 301
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SOL)": 1
@@ -690,6 +667,7 @@ select:
     address: 302
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Wide range": 0
       "Narrow range": 1
@@ -702,6 +680,7 @@ select:
     address: 303
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Silent": 0
       "Beep on input source changes, warnings and faults": 1
@@ -716,6 +695,7 @@ select:
     address: 305
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Timed off": 0
       "Always on": 1
@@ -728,6 +708,7 @@ select:
     address: 331
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Utility priority": 0
       "PV priority": 1
@@ -742,6 +723,7 @@ select:
     address: 406
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Local and remotely turn-on allowed": 0
       "Local turn-on only": 1
@@ -959,6 +941,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -976,6 +959,7 @@ number:
     # max_value: 100.0
     step: 0.01
     unit_of_measurement: "Hz"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.01f;"
     write_lambda: |-
@@ -993,6 +977,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1010,6 +995,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1027,6 +1013,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1044,6 +1031,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1061,6 +1049,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1078,6 +1067,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1095,6 +1085,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1112,6 +1103,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1129,6 +1121,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1146,6 +1139,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
@@ -1160,6 +1154,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
@@ -1174,6 +1169,7 @@ number:
     max_value: 90.0
     step: 1
     unit_of_measurement: "day"
+    entity_category: config
     icon: mdi:timer
 
 button:

@@ -85,6 +85,7 @@ sensor:
     icon: mdi:solar-power
     filters:
       - multiply: 0.1
+
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${device0} pv average current"
@@ -95,7 +96,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -112,6 +112,7 @@ sensor:
     icon: mdi:solar-power
     filters:
       - multiply: 0.1
+
   - platform: modbus_controller
     modbus_controller_id: smg1
     name: "${device1} pv average current"
@@ -122,7 +123,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:solar-power
     filters:
       - multiply: 0.1
 
@@ -134,6 +134,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
@@ -147,6 +148,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
@@ -207,6 +209,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   - platform: modbus_controller
@@ -220,4 +223,6 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
+
