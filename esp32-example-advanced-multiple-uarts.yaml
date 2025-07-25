@@ -207,6 +207,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   - platform: modbus_controller
@@ -220,4 +221,6 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
+

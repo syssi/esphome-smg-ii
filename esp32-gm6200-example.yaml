@@ -171,7 +171,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -186,7 +185,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -214,7 +212,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -244,7 +241,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -285,7 +281,6 @@ sensor:
     device_class: voltage
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:sine-wave
     filters:
       - multiply: 0.1
 
@@ -315,7 +310,6 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
-    icon: mdi:cosine-wave
     filters:
       - multiply: 0.01
 
@@ -1060,6 +1054,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1077,6 +1072,7 @@ number:
     # max_value: 100.0
     step: 0.01
     unit_of_measurement: "Hz"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.01f;"
     write_lambda: |-
@@ -1095,6 +1091,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1113,6 +1110,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1131,6 +1129,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1148,6 +1147,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1165,6 +1165,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1182,6 +1183,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1199,6 +1201,7 @@ number:
     max_value: 120.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:current-dc
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1216,6 +1219,7 @@ number:
     max_value: 80.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1233,6 +1237,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1250,6 +1255,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
@@ -1264,6 +1270,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
@@ -1278,6 +1285,7 @@ number:
     max_value: 90.0
     step: 1
     unit_of_measurement: "day"
+    entity_category: config
     icon: mdi:timer
 
   # Battery discharge SOC protection value in AC mode [K]           1%    Uint   341 1 R/W Range: 20%~50%
@@ -1292,6 +1300,7 @@ number:
     max_value: 50.0
     step: 1
     unit_of_measurement: "%"
+    entity_category: config
     icon: mdi:shield-check
 
   # Battery discharge SOC recovery value in AC mode                  1%    Uint   342 1 R/W Range: 60%~100%
@@ -1306,6 +1315,7 @@ number:
     max_value: 100.0
     step: 1
     unit_of_measurement: "%"
+    entity_category: config
     icon: mdi:shield-check
 
   # Off-grid mode battery discharge SOC protection value              1%    Uint   343 1 R/W Range: 3%~Min( K , 30%)
@@ -1320,6 +1330,7 @@ number:
     max_value: 50.0
     step: 1
     unit_of_measurement: "%"
+    entity_category: config
     icon: mdi:shield-check
 
   # PV grid-connected maximum power                                    1w    Uint   344 1 R/W Range: 200w~ rated power
@@ -1335,6 +1346,7 @@ number:
     step: 1
     device_class: power
     unit_of_measurement: "W"
+    entity_category: config
     icon: mdi:chart-line
 
   # UNDOCUMENTED!! CT detection error compensation                                   349 1 R/W Range: -200:200
@@ -1347,6 +1359,7 @@ number:
     value_type: U_WORD
     min_value: -200.0
     max_value: 200.0
+    entity_category: config
     icon: mdi:cog
 
   # Maximum discharge current protection                                1A    Uint   351 1 R/W Maximum discharge current protection value in stand-alone mode
@@ -1362,4 +1375,5 @@ number:
     step: 1
     device_class: current
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:shield-check

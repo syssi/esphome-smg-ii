@@ -983,6 +983,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1000,6 +1001,7 @@ number:
     # max_value: 100.0
     step: 0.01
     unit_of_measurement: "Hz"
+    entity_category: config
     icon: mdi:cog
     lambda: "return x * 0.01f;"
     write_lambda: |-
@@ -1017,6 +1019,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1034,6 +1037,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-high
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1051,6 +1055,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1068,6 +1073,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1085,6 +1091,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1102,6 +1109,7 @@ number:
     # max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery-low
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1119,6 +1127,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1136,6 +1145,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "A"
+    entity_category: config
     icon: mdi:battery-charging
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1153,6 +1163,7 @@ number:
     max_value: 100.0
     step: 0.1
     unit_of_measurement: "V"
+    entity_category: config
     icon: mdi:battery
     lambda: "return x * 0.1f;"
     write_lambda: |-
@@ -1170,6 +1181,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
@@ -1184,6 +1196,7 @@ number:
     max_value: 900.0
     step: 1
     unit_of_measurement: "min"
+    entity_category: config
     icon: mdi:timer
 
   # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
@@ -1198,6 +1211,7 @@ number:
     max_value: 90.0
     step: 1
     unit_of_measurement: "day"
+    entity_category: config
     icon: mdi:timer
 
 # Button entities
