@@ -1,0 +1,1249 @@
+# ESP32-S3 DevKit C N16R8 board
+# Don't forget to close the USB-OTG jumper!
+#
+# See https://github.com/syssi/esphome-smg-ii/issues/79#issuecomment-3058448729
+
+substitutions:
+  name: smg-ii
+  device_description: "Monitor and control a ISolar/EASUN SMG II inverter via USB"
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  min_version: 2025.7.1
+  project:
+    name: "syssi.esphome-smg-ii"
+    version: 1.3.0
+  platformio_options:
+    # qio results into a boot loop when using esp-idf and flashing via USB
+    # https://github.com/platformio/platform-espressif32/blob/268f561df4793d631d02e4ff5e67b6b11d1be4ec/boards/esp32-s3-devkitc-1.json#L16
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-s3-devkitc-1
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32_S3_BOX_BOARD: "y"
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  hardware_uart: uart0
+  level: INFO
+
+# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+# The native API has many advantages over MQTT: https://esphome.io/components/api.html#advantages-over-mqtt
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
+
+# api:
+
+usb_uart:
+  - type: ch340
+    channels:
+      id: uart_0
+      baud_rate: 9600
+
+modbus:
+  - id: modbus0
+    uart_id: uart_0
+    send_wait_time: 200ms
+
+modbus_controller:
+  - id: smg0
+    address: 0x01
+    modbus_id: modbus0
+    command_throttle: 200ms
+    update_interval: 10s
+
+time:
+  - platform: sntp
+
+sensor:
+  - platform: total_daily_energy
+    name: "${name} PV energy today"
+    restore: true
+    device_class: energy
+    power_id: smg0_pv_average_power
+    filters:
+      # Multiplication factor from W to kW is 0.001
+      - multiply: 0.001
+    unit_of_measurement: kWh
+
+  - platform: template
+    name: "${name} discharging power"
+    id: smg0_discharging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: mdi:battery-arrow-down
+    # Gets updated on value of smg0_battery_average_power
+    update_interval: never
+    lambda: |-
+      if (isnan(id(smg0_battery_average_power).state)) {
+        return {};
+      }
+      auto power = id(smg0_battery_average_power).state;
+      return (power < 0.0f) ? -power : 0.0f;
+
+  - platform: template
+    name: "${name} charging power"
+    id: smg0_charging_power
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    icon: mdi:battery-charging
+    # Gets updated on value of smg0_battery_average_power
+    update_interval: never
+    lambda: |-
+      if (isnan(id(smg0_battery_average_power).state)) {
+        return {};
+      }
+      auto power = id(smg0_battery_average_power).state;
+      return (power > 0.0f) ? power : 0.0f;
+
+  # Fault code                                                    ULong 100 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} fault code"
+    address: 100
+    register_type: holding
+    value_type: U_DWORD
+    accuracy_decimals: 0
+    icon: mdi:alert-circle
+
+  # Warning code                                                  ULong 108 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} warning code"
+    address: 108
+    register_type: holding
+    value_type: U_DWORD
+    accuracy_decimals: 0
+    icon: mdi:alert-circle
+
+  # Operation Mode                                                UInt  201 1 R 0: Power On
+  #                                                                             1: Standby
+  #                                                                             2: Mains
+  #                                                                             3: Off-Grid
+  #                                                                             4: Bypass
+  #                                                                             5: Charging
+  #                                                                             6: Fault
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} operation mode id"
+    address: 201
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 0
+    icon: mdi:information
+
+  # Effective mains voltage                              0.1V     Int   202 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} ac voltage"
+    address: 202
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Mains Frequency                                      0.01Hz   Int   203 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} ac frequency"
+    address: 203
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  # Average mains power                                  1W       Int   204 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} average mains power"
+    address: 204
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Effective inverter voltage                           0.1V     Int   205 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} effective inverter voltage"
+    address: 205
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Effective inverter current                           0.1A     Int   206 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} effective inverter current"
+    address: 206
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Inverter frequency                                   0.01Hz   Int   207 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} inverter frequency"
+    address: 207
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  # Average inverter power                               1W       Int   208 1 R Positive numbers indicate inverter output, negative numbers indicate inverter input
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} average inverter power"
+    address: 208
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Inverter charging power                              1W       Int   209 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} inverter charging power"
+    address: 209
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Output effective voltage                             0.1V     Int   210 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output effective voltage"
+    address: 210
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Output effective Current                             0.1A     Int   211 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output effective Current"
+    address: 211
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Output frequency                                     0.01Hz   Int   212 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output frequency"
+    address: 212
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  # Output active power                                  1W       Int   213 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output active power"
+    address: 213
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Output apparent power                                1VA      Int   214 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output apparent power"
+    address: 214
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "VA"
+    device_class: apparent_power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Battery average voltage                              0.1V     Int   215 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery average voltage"
+    address: 215
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Battery average Current                              0.1A     Int   216 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery average current"
+    address: 216
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Battery average power                                1W       Int   217 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery average power"
+    id: smg0_battery_average_power
+    address: 217
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+    on_value:
+      - component.update: smg0_discharging_power
+      - component.update: smg0_charging_power
+
+  # PV average voltage                                   0.1V     Int   219 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} pv average voltage"
+    address: 219
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # PV average current                                   0.1A     Int   220 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} pv average current"
+    address: 220
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # PV average power                                     1W       Int   223 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    id: smg0_pv_average_power
+    name: "${name} pv average power"
+    address: 223
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # PV charging average power                            1W       Int   224 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} pv charging average power"
+    address: 224
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Load percentage                                      1%       Int   225 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} load percentage"
+    address: 225
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "%"
+    state_class: measurement
+    accuracy_decimals: 0
+    icon: mdi:percent
+
+  # DCDC Temperature                                     1°C      Int   226 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} dcdc temperature"
+    address: 226
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Inverter Temperature                                 1°C      Int   227 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} inverter temperature"
+    address: 227
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Battery state of charge                              1%       UInt  229 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery state of charge"
+    address: 229
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # Battery average current                              0.1A     Int   232 1 R Positive number means charging, negative number means discharging
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery average current2"
+    address: 232
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # Inverter charging average current                    0.1A     Int   233 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} inverter charging average current"
+    address: 233
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # PV charging average current                          0.1A     Int   234 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} pv charging average current"
+    address: 234
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # # Output voltage                                        0.1V    Uint  320 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} output voltage"
+  #   address: 320
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Output frequency setting                              0.01Hz  Uint  321 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} output frequency setting"
+  #   address: 321
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "Hz"
+  #   device_class: frequency
+  #   # state_class: measurement
+  #   accuracy_decimals: 2
+  #   filters:
+  #     - multiply: 0.01
+
+  # # Battery overvoltage protection point                  0.1V    Uint  323 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery overvoltage protection point"
+  #   address: 323
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Max charging voltage                                  0.1V    Uint  324 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} max charging voltage"
+  #   address: 324
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Floating charging voltage                             0.1V    Uint  325 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} floating charging voltage"
+  #   address: 325
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery discharge recovery point in mains mode        0.1V    Uint  326 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery discharge recovery point in mains mode"
+  #   address: 326
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery low voltage protection point in mains mode    0.1V    Uint  327 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery low voltage protection point in mains mode"
+  #   address: 327
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Battery low voltage protection point in off-grid mode 0.1V    Uint  329 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} battery low voltage protection point in off-grid mode"
+  #   address: 329
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Maximum charging current                              0.1A    Uint  332 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} maximum charging current"
+  #   address: 332
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "A"
+  #   device_class: current
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Maximum mains charging current                        0.1A    Uint  333 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} maximum mains charging current"
+  #   address: 333
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "A"
+  #   device_class: current
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # # Eq Charging voltage                                   0.1V    Uint  334 1 R/W
+  # - platform: modbus_controller
+  #   modbus_controller_id: smg0
+  #   name: "${name} Eq Charging voltage"
+  #   address: 334
+  #   register_type: holding
+  #   value_type: U_WORD
+  #   unit_of_measurement: "V"
+  #   device_class: voltage
+  #   # state_class: measurement
+  #   accuracy_decimals: 1
+  #   filters:
+  #     - multiply: 0.1
+
+  # Rated power                                           W       Uint  643 1 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} rated power"
+    address: 643
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    # state_class: measurement
+    accuracy_decimals: 0
+
+select:
+  # Output Mode                                                   Uint  300 1 R/W 0: Single, 1: Parallel, 2: 3 Phase-P1, 3: 3 Phase-P2, 4: 3 Phase-P3
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output mode"
+    use_write_multiple: true
+    address: 300
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Single": 0
+      "Parallel": 1
+      "Phase P1": 2
+      "Phase P2": 3
+      "Phase P3": 4
+
+  # Output priority                                               Uint  301 1 R/W 0: Utility-PV-Battery, 1: PV-Utility-Battery, 2: PV-Battery-Utility
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output priority"
+    use_write_multiple: true
+    address: 301
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Utility-PV-Battery (UTI)": 0
+      "PV-Utility-Battery (SOL)": 1
+      "PV-Battery-Utility (SBU)": 2
+      "PV-Utility-Battery (SUB)": 3
+
+  # Input voltage range                                           Uint  302 1 R/W 0: Wide range, 1: Narrow range
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} input voltage range"
+    use_write_multiple: true
+    address: 302
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Wide range": 0
+      "Narrow range": 1
+
+  # Buzzer mode                                                   Uint  303 1 R/W 0: Mute in all situations, 1: Sound when the input source is changed or there is a specific warning or fault, 2: Sound when there is aspecific warning or fault, 3: Sound when fault occurs
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} buzzer mode"
+    use_write_multiple: true
+    address: 303
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Silent": 0
+      "Beep on input source changes, warnings and faults": 1
+      "Beep on warnings and faults": 2
+      "Beep on faults": 3
+
+  # LCD backlight                                                 Uint  305 1 R/W 0: Timed off, 1: Always on
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} lcd backlight"
+    use_write_multiple: true
+    address: 305
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Timed off": 0
+      "Always on": 1
+
+  # Battery charging priority                                     Uint  331 1 R/W 0: Utility priority, 1: PV priority, 2: PV is at the same level as the Utility, 3: Only PV charging is allowed
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery charging priority"
+    use_write_multiple: true
+    address: 331
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Utility priority": 0
+      "PV priority": 1
+      "PV is at the same level as the Utility": 2
+      "Only PV charging is allowed": 3
+
+  # Turn on mode                                                  Uint  406 1 R/W 0: Can be turn-on locally or remotely, 1: Only local turn-on, 2: Only remote turn-on
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} turn on mode"
+    use_write_multiple: true
+    address: 406
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "Local and remotely turn-on allowed": 0
+      "Local turn-on only": 1
+      "Remote turn-on only": 2
+
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery type"
+    address: 630
+    value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
+    optionsmap:
+      "AGM": 0
+      "FLD": 1
+      "USER": 2
+      "Li2": 4
+      "Li4": 6
+      "Lib": 8
+
+switch:
+  # LCD automatically returns to the homepage                     Uint  306 1 R/W 0: Do not return automatically, 1: Automatically return after 1 minute
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} lcd automatically returns to the homepage"
+    use_write_multiple: true
+    address: 306
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Energy-saving mode                                            Uint  307 1 R/W 0: Energy-saving mode is off, 1: Energy-saving mode is on
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} energy-saving mode"
+    use_write_multiple: true
+    address: 307
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Overload automatic restart                                    Uint  308 1 R/W 0: Overload failure will not restart, 1: Automatic restart after overload failure
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} overload automatic restart"
+    use_write_multiple: true
+    address: 308
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Over temperature automatic restart                            Uint  309 1 R/W 0: Over temperature failure will not restart, 1: Automatic restart after over-temperature fault
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} over temperature automatic restart"
+    use_write_multiple: true
+    address: 309
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Overload transfer to bypass enabled                           Uint  310 1 R/W 0: Disable, 1: Enable
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} overload transfer to bypass enabled"
+    use_write_multiple: true
+    address: 310
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Battery Eq mode is enabled                                    Uint  313 1 R/W 0: Disable, 1: Enable
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery Eq mode is enabled"
+    use_write_multiple: true
+    address: 313
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+  # Remote switch                                                 Uint  420 1 R/W 0: Remote shutdown, 1: Remote turn-on
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} remote switch"
+    use_write_multiple: true
+    address: 420
+    register_type: holding
+    bitmask: 1
+    icon: mdi:toggle-switch
+
+text_sensor:
+  # Fault code                                                    ULong 100 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} fault"
+    address: 100
+    register_type: holding
+    register_count: 2
+    response_size: 4
+    raw_encode: HEXBYTES
+    icon: mdi:alert-circle
+    lambda: |-
+      static const uint8_t FAULTS_SIZE = 27;
+      static const char *const FAULTS[FAULTS_SIZE] = {
+          "Over temperature of inverter module",                     // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+          "Over temperature of DCDC module",                         // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+          "Battery over voltage",                                    // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+          "PV module over temperature",                              // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+          "Output short circuit",                                    // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+          "Inverter over voltage",                                   // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+          "Output over load",                                        // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+          "Bus over voltage",                                        // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+          "Bus soft start timed out",                                // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+          "PV over current",                                         // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+          "PV over voltage",                                         // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+          "Battery over current",                                    // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+          "Inverter over current",                                   // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+          "Bus low voltage",                                         // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+          "Reserve (Bit 15)",                                        // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+          "Inverter DC component is too high",                       // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+          "Reserve (Bit 17)",                                        // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+          "The zero bias of output current is too large",            // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+          "The zero bias of inverter current is too large",          // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+          "The zero bias of battery current is too large",           // 0000 0000 0000 1000 0000 0000 0000 0000 (20)
+          "The zero bias of PV current is too large",                // 0000 0000 0001 0000 0000 0000 0000 0000 (21)
+          "Inverter low voltage",                                    // 0000 0000 0010 0000 0000 0000 0000 0000 (22)
+          "Inverter negative power protection",                      // 0000 0000 0100 0000 0000 0000 0000 0000 (23)
+          "The host in the parallel system is lost",                 // 0000 0000 1000 0000 0000 0000 0000 0000 (24)
+          "Synchronization signal abnormal in the parallel system",  // 0000 0001 0000 0000 0000 0000 0000 0000 (25)
+          "The battery type is incompatible",                        // 0000 0010 0000 0000 0000 0000 0000 0000 (26)
+          "Parallel versions are incompatible",                      // 0000 0100 0000 0000 0000 0000 0000 0000 (27)
+      };
+      std::string values = "";
+
+      uint32_t mask = modbus_controller::dword_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < FAULTS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(FAULTS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
+  # Warning code                                                  ULong 108 2 R
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} warning"
+    address: 108
+    register_type: holding
+    register_count: 2
+    response_size: 4
+    raw_encode: HEXBYTES
+    icon: mdi:alert-circle
+    lambda: |-
+      static const uint8_t WARNINGS_SIZE = 19;
+      static const char *const WARNINGS[WARNINGS_SIZE] = {
+          "Reserve (Bit 0)",                                             // 0000 0000 0000 0000 0000 0000 0000 0001 (1)
+          "Mains waveform abnormal",                                     // 0000 0000 0000 0000 0000 0000 0000 0010 (2)
+          "Reserve (Bit 2)",                                             // 0000 0000 0000 0000 0000 0000 0000 0100 (3)
+          "Mains low voltage",                                           // 0000 0000 0000 0000 0000 0000 0000 1000 (4)
+          "Mains over frequency",                                        // 0000 0000 0000 0000 0000 0000 0001 0000 (5)
+          "Mains low frequency",                                         // 0000 0000 0000 0000 0000 0000 0010 0000 (6)
+          "PV low voltage",                                              // 0000 0000 0000 0000 0000 0000 0100 0000 (7)
+          "Over temperature",                                            // 0000 0000 0000 0000 0000 0000 1000 0000 (8)
+          "Battery low voltage",                                         // 0000 0000 0000 0000 0000 0001 0000 0000 (9)
+          "Battery is not connected",                                    // 0000 0000 0000 0000 0000 0010 0000 0000 (10)
+          "Overload",                                                    // 0000 0000 0000 0000 0000 0100 0000 0000 (11)
+          "Battery Eq charging",                                         // 0000 0000 0000 0000 0000 1000 0000 0000 (12)
+          "Battery undervoltage",                                        // 0000 0000 0000 0000 0001 0000 0000 0000 (13)
+          "Output power derating",                                       // 0000 0000 0000 0000 0010 0000 0000 0000 (14)
+          "Fan blocked",                                                 // 0000 0000 0000 0000 0100 0000 0000 0000 (15)
+          "PV energy is too low to be use",                              // 0000 0000 0000 0000 1000 0000 0000 0000 (16)
+          "Parallel communication interrupted",                          // 0000 0000 0000 0001 0000 0000 0000 0000 (17)
+          "Output mode of Single and Parallel systems inconsistent",     // 0000 0000 0000 0010 0000 0000 0000 0000 (18)
+          "Battery voltage difference of parallel system is too large",  // 0000 0000 0000 0100 0000 0000 0000 0000 (19)
+      };
+      std::string values = "";
+
+      uint32_t mask = modbus_controller::dword_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < WARNINGS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(WARNINGS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
+  # Operation Mode                                                UInt  201 1 R 0: Power On, 1: Standby, 2: Mains, 3: Off-Grid, 4: Bypass, 5: Charging, 6: Fault
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} operation mode"
+    address: 201
+    register_type: holding
+    raw_encode: HEXBYTES
+    icon: mdi:information
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("Power On");
+        case 1: return std::string("Standby");
+        case 2: return std::string("Mains");
+        case 3: return std::string("Off-Grid");
+        case 4: return std::string("Bypass");
+        case 5: return std::string("Charging");
+        case 6: return std::string("Fault");
+      }
+      return std::string("Unknown");
+
+number:
+  # Output voltage                                                0.1V    Uint  320 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output voltage"
+    use_write_multiple: true
+    address: 320
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:cog
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Output frequency setting                                      0.01Hz  Uint  321 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} output frequency setting"
+    use_write_multiple: true
+    address: 321
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.01
+    unit_of_measurement: "Hz"
+    entity_category: config
+    icon: mdi:cog
+    lambda: "return x * 0.01f;"
+    write_lambda: |-
+      return x * 100.0f;
+
+  # Battery overvoltage protection point                          0.1V    Uint  323 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery overvoltage protection point"
+    use_write_multiple: true
+    address: 323
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery-high
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Max charging voltage                                          0.1V    Uint  324 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} max charging voltage"
+    use_write_multiple: true
+    address: 324
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery-high
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Floating charging voltage                                     0.1V    Uint  325 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} floating charging voltage"
+    use_write_multiple: true
+    address: 325
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery discharge recovery point in mains mode                0.1V    Uint  326 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery discharge recovery point in mains mode"
+    use_write_multiple: true
+    address: 326
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery-low
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery low voltage protection point in mains mode            0.1V    Uint  327 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery low voltage protection point in mains mode"
+    use_write_multiple: true
+    address: 327
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery-low
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery low voltage protection point in off-grid mode          0.1V           Uint  329 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery low voltage protection point in off-grid mode"
+    use_write_multiple: true
+    address: 329
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    # max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery-low
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Maximum charging current                                      0.1A    Uint  332 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} maximum charging current"
+    use_write_multiple: true
+    address: 332
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "A"
+    entity_category: config
+    icon: mdi:battery-charging
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Maximum mains charging current                                0.1A    Uint  333 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} maximum mains charging current"
+    use_write_multiple: true
+    address: 333
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "A"
+    entity_category: config
+    icon: mdi:battery-charging
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Eq Charging voltage                                           0.1V    Uint  334 1 R/W
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} Eq Charging voltage"
+    use_write_multiple: true
+    address: 334
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 0.1
+    unit_of_measurement: "V"
+    entity_category: config
+    icon: mdi:battery
+    lambda: "return x * 0.1f;"
+    write_lambda: |-
+      return x * 10.0f;
+
+  # Battery equalization time                                     min     Uint  335 1 R/W Range: 0~900
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} battery equalization time"
+    use_write_multiple: true
+    address: 335
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
+    entity_category: config
+    icon: mdi:timer
+
+  # Equalization Timeout exit                                     min     Uint  336 1 R/W Range: 0~900
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} equalization Timeout exit"
+    use_write_multiple: true
+    address: 336
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 900.0
+    step: 1
+    unit_of_measurement: "min"
+    entity_category: config
+    icon: mdi:timer
+
+  # Two equalization charging intervals                           day     Uint  337 1 R/W Range: 1~90
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} two equalization charging intervals"
+    use_write_multiple: true
+    address: 337
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 90.0
+    step: 1
+    unit_of_measurement: "day"
+    entity_category: config
+    icon: mdi:timer
+
+button:
+  # Exit the fault mode                                           Uint  426   W   1: Exit the fault state
+  - platform: template
+    name: "${name} exit fault state"
+    icon: mdi:restore
+    on_press:
+      then:
+        - lambda: |-
+            auto cmd = esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(id(smg0), 426, 1, {1});
+            id(smg0)->queue_command(cmd);
