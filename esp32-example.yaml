@@ -414,7 +414,6 @@ sensor:
     register_type: holding
     value_type: S_WORD
     unit_of_measurement: "%"
-    # device_class: battery
     state_class: measurement
     accuracy_decimals: 0
     icon: mdi:percent

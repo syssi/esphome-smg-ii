@@ -199,7 +199,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:transmission-tower
 
   # Effective inverter voltage                           0.1V     Int   205 1 R
   - platform: modbus_controller
@@ -226,7 +225,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -255,7 +253,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:power-plug
 
   # Inverter charging power                              1W       Int   209 1 R
   - platform: modbus_controller
@@ -295,7 +292,6 @@ sensor:
     device_class: current
     state_class: measurement
     accuracy_decimals: 1
-    icon: mdi:current-ac
     filters:
       - multiply: 0.1
 
@@ -324,7 +320,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Output apparent power                                1VA      Int   214 1 R
   - platform: modbus_controller
@@ -337,7 +332,6 @@ sensor:
     device_class: apparent_power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Battery average voltage                              0.1V     Int   215 1 R
   - platform: modbus_controller
@@ -380,7 +374,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
     on_value:
       - component.update: smg0_discharging_power
       - component.update: smg0_charging_power
@@ -450,7 +443,6 @@ sensor:
     register_type: holding
     value_type: S_WORD
     unit_of_measurement: "%"
-    # device_class: battery
     state_class: measurement
     accuracy_decimals: 0
     icon: mdi:percent
@@ -466,7 +458,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Inverter Temperature                                 1°C      Int   227 1 R
   - platform: modbus_controller
@@ -479,7 +470,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # PV temperature                                       1°C      Int   228 1 R
   - platform: modbus_controller
@@ -492,7 +482,6 @@ sensor:
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:thermometer
 
   # Battery state of charge                              1%       UInt  229 1 R
   - platform: modbus_controller
@@ -505,7 +494,6 @@ sensor:
     device_class: battery
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:battery
 
   # Power flow status                                     --       UInt  231 1 R
   # bit0~1 0: PV is not connected to the system          1: PV is connected to the system
@@ -583,7 +571,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:transmission-tower
 
   # Power generation on the day                            0.01Kwh  Uint   443 1 R
   - platform: modbus_controller

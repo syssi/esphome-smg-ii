@@ -196,7 +196,6 @@ sensor:
     device_class: power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:power-plug
 
   # Inverter charging power                              1W       Int   209 1 R
   - platform: modbus_controller
@@ -275,7 +274,6 @@ sensor:
     device_class: apparent_power
     state_class: measurement
     accuracy_decimals: 0
-    icon: mdi:home-lightning-bolt
 
   # Battery average voltage                              0.1V     Int   215 1 R
   - platform: modbus_controller
@@ -380,7 +378,6 @@ sensor:
     register_type: holding
     value_type: S_WORD
     unit_of_measurement: "%"
-    # device_class: battery
     state_class: measurement
     accuracy_decimals: 0
     icon: mdi:percent
