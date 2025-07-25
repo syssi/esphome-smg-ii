@@ -1234,8 +1234,6 @@ button:
     icon: mdi:restore
     on_press:
       then:
-        - modbus_controller.write_register:
-            id: smg0
-            address: 426
-            value: 1
-            value_type: U_WORD
+        - lambda: |-
+            auto cmd = esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(id(smg0), 426, 1, {1});
+            id(smg0)->queue_command(cmd);
