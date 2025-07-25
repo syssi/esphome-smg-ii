@@ -732,7 +732,7 @@ number:
     step: 0.4
     lambda: "return x * 0.4;"
     write_lambda: "return x * 2.5;"
-    icon: mdi:battery-high
+    device_class: voltage
 
   - platform: modbus_controller
     modbus_controller_id: inverter0

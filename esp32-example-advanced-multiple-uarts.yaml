@@ -134,6 +134,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
@@ -147,6 +148,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0

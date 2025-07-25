@@ -639,6 +639,7 @@ select:
     address: 300
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Single": 0
       "Parallel": 1
@@ -654,6 +655,7 @@ select:
     address: 301
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SOL)": 1
@@ -668,6 +670,7 @@ select:
     address: 302
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Wide range": 0
       "Narrow range": 1
@@ -680,6 +683,7 @@ select:
     address: 303
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Silent": 0
       "Beep on input source changes, warnings and faults": 1
@@ -694,6 +698,7 @@ select:
     address: 305
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Timed off": 0
       "Always on": 1
@@ -706,6 +711,7 @@ select:
     address: 331
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Utility priority": 0
       "PV priority": 1
@@ -720,6 +726,7 @@ select:
     address: 406
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Local and remotely turn-on allowed": 0
       "Local turn-on only": 1

@@ -671,6 +671,7 @@ select:
     use_write_multiple: true
     address: 300
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Single": 0
@@ -686,6 +687,7 @@ select:
     use_write_multiple: true
     address: 301
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility-PV-Battery (UTI)": 0
@@ -700,6 +702,7 @@ select:
     use_write_multiple: true
     address: 302
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Wide range": 0
@@ -712,6 +715,7 @@ select:
     use_write_multiple: true
     address: 303
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Silent": 0
@@ -726,6 +730,7 @@ select:
     use_write_multiple: true
     address: 305
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Timed off": 0
@@ -738,6 +743,7 @@ select:
     use_write_multiple: true
     address: 331
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Utility priority": 0
@@ -752,6 +758,7 @@ select:
     use_write_multiple: true
     address: 406
     value_type: U_WORD
+    entity_category: config
     icon: mdi:cog
     optionsmap:
       "Local and remotely turn-on allowed": 0
@@ -763,6 +770,8 @@ select:
     name: "${name} battery type"
     address: 630
     value_type: U_WORD
+    entity_category: config
+    icon: mdi:cog
     optionsmap:
       "AGM": 0
       "FLD": 1

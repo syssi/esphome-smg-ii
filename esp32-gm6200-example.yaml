@@ -632,6 +632,7 @@ select:
     address: 300
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Single": 0
       "Parallel": 1
@@ -647,6 +648,7 @@ select:
     address: 301
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       # "Utility-PV-Battery (UTI)": 0
       "PV-Utility-Battery (SUB)": 1
@@ -662,6 +664,7 @@ select:
     address: 302
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "APL": 0
       "UPS": 1
@@ -675,6 +678,7 @@ select:
     address: 303
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Silent": 0
       "Beep on input source changes, warnings and faults": 1
@@ -689,6 +693,7 @@ select:
     address: 305
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Timed off": 0
       "Always on": 1
@@ -701,6 +706,7 @@ select:
     address: 318
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Disabled": 0
       "PV-Utility-Battery (SUB)": 1
@@ -716,6 +722,7 @@ select:
     address: 319
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Disabled": 0
       "PV priority (SOF) ": 1
@@ -730,6 +737,7 @@ select:
     address: 322
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "AGM": 0
       "FLD": 1
@@ -748,6 +756,7 @@ select:
     address: 331
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "PV priority (SOF) ": 1
       "PV and mains at the same level (SNU)": 2
@@ -762,6 +771,7 @@ select:
     address: 406
     value_type: U_WORD
     icon: mdi:cog
+    entity_category: config
     optionsmap:
       "Local and remotely turn-on allowed": 0
       "Local turn-on only": 1
