@@ -767,7 +767,8 @@ select:
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "${name} battery type"
-    address: 630
+    use_write_multiple: true
+    address: 322
     value_type: U_WORD
     entity_category: config
     icon: mdi:cog
@@ -775,7 +776,9 @@ select:
       "AGM": 0
       "FLD": 1
       "USER": 2
+      "Li1": 3
       "Li2": 4
+      "Li3": 5
       "Li4": 6
       "Lib": 8
 
