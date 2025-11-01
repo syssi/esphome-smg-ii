@@ -1225,6 +1225,51 @@ number:
     entity_category: config
     icon: mdi:timer
 
+  # SOC point back to utility source                           %       Uint  341 1 R/W Value Menu 43 minimum setting value must be more than the value of program 45
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} SOC point back to utility"
+    use_write_multiple: true
+    address: 341
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 1
+    unit_of_measurement: "%"
+    entity_category: config
+    icon: mdi:battery-alert
+
+  # SOC point back to battery                        %       Uint  342 1 R/W Value Menu 44 60%~100% Settable
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} SOC point back to battery"
+    use_write_multiple: true
+    address: 342
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 1
+    unit_of_measurement: "%"
+    entity_category: config
+    icon: mdi:battery-high
+
+  # Low DC cut-off SOC                 %       Uint  343 1 R/W Value Menu 45 3%~30% the max setting value must be less than the value of program 43.
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} Low DC cut-off SOC"
+    use_write_multiple: true
+    address: 343
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 100.0
+    step: 1
+    unit_of_measurement: "%"
+    entity_category: config
+    icon: mdi:battery-low
+
 button:
   # Exit the fault mode                                           Uint  426   W   1: Exit the fault state
   - platform: template
