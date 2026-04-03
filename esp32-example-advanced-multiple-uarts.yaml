@@ -226,4 +226,3 @@ number:
     unit_of_measurement: "min"
     entity_category: config
     icon: mdi:timer
-
