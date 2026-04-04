@@ -34,13 +34,15 @@ repos:
     rev: v1.35.1
     hooks:
       - id: yamllint
-  - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.4
+  - repo: local
     hooks:
-      - id: pylint
-        args: [--persistent=n, components]
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: python
+        types: [python]
         pass_filenames: false
-        additional_dependencies: [esphome]
+        additional_dependencies: [pytest, esphome]
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: v13.0.1
     hooks:
