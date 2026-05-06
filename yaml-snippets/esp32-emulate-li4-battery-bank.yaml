@@ -56,12 +56,12 @@ uart:
 
 modbus:
   - uart_id: uart_0
-    id: modbus_server
+    id: modbus0
     role: server
     flow_control_pin: GPIO27
 
 modbus_server:
-  - modbus_id: modbus_server
+  - modbus_id: modbus0
     address: 0x01
     registers:
         # Battery Status uint 1 R
