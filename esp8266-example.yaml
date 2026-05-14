@@ -678,7 +678,7 @@ select:
       "Phase P2": 3
       "Phase P3": 4
 
-  # Output priority                                               Uint  301 1 R/W 0: Utility-PV-Battery, 1: PV-Utility-Battery, 2: PV-Battery-Utility
+  # Output priority                                               Uint  301 1 R/W 0: Utility-PV-Battery, 1: PV-Utility-Battery, 2: PV-Battery-Utility, 3: PV-Utility-Battery (SUB), 4: PV-Utility-Feed (SUF)
   - platform: modbus_controller
     modbus_controller_id: smg0
     name: "output priority"
@@ -692,6 +692,8 @@ select:
       "PV-Utility-Battery (SOL)": 1
       "PV-Battery-Utility (SBU)": 2
       "PV-Utility-Battery (SUB)": 3
+      # Some devices (e.g. Qoltec 53963) support this additional output priority mode
+      # "PV-Utility-Feed (SUF)": 4
 
   # Input voltage range                                           Uint  302 1 R/W 0: Wide range, 1: Narrow range
   - platform: modbus_controller
