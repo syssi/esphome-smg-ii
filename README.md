@@ -16,7 +16,7 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 * PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
 * Qoltec 53963 (supports SUF output priority)
 * Anenji 3kW-24Vdc-120Vac (supports SUF output priority)
-* Anenji 6200W-WiFi (charging priority "Utility first" not supported)
+* Anenji 6200W-WiFi (charging priority "Utility first" probably not supported)
 
 ## Requirements
 
