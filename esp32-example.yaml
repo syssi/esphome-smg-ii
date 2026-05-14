@@ -694,7 +694,7 @@ select:
       "PV-Utility-Battery (SOL)": 1
       "PV-Battery-Utility (SBU)": 2
       "PV-Utility-Battery (SUB)": 3
-      # Some devices (e.g. Qoltec 53963) support this additional output priority mode
+      # Some devices (e.g. Qoltec 53963, Anenji 3kW-24Vdc-120Vac) support this additional output priority mode
       # "PV-Utility-Feed (SUF)": 4
 
   # Input voltage range                                           Uint  302 1 R/W 0: Wide range, 1: Narrow range

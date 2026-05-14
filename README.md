@@ -14,7 +14,8 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 * EASUN SMG II
 * SMG III 6.2kW 48V (mostly supported, some registers may not work)
 * PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
-* Qoltec 53963
+* Qoltec 53963 (supports SUF output priority)
+* Anenji 3kW-24Vdc-120Vac (supports SUF output priority)
 
 ## Requirements
 
@@ -142,7 +143,7 @@ The protocol is Modbus RTU via RS232.
 | Inverter charging average current                      |  0.1A    |  Int  |  233 |  1  |  R  | |
 | PV charging average current                            |  0.1A    |  Int  |  234 |  1  |  R  | |
 | Output Mode                                            |          |  Uint |  300 |  1  | R/W | 0: Single<br>1: Parallel<br>2: 3 Phase-P1<br>3: 3 Phase-P2<br>4: 3 Phase-P3 |
-| Output priority                                        |          |  Uint |  301 |  1  | R/W | 0: Utility-PV-Battery (UTI)<br>1: PV-Utility-Battery (SOL)<br>2: PV-Battery-Utility (SBU)<br>3: PV-Utility-Battery (SUB)<br>4: PV-Utility-Feed (SUF) *(some devices only, e.g. Qoltec 53963)* |
+| Output priority                                        |          |  Uint |  301 |  1  | R/W | 0: Utility-PV-Battery (UTI)<br>1: PV-Utility-Battery (SOL)<br>2: PV-Battery-Utility (SBU)<br>3: PV-Utility-Battery (SUB)<br>4: PV-Utility-Feed (SUF) *(some devices only, e.g. Qoltec 53963, Anenji 3kW-24Vdc-120Vac)* |
 | Input voltage range                                    |          |  Uint |  302 |  1  | R/W | 0: Wide range<br>1: Narrow range                                         |
 | Buzzer mode                                            |          |  Uint |  303 |  1  | R/W | 0: Mute in all situations<br>1: Sound when the input source is changed or there is a specific warning or fault<br>2: Sound when there is aspecific warning or fault<br>3: Sound when fault occurs |
 | LCD backlight                                          |          |  Uint |  305 |  1  | R/W | 0: Timed off<br>1: Always on                                             |
