@@ -405,7 +405,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: over_voltage_threshold
-#    name: ${name}_over_voltage_threshold
+#    name: "Over Voltage Threshold"
 #    address: 0xE005
 #    register_type: holding
 #    value_type: U_WORD
@@ -419,7 +419,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: charging_voltage_limit
-#    name: ${name}_charging_voltage_limit
+#    name: "Charging Voltage Limit"
 #    address: 0xE006
 #    register_type: holding
 #    value_type: U_WORD
@@ -433,7 +433,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: equalizing_charge_voltage
-#    name: ${name}_equalizing_charge_voltage
+#    name: "Equalizing Charge Voltage"
 #    address: 0xE007
 #    register_type: holding
 #    value_type: U_WORD
@@ -447,7 +447,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: boost_voltage
-#    name: ${name}_boost_voltage
+#    name: "Boost Voltage"
 #    address: 0xE008
 #    register_type: holding
 #    value_type: U_WORD
@@ -461,7 +461,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: float_voltage
-#    name: ${name}_float_voltage
+#    name: "Float Voltage"
 #    address: 0xE009
 #    register_type: holding
 #    value_type: U_WORD
@@ -475,7 +475,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: boost_charging_recovery_voltage
-#    name: ${name}_boost_charging_recovery_voltage
+#    name: "Boost Charging Recovery Voltage"
 #    address: 0xE00A
 #    register_type: holding
 #    value_type: U_WORD
@@ -489,7 +489,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: over_discharge_recovery_voltage
-#    name: ${name}_over_discharge_recovery_voltage
+#    name: "Over Discharge Recovery Voltage"
 #    address: 0xE00B
 #    register_type: holding
 #    value_type: U_WORD
@@ -505,7 +505,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: under_voltage_warning
-#    name: ${name}_under_voltage_warning
+#    name: "Under Voltage Warning"
 #    address: 0xE00C
 #    register_type: holding
 #    value_type: U_WORD
@@ -519,7 +519,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: over_discharge_voltage
-#    name: ${name}_over_discharge_voltage
+#    name: "Over Discharge Voltage"
 #    address: 0xE00D
 #    register_type: holding
 #    value_type: U_WORD
@@ -533,7 +533,7 @@ sensor:
 #  - platform: modbus_controller
 #    modbus_controller_id: inverter0
 #    id: discharge_limit_voltage
-#    name: ${name}_discharge_limit_voltage
+#    name: "Discharge Limit Voltage"
 #    address: 0xE00E
 #    register_type: holding
 #    value_type: U_WORD
