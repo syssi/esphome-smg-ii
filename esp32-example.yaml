@@ -62,7 +62,7 @@ time:
 
 sensor:
   - platform: total_daily_energy
-    name: "PV energy today"
+    name: "pv energy today"
     restore: true
     device_class: energy
     power_id: smg0_pv_average_power

@@ -59,7 +59,7 @@ time:
 
 sensor:
   - platform: total_daily_energy
-    name: "Battery discharge today"
+    name: "battery discharge today"
     restore: true
     device_class: energy
     power_id: smg0_discharging_power
@@ -69,7 +69,7 @@ sensor:
     unit_of_measurement: kWh
 
   - platform: total_daily_energy
-    name: "Battery charge today"
+    name: "battery charge today"
     restore: true
     device_class: energy
     power_id: smg0_charging_power
@@ -132,7 +132,7 @@ sensor:
   # Device Type	 	UInt	171	1	R
   # - platform: modbus_controller
   #   modbus_controller_id: smg0
-  #   name: "Device Type"
+  #   name: "device type"
   #   address: 171
   #   register_type: holding
   #   value_type: U_WORD
@@ -141,7 +141,7 @@ sensor:
   # Protocol Number	 	UInt	184	1	R	The protocol number of this protocol is 0x02
   # - platform: modbus_controller
   #   modbus_controller_id: smg0
-  #   name: "Protocol Number"
+  #   name: "protocol number"
   #   address: 171
   #   register_type: holding
   #   value_type: U_WORD
