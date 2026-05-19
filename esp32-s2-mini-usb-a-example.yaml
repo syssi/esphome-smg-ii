@@ -1,0 +1,217 @@
+# ESPHome configuration for ISolar/EASUN SMG II 6KW inverter
+#
+# Some SMG II variants (confirmed: 6KW/48V) expose RS232 via a USB-A COM port
+# instead of the RJ45 jack documented in the main README. On those units the
+# USB data lines carry RS232 signals:
+#
+#   USB-A pin  │ RS232 signal  │ MAX3232 pin
+#   ───────────┼───────────────┼────────────
+#   VBUS (1)   │ not connected │ –
+#   D-   (2)   │ RX (to ESP)   │ T1IN / R1OUT side
+#   D+   (3)   │ TX (to ESP)   │ T1IN / R1OUT side
+#   GND  (4)   │ GND           │ GND
+#
+# Additionally this firmware variant responds on a DIFFERENT register map
+# than the standard SMG II firmware (decimal addresses 201+). The empirically
+# confirmed addresses for the 6KW firmware are listed below (hex 0x0050 /
+# 0x0150 blocks). All other registers returned exception 0x04 on write.
+#
+# Wakeup sequence: the inverter requires a proprietary wakeup frame
+# (01 AA 06 DE A2) before the first Modbus read. One transmission at boot is
+# sufficient for continuous ≤10 s polling – no need to repeat it.
+#
+# Hardware:
+#   Board   : Wemos S2 Mini (ESP32-S2FNR2)
+#   UART    : TX=GPIO16, RX=GPIO17
+#   Adapter : USB-A male DIP breakout → MAX3232 module → S2 Mini GPIO16/17
+#
+# See images/usb-a-*.jpg for wiring photos.
+
+substitutions:
+  name: smg-ii-usb-a
+  device_description: "Monitor a ISolar/EASUN SMG II 6KW inverter via USB-A RS232 port"
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  comment: ${device_description}
+  min_version: 2024.6.0
+  on_boot:
+    # Send proprietary wakeup frame once after all components are ready.
+    # The inverter stays awake for the entire session as long as polls
+    # arrive within ≤10 s. No repeat needed.
+    priority: -100
+    then:
+      - logger.log: "Sending inverter wakeup (01 AA 06 DE A2)"
+      - uart.write:
+          id: uart_0
+          data: [0x01, 0xAA, 0x06, 0xDE, 0xA2]
+      - delay: 300ms
+
+esp32:
+  board: lolin_s2_mini
+  variant: ESP32S2
+  framework:
+    type: esp-idf
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "${name} Fallback"
+    password: "smgii1234"
+
+captive_portal:
+
+logger:
+
+api:
+
+ota:
+  platform: esphome
+
+uart:
+  id: uart_0
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
+  baud_rate: 9600
+  data_bits: 8
+  parity: NONE
+  stop_bits: 1
+
+modbus:
+  id: modbus_0
+  uart_id: uart_0
+  send_wait_time: 250ms
+
+modbus_controller:
+  - id: smg_ii
+    address: 0x01
+    modbus_id: modbus_0
+    update_interval: 10s
+    command_throttle: 50ms
+
+sensor:
+  # ── 0x0050 block – AC / grid measurements (decimal 80–95) ─────────────────
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Grid Voltage"
+    register_type: holding
+    address: 0x0050
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Grid Frequency"
+    register_type: holding
+    address: 0x0052
+    value_type: U_WORD
+    filters:
+      - multiply: 0.01
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Output Voltage"
+    register_type: holding
+    address: 0x0058
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Output Frequency"
+    register_type: holding
+    address: 0x005A
+    value_type: U_WORD
+    filters:
+      - multiply: 0.01
+    unit_of_measurement: "Hz"
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 2
+
+  # ── 0x0150 block – battery / charging (decimal 336–375) ───────────────────
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Battery Voltage"
+    register_type: holding
+    address: 0x0159
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Battery Current"
+    register_type: holding
+    address: 0x015D
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Float Voltage"
+    register_type: holding
+    address: 0x015C
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Bulk Charge Voltage"
+    register_type: holding
+    address: 0x0177
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: wifi_signal
+    name: "${name} WiFi Signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "${name} Uptime"
+    update_interval: 60s
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${name} IP Address"
+    ssid:
+      name: "${name} WiFi SSID"

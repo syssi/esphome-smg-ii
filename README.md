@@ -69,6 +69,84 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 
 Please be aware of the different RJ45 pinout colors ([T-568A vs. T-568B](images/rj45-colors-t568a-vs-t568.png)).
 
+### Alternative: USB-A COM port (6KW firmware variant)
+
+Some SMG II units (confirmed: **6KW/48V**) expose RS232 via a **USB-A COM port**
+instead of the RJ45 jack. The USB data lines carry RS232 signals — VBUS and GND
+retain their standard meaning.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-inverter-com-port.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-inverter-com-port.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-breakout-pinout.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-breakout-pinout.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-full-assembly.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-full-assembly.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-s2-mini-wiring.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-s2-mini-wiring.jpg" height="172">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-max3232-soldering.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-smg-ii/main/images/usb-a-max3232-soldering.jpg" height="172">
+</a>
+
+```
+               RS232 via USB-A             UART-TTL
+┌──────────┐                ┌──────────┐                ┌─────────┐
+│          │  D+ ──── TX ──>│          │<----- RX ─────>│         │
+│  SMG-II  │  D- ──── RX ──<│  MAX3232 │<----- TX ─────>│ ESP32   │
+│  6KW     │  GND ─── GND ─>│  module  │<----- GND ────>│ S2 Mini │
+│  USB-A   │  VBUS not used │          │<── 3.3V VCC ──>│         │
+└──────────┘                └──────────┘                └─────────┘
+```
+
+#### USB-A COM port pinout
+
+| USB-A pin | Label | RS232 signal  | Wire color (example) |
+| :-------: | :---- | :------------ | :------------------- |
+| 1         | VBUS  | not connected | red (unused)         |
+| 2         | D-    | RX (inverter → ESP) | yellow         |
+| 3         | D+    | TX (ESP → inverter) | blue           |
+| 4         | GND   | GND           | black                |
+
+A generic **USB-A male DIP breakout board** is the easiest way to access these
+pins without cutting a cable.
+
+#### Wakeup sequence
+
+This firmware variant requires a proprietary wakeup frame before the first
+Modbus read. One transmission at boot is sufficient — the inverter stays awake
+as long as polls arrive within ≤10 s:
+
+```
+01 AA 06 DE A2
+```
+
+#### Register map (6KW firmware)
+
+> ⚠️ This firmware uses **different register addresses** than the standard SMG II
+> firmware documented in the Protocol section below. The addresses 201+ do **not**
+> respond on these units. The following registers were confirmed by empirical scan:
+
+| Address (hex) | Address (dec) | Description          | Scale  | Unit | Signed |
+| :-----------: | :-----------: | :------------------- | -----: | :--- | :----- |
+| 0x0050        | 80            | Grid voltage         | ×0.1   | V    | No     |
+| 0x0052        | 82            | Grid frequency       | ×0.01  | Hz   | No     |
+| 0x0058        | 88            | Output voltage       | ×0.1   | V    | No     |
+| 0x005A        | 90            | Output frequency     | ×0.01  | Hz   | No     |
+| 0x0159        | 345           | Battery voltage      | ×0.1   | V    | No     |
+| 0x015C        | 348           | Float voltage        | ×0.1   | V    | No     |
+| 0x015D        | 349           | Battery current      | ×0.1   | A    | **Yes** |
+| 0x0177        | 375           | Bulk charge voltage  | ×0.1   | V    | No     |
+
+Use `esp32-s2-mini-usb-a-example.yaml` as a starting point for this hardware variant.
+
+
 ### MAX3232
 
 | Pin          | Label        | ESPHome     | ESP8266 example  | ESP32 example |
