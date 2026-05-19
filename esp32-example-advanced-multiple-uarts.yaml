@@ -16,6 +16,11 @@ esphome:
   project:
     name: "syssi.esphome-smg-ii"
     version: 1.4.0
+  devices:
+    - id: device0
+      name: "${device0}"
+    - id: device1
+      name: "${device1}"
 
 esp32:
   board: wemos_d1_mini32
@@ -76,7 +81,8 @@ modbus_controller:
 sensor:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${device0} pv average voltage"
+    name: "pv average voltage"
+    device_id: device0
     address: 219
     register_type: holding
     value_type: S_WORD
@@ -90,7 +96,8 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${device0} pv average current"
+    name: "pv average current"
+    device_id: device0
     address: 220
     register_type: holding
     value_type: S_WORD
@@ -103,7 +110,8 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${device1} pv average voltage"
+    name: "pv average voltage"
+    device_id: device1
     address: 219
     register_type: holding
     value_type: S_WORD
@@ -117,7 +125,8 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${device1} pv average current"
+    name: "pv average current"
+    device_id: device1
     address: 220
     register_type: holding
     value_type: S_WORD
@@ -132,7 +141,8 @@ sensor:
 select:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${device0} output priority"
+    name: "output priority"
+    device_id: device0
     use_write_multiple: true
     address: 301
     value_type: U_WORD
@@ -146,7 +156,8 @@ select:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${device1} output priority"
+    name: "output priority"
+    device_id: device1
     use_write_multiple: true
     address: 301
     value_type: U_WORD
@@ -161,7 +172,8 @@ select:
 text_sensor:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${device0} operation mode"
+    name: "operation mode"
+    device_id: device0
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
@@ -181,7 +193,8 @@ text_sensor:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${device1} operation mode"
+    name: "operation mode"
+    device_id: device1
     address: 201
     register_type: holding
     raw_encode: HEXBYTES
@@ -202,7 +215,8 @@ text_sensor:
 number:
   - platform: modbus_controller
     modbus_controller_id: smg0
-    name: "${device0} battery equalization time"
+    name: "battery equalization time"
+    device_id: device0
     use_write_multiple: true
     address: 335
     register_type: holding
@@ -216,7 +230,8 @@ number:
 
   - platform: modbus_controller
     modbus_controller_id: smg1
-    name: "${device1} battery equalization time"
+    name: "battery equalization time"
+    device_id: device1
     use_write_multiple: true
     address: 335
     register_type: holding
