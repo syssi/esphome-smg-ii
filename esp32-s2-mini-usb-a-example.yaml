@@ -54,7 +54,9 @@ esp32:
   board: lolin_s2_mini
   variant: ESP32S2
   framework:
-    type: arduino
+    type: esp-idf
+  platformio_options:
+    board_build.flash_mode: dio
 
 wifi:
   ssid: !secret wifi_ssid
