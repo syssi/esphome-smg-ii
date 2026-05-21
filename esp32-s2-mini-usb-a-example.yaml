@@ -40,7 +40,7 @@ esphome:
   min_version: 2024.6.0
   project:
     name: "syssi.esphome-smg-ii"
-    version: 1.4.0
+    version: 1.5.0
   on_boot:
     # Send proprietary wakeup frame once after all components are ready.
     # The inverter stays awake for the entire session as long as polls
