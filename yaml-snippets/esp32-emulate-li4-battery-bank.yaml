@@ -196,27 +196,24 @@ sensor:
       name: "temperature sensor 1"
     temperature_sensor_2:
       name: "temperature sensor 2"
-    power_tube_temperature:
-      name: "power tube temperature"
-    balancing:
-      name: "balancing"
+    mosfet_temperature:
+      name: "mosfet temperature"
+    balancer_status_bitmask:
+      name: "balancer status bitmask"
     state_of_charge:
       id: state_of_charge
       name: "state of charge"
     capacity_remaining:
       id: capacity_remaining
       name: "capacity remaining"
-    total_battery_capacity_setting:
-      name: "total battery capacity setting"
+    full_charge_capacity:
+      name: "full charge capacity"
     charging_cycles:
       name: "charging cycles"
     total_charging_cycle_capacity:
       name: "total charging cycle capacity"
     balancing_current:
       name: "balancing current"
-    errors_bitmask:
-      id: errors_bitmask
-      name: "errors bitmask"
 
 switch:
   - platform: jk_bms_ble
@@ -238,6 +235,8 @@ text_sensor:
   - platform: jk_bms_ble
     errors:
       name: "errors"
+    errors_bitmask_hex:
+      name: "errors bitmask hex"
     total_runtime_formatted:
       name: "total runtime formatted"
 
@@ -257,8 +256,8 @@ number:
       name: "cell voltage undervoltage protection"
     cell_voltage_undervoltage_recovery:
       name: "cell voltage undervoltage recovery"
-    balance_starting_voltage:
-      name: "balance starting voltage"
+    balancing_start_voltage:
+      name: "balance start voltage"
     voltage_calibration:
       name: "voltage calibration"
     current_calibration:
@@ -297,10 +296,10 @@ number:
       name: "charge undertemperature protection"
     charge_undertemperature_protection_recovery:
       name: "charge undertemperature protection recovery"
-    power_tube_overtemperature_protection:
-      name: "power tube overtemperature protection"
-    power_tube_overtemperature_protection_recovery:
-      name: "power tube overtemperature protection recovery"
+    mosfet_overtemperature_protection:
+      name: "mosfet overtemperature protection"
+    mosfet_overtemperature_protection_recovery:
+      name: "mosfet overtemperature protection recovery"
 
 
 binary_sensor:
