@@ -37,7 +37,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2024.6.0
+  min_version: 2026.9.0
   project:
     name: "syssi.esphome-smg-ii"
     version: 1.5.0
@@ -99,7 +99,6 @@ modbus_controller:
     address: 0x01
     modbus_id: modbus_0
     update_interval: 10s
-    command_throttle: 50ms
 
 sensor:
   # ── 0x0050 block – AC / grid measurements (decimal 80–95) ─────────────────

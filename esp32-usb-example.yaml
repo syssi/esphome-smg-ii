@@ -11,7 +11,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2025.7.1
+  min_version: 2026.9.0
   project:
     name: "syssi.esphome-smg-ii"
     version: 1.5.0
@@ -69,7 +69,6 @@ modbus_controller:
   - id: smg0
     address: 0x01
     modbus_id: modbus0
-    command_throttle: 200ms
     update_interval: 10s
 
 time:
@@ -877,7 +876,6 @@ text_sensor:
     name: "fault"
     address: 100
     register_type: holding
-    register_count: 2
     response_size: 4
     raw_encode: HEXBYTES
     icon: mdi:alert-circle
@@ -934,7 +932,6 @@ text_sensor:
     name: "warning"
     address: 108
     register_type: holding
-    register_count: 2
     response_size: 4
     raw_encode: HEXBYTES
     icon: mdi:alert-circle

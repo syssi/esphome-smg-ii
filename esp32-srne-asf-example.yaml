@@ -12,7 +12,7 @@ esphome:
   name: ${name}
   friendly_name: ${friendly_name}
   comment: ${device_description}
-  min_version: 2024.6.0
+  min_version: 2026.9.0
   project:
     name: "syssi.esphome-smg-ii"
     version: 1.5.0
@@ -58,7 +58,6 @@ modbus_controller:
   - id: inverter0
     address: 0x01
     modbus_id: modbus0
-    command_throttle: 200ms
     update_interval: 10s
 
 time:
@@ -71,9 +70,7 @@ sensor:
     id: software_version
     register_type: holding
     address: 0x014
-    register_count: 2
     value_type: U_DWORD
-    skip_updates: 1
     icon: mdi:information
     entity_category: diagnostic
 
@@ -83,9 +80,7 @@ sensor:
     id: hardware_version
     register_type: holding
     address: 0x016
-    register_count: 2
     value_type: U_DWORD
-    skip_updates: 1
     icon: mdi:information
     entity_category: diagnostic
 
@@ -411,7 +406,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -425,7 +419,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -439,7 +432,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -453,7 +445,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -467,7 +458,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -481,7 +471,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -495,7 +484,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -511,7 +499,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -525,7 +512,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -539,7 +525,6 @@ sensor:
 #    value_type: U_WORD
 #    accuracy_decimals: 1
 #    unit_of_measurement: "V"
-#    skip_updates: 1
 #    # filters:
 #    #   - multiply: 0.1
 #    lambda: "return x * 0.4;"
@@ -554,7 +539,6 @@ sensor:
     icon: mdi:sine-wave
     accuracy_decimals: 1
     unit_of_measurement: "V"
-    skip_updates: 1
     # filters:
     #   - multiply: 0.1
     lambda: "return x * 0.4;"
@@ -569,7 +553,6 @@ sensor:
     icon: mdi:sine-wave
     accuracy_decimals: 1
     unit_of_measurement: "V"
-    skip_updates: 1
     # filters:
     #   - multiply: 0.1
     lambda: "return x * 0.4;"
