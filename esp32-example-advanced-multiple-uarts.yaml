@@ -12,15 +12,17 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2026.9.0
+  min_version: "2026.11.0"
   project:
     name: "syssi.esphome-smg-ii"
     version: 1.5.0
   devices:
     - id: device0
       name: "${device0}"
+      relation: via
     - id: device1
       name: "${device1}"
+      relation: via
 
 esp32:
   board: wemos_d1_mini32
