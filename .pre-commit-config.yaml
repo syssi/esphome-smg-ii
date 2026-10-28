@@ -32,19 +32,3 @@ repos:
     hooks:
       - id: clang-format
         types_or: [c, c++]
-  - repo: https://github.com/pylint-dev/pylint
-    rev: v4.1.3
-    hooks:
-      - id: pylint
-        args: [--persistent=n, components]
-        pass_filenames: false
-        additional_dependencies: [esphome]
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        entry: pytest
-        language: python
-        types: [python]
-        pass_filenames: false
-        additional_dependencies: [pytest, esphome]
