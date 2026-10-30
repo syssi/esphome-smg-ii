@@ -1,0 +1,67 @@
+# TCP-to-Serial bridge for deep register scanning of EASUN/ISolar SMG II inverters.
+#
+# Usage:
+#   1. Set your ESP's wifi credentials in secrets.yaml
+#   2. Adjust tx_pin / rx_pin to match your wiring (see README)
+#   3. Flash:  esphome run tools/deep-scan-esp32-c3.yaml --device <ip-or-hostname>
+#   4. Scan:   python3 tools/deep_scan.py --host <ip-or-hostname>
+#   5. Restore production config when done:  esphome run <your-device>.yaml
+
+substitutions:
+  name: smg-deep-scan
+  friendly_name: SMG Deep Scan Bridge
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  on_boot:
+    priority: -100
+    then:
+      - logger.log: "Bridge ready – sending inverter wakeup"
+      - uart.write:
+          id: inverter_uart
+          data: [0x01, 0xAA, 0x06, 0xDE, 0xA2]   # proprietary wakeup (USB-A / 6KW firmware)
+      - delay: 300ms
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+
+ota:
+  platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: none
+  fast_connect: true
+  reboot_timeout: 15min
+  output_power: 8.5
+  ap:
+    ssid: "${name} Fallback"
+    password: "smgscan1234"
+
+captive_portal:
+
+external_components:
+  - source: github://oxan/esphome-stream-server
+    refresh: 1d
+
+uart:
+  id: inverter_uart
+  tx_pin: GPIO6      # adjust to your wiring
+  rx_pin: GPIO5      # adjust to your wiring
+  baud_rate: 9600
+  data_bits: 8
+  parity: NONE
+  stop_bits: 1
+
+stream_server:
+  uart_id: inverter_uart
+  port: 8888         # deep_scan.py --tcp-port 8888
