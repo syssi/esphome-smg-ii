@@ -12,6 +12,7 @@ ESPHome configuration to monitor and control a ISolar/EASUN SMG II inverter via 
 
 * ISolar SMG II
 * EASUN SMG II
+* EASUN SMS-6.5KP-W-E (48V / 6.5kW offgrid, USB-A COM port — see USB-A section below for corrected register map)
 * SMG III 6.2kW 48V (mostly supported, some registers may not work)
 * PowMr POW-HVM5.5K-48V / POW-HVM5.5K-48V-P
 * Qoltec 53963 (supports SUF output priority)
@@ -133,16 +134,24 @@ as long as polls arrive within ≤10 s:
 > firmware documented in the Protocol section below. The addresses 201+ do **not**
 > respond on these units. The following registers were confirmed by empirical scan:
 
-| Address (hex) | Address (dec) | Description          | Scale  | Unit | Signed |
-| :-----------: | :-----------: | :------------------- | -----: | :--- | :----- |
-| 0x0050        | 80            | Grid voltage         | ×0.1   | V    | No     |
-| 0x0052        | 82            | Grid frequency       | ×0.01  | Hz   | No     |
-| 0x0058        | 88            | Output voltage       | ×0.1   | V    | No     |
-| 0x005A        | 90            | Output frequency     | ×0.01  | Hz   | No     |
-| 0x0159        | 345           | Battery voltage      | ×0.1   | V    | No     |
-| 0x015C        | 348           | Float voltage        | ×0.1   | V    | No     |
-| 0x015D        | 349           | Battery current      | ×0.1   | A    | **Yes** |
-| 0x0177        | 375           | Bulk charge voltage  | ×0.1   | V    | No     |
+| Address (hex) | Address (dec) | Description          | Scale  | Unit | Signed | Notes |
+| :-----------: | :-----------: | :------------------- | -----: | :--- | :----- | :---- |
+| 0x0050        | 80            | Grid voltage         | ×0.1   | V    | No     | |
+| 0x0052        | 82            | Grid frequency       | ×0.01  | Hz   | No     | |
+| 0x0058        | 88            | Output voltage       | ×0.1   | V    | No     | |
+| 0x005A        | 90            | Output frequency     | ×0.01  | Hz   | No     | |
+| 0x0085        | 133           | Output power         | ×1     | W    | Yes    | raw value is directly in watts — **no multiplier** |
+| 0x0053        | 83            | AC power (grid)      | ×1     | W    | Yes    | raw value is directly in watts — **no multiplier** |
+| 0x0155        | 341           | Battery voltage      | ×0.1   | V    | No     | **measured** voltage; 0x0159 is the nominal system voltage (constant 48.0 V) — do not use 0x0159 |
+| 0x0156        | 342           | Battery current      | ×0.1   | A    | **Yes** | S_WORD two's-complement; negative = discharging; validated via energy balance I_bat × V_bat × η ≈ P_out |
+| 0x015C        | 348           | Float voltage        | ×0.1   | V    | No     | |
+| 0x0177        | 375           | Bulk charge voltage  | ×0.1   | V    | No     | |
+
+> ⚠️ **Common mistakes with this firmware:**
+> - `0x0159` (dec 345) reads as a constant 48.0 V — this is the **nominal** system voltage, not the measured battery voltage. Use `0x0155` instead.
+> - `0x015D` (dec 349) reads as a constant ~−1.5 A — this is a **configuration register**, not a live measurement. Use `0x0156` instead.
+> - `0x005B` (dec 91) "Output Power" only responds above ~200 W load threshold; returns 0 at low loads. Use `0x0085` instead.
+> - PV registers `0x0090`/`0x0091` do **not exist** in this firmware variant (always return 0).
 
 Use `esp32-s2-mini-usb-a-example.yaml` as a starting point for this hardware variant.
 

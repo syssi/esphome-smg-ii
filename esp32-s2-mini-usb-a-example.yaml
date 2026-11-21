@@ -100,6 +100,40 @@ modbus_controller:
     modbus_id: modbus_0
     update_interval: 10s
 
+# ── Switch: pause/resume Modbus polling from HA ───────────────────────────────
+switch:
+  - platform: template
+    name: "${name} Modbus Polling"
+    id: modbus_polling
+    icon: "mdi:toggle-switch"
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: true
+    turn_on_action:
+      - logger.log: "Modbus polling resumed"
+      - component.resume: smg_ii
+    turn_off_action:
+      - logger.log: "Modbus polling suspended"
+      - component.suspend: smg_ii
+
+# ── Button: send wakeup frame from HA ────────────────────────────────────────
+button:
+  - platform: template
+    name: "${name} Inverter Wakeup"
+    icon: "mdi:power-cycle"
+    on_press:
+      - logger.log: "Manual wakeup (FC 0xAA) triggered from HA"
+      - component.suspend: smg_ii
+      - delay: 50ms
+      - uart.write:
+          id: uart_0
+          data: [0x01, 0xAA, 0x06, 0xDE, 0xA2]
+      - delay: 300ms
+      - if:
+          condition:
+            switch.is_on: modbus_polling
+          then:
+            - component.resume: smg_ii
+
 sensor:
   # ── 0x0050 block – AC / grid measurements (decimal 80–95) ─────────────────
   - platform: modbus_controller
@@ -153,6 +187,109 @@ sensor:
     device_class: frequency
     state_class: measurement
     accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} AC Power"
+    register_type: holding
+    address: 0x0053
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Output Power"
+    register_type: holding
+    address: 0x005B
+    value_type: S_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Output Apparent Power"
+    register_type: holding
+    address: 0x005C
+    value_type: U_WORD
+    unit_of_measurement: "VA"
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Load Percent"
+    register_type: holding
+    address: 0x005D
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # ── 0x0090 block – PV ─────────────────────────────────────────────────────
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} PV Current"
+    register_type: holding
+    address: 0x0090
+    value_type: U_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} PV Power"
+    register_type: holding
+    address: 0x0091
+    value_type: U_WORD
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+
+  # ── 0x00A4 block – temperatures (empirical, unconfirmed identity) ──────────
+  # All three registers return plausible temperatures (~29 °C at low load).
+  # Identity (DCDC / inverter / ambient) to be confirmed under load.
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Temp A"
+    register_type: holding
+    address: 0x00A4
+    value_type: U_WORD
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Temp B"
+    register_type: holding
+    address: 0x00A5
+    value_type: U_WORD
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: smg_ii
+    name: "${name} Temp C"
+    register_type: holding
+    address: 0x00A6
+    value_type: U_WORD
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 0
 
   # ── 0x0150 block – battery / charging (decimal 336–375) ───────────────────
   - platform: modbus_controller
